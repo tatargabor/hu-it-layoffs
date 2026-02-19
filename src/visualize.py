@@ -40,7 +40,7 @@ def _eff_headcount(post):
     return post.get('headcount_min'), post.get('headcount_max'), post.get('headcount_source')
 
 
-def generate_html(posts, output_path='data/report.html'):
+def generate_html(posts, output_path='data/report.html', llm_stats=None):
     relevant = [p for p in posts if _eff_relevance(p) >= 1]
     strong = [p for p in posts if _eff_relevance(p) >= 2]
     direct = [p for p in posts if _eff_relevance(p) >= 3]
@@ -361,6 +361,7 @@ details summary:hover {{ color: #fff; }}
 
 <div class="footer">
   Forrás: Reddit publikus JSON API | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec &middot; Agentic
+  {"<br>" + f"{llm_stats['validated']} poszt LLM-validálva {llm_stats['elapsed_seconds']:.0f}s alatt | ~{llm_stats['est_input_tokens']:,}+{llm_stats['est_output_tokens']:,} token | Költség: $0.00 (GitHub Models) | Kézzel ez ~{llm_stats['est_manual_hours']:.0f} óra lett volna" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
 </div>
 
 <script>

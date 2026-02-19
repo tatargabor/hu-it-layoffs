@@ -1,7 +1,7 @@
 """Main entry point — runs scraper → analyzer → LLM validate → report → HTML pipeline."""
 
+import json
 import os
-import shutil
 
 # Ensure we run from project root
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,16 +53,20 @@ def main():
 
     # Step 3: LLM Validation
     print('\n[3/5] LLM validáció...')
-    validated = validate_posts(analyzed)
+    validated, llm_stats = validate_posts(analyzed)
     save_validated_posts(validated, 'data/validated_posts.json')
+
+    # Save stats alongside
+    with open('data/llm_stats.json', 'w') as f:
+        json.dump(llm_stats, f, indent=2)
 
     # Step 4: Markdown Report
     print('\n[4/5] Markdown riport generálása...')
-    generate_report(validated, 'data/report.md')
+    generate_report(validated, 'data/report.md', llm_stats=llm_stats)
 
     # Step 5: HTML Dashboard
     print('\n[5/5] HTML dashboard generálása...')
-    generate_html(validated, 'data/report.html')
+    generate_html(validated, 'data/report.html', llm_stats=llm_stats)
 
     # Generate README.md
     _generate_readme()

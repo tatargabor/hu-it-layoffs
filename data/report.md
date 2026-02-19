@@ -1,6 +1,6 @@
 # Magyar IT Szektor Leépítések — Kimutatás
 
-*Generálva: 2026-02-19 23:02*
+*Generálva: 2026-02-19 23:26*
 *Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*
 
 **Becsült összes érintett: ~1523–3408 fő**
@@ -360,6 +360,13 @@
 - [2022-05-27] [Codecool vélemények?](https://reddit.com/r/programmingHungary/comments/uz5lqz/codecool_vélemények/) (score: 6, 9 komment) **
 - [2021-12-27] [Segítség kérés tudásom beárazásában és álláskeresésben, hosszan kifejt](https://reddit.com/r/programmingHungary/comments/rplo0c/segítség_kérés_tudásom_beárazásában_és/) (score: 9, 3 komment) **
 - [2021-02-09] [Állások bérigénye](https://reddit.com/r/programmingHungary/comments/lg2n1g/állások_bérigénye/) (score: 65, 42 komment) **
+
+---
+
+**LLM validáció:** 187 poszt validálva 102 másodperc alatt
+**Tokenek:** ~185,000 input + ~22,000 output
+**Becsült költség (gpt-4o-mini áron):** $0.041 | **Tényleges (GitHub Models):** $0.00
+**Kézzel ez ~20 óra munka lett volna**
 
 ---
 *Relevancia jelölés: \*\*\* = közvetlen leépítés, \*\* = erős jelzés, \* = közvetett*

@@ -134,8 +134,38 @@ def _build_prompt(post):
     return '\n'.join(parts)
 
 
+def _estimate_manual_minutes(post):
+    """Estimate how many minutes a human would need to review this post."""
+    text_len = len(post.get('title', '')) + len(post.get('selftext', ''))
+    comment_count = len(post.get('top_comments', []))
+
+    if text_len < 200:
+        minutes = 2
+    elif text_len < 1000:
+        minutes = 5
+    else:
+        minutes = 8
+
+    if comment_count > 10:
+        minutes += 3
+    elif comment_count > 5:
+        minutes += 1.5
+
+    return minutes
+
+
 def validate_posts(posts):
-    """Validate analyzed posts with LLM. Returns enriched post list."""
+    """Validate analyzed posts with LLM. Returns enriched post list + stats dict."""
+    stats = {
+        'validated': 0,
+        'errors': 0,
+        'skipped': 0,
+        'est_input_tokens': 0,
+        'est_output_tokens': 0,
+        'est_manual_hours': 0.0,
+        'elapsed_seconds': 0.0,
+    }
+
     token = _resolve_token()
 
     if not token:
@@ -143,7 +173,10 @@ def validate_posts(posts):
         print('  Set GITHUB_TOKEN or install gh CLI for LLM validation')
         for post in posts:
             post['llm_validated'] = False
-        return posts
+        stats['skipped'] = len(posts)
+        # Still estimate manual time
+        stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
+        return posts, stats
 
     # Filter to relevant posts only
     to_validate = [p for p in posts if p.get('relevance', 0) >= 1]
@@ -151,15 +184,21 @@ def validate_posts(posts):
 
     for p in skip:
         p['llm_validated'] = False
+    stats['skipped'] = len(skip)
 
     print(f'\nLLM validation: {len(to_validate)} posts to validate (skipping {len(skip)} irrelevant)')
-    validated_count = 0
-    error_count = 0
+
+    start_time = time.time()
 
     for i, post in enumerate(to_validate):
         print(f'  [{i+1}/{len(to_validate)}] {post["title"][:50]}...')
 
         prompt = _build_prompt(post)
+
+        # Estimate tokens (Hungarian text ≈ 1 token per 3 chars)
+        est_input = (len(SYSTEM_PROMPT) + len(prompt)) / 3
+        stats['est_input_tokens'] += int(est_input)
+
         time.sleep(REQUEST_DELAY)
 
         result = _call_llm(token, prompt)
@@ -167,8 +206,12 @@ def validate_posts(posts):
         if result is None:
             print(f'    FAILED — keeping keyword scoring')
             post['llm_validated'] = False
-            error_count += 1
+            stats['errors'] += 1
             continue
+
+        # Estimate output tokens
+        result_str = json.dumps(result, ensure_ascii=False)
+        stats['est_output_tokens'] += int(len(result_str) / 4)
 
         post['llm_validated'] = True
         post['llm_relevance'] = _map_relevance(result)
@@ -178,14 +221,27 @@ def validate_posts(posts):
         post['llm_summary'] = result.get('summary', '')
         post['llm_technologies'] = result.get('technologies', [])
         post['llm_roles'] = result.get('roles', [])
-        validated_count += 1
+        stats['validated'] += 1
+
+    stats['elapsed_seconds'] = time.time() - start_time
+    stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
+
+    # Cost estimation (gpt-4o-mini pricing, even though GitHub Models is free)
+    est_input_cost = stats['est_input_tokens'] / 1_000_000 * 0.15
+    est_output_cost = stats['est_output_tokens'] / 1_000_000 * 0.60
+    est_total_cost = est_input_cost + est_output_cost
 
     print(f'\nLLM validation complete:')
-    print(f'  Validated: {validated_count}')
-    print(f'  Errors: {error_count}')
-    print(f'  Skipped: {len(skip)}')
+    print(f'  Validated: {stats["validated"]}')
+    print(f'  Errors: {stats["errors"]}')
+    print(f'  Skipped: {stats["skipped"]}')
+    print(f'  Time: {stats["elapsed_seconds"]:.0f}s')
+    print(f'  Est. tokens: ~{stats["est_input_tokens"]:,} input + ~{stats["est_output_tokens"]:,} output')
+    print(f'  Est. cost (gpt-4o-mini rates): ${est_total_cost:.3f}')
+    print(f'  Actual cost (GitHub Models): $0.00')
+    print(f'  Manual equivalent: ~{stats["est_manual_hours"]:.0f} hours')
 
-    return posts
+    return posts, stats
 
 
 def save_validated_posts(posts, output_path='data/validated_posts.json'):

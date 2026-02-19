@@ -55,7 +55,7 @@ def _headcount_str(post):
     return f'{prefix}{hmin}-{hmax}'
 
 
-def generate_report(posts, output_path='data/report.md'):
+def generate_report(posts, output_path='data/report.md', llm_stats=None):
     """Generate full markdown report."""
     relevant = [p for p in posts if _eff_relevance(p) >= 1]
     strong = [p for p in posts if _eff_relevance(p) >= 2]
@@ -322,6 +322,22 @@ def generate_report(posts, output_path='data/report.md'):
         )
 
     lines.append('')
+    # === TRANSPARENCY STATS ===
+    if llm_stats and llm_stats.get('validated', 0) > 0:
+        est_input = llm_stats.get('est_input_tokens', 0)
+        est_output = llm_stats.get('est_output_tokens', 0)
+        est_cost = est_input / 1_000_000 * 0.15 + est_output / 1_000_000 * 0.60
+        manual_hours = llm_stats.get('est_manual_hours', 0)
+        elapsed = llm_stats.get('elapsed_seconds', 0)
+
+        lines.append('---')
+        lines.append('')
+        lines.append(f'**LLM validáció:** {llm_stats["validated"]} poszt validálva {elapsed:.0f} másodperc alatt')
+        lines.append(f'**Tokenek:** ~{est_input:,} input + ~{est_output:,} output')
+        lines.append(f'**Becsült költség (gpt-4o-mini áron):** ${est_cost:.3f} | **Tényleges (GitHub Models):** $0.00')
+        lines.append(f'**Kézzel ez ~{manual_hours:.0f} óra munka lett volna**')
+        lines.append('')
+
     lines.append('---')
     lines.append('*Relevancia jelölés: \\*\\*\\* = közvetlen leépítés, \\*\\* = erős jelzés, \\* = közvetett*')
 
