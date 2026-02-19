@@ -2,7 +2,7 @@ name: Update Report
 
 on:
   schedule:
-    - cron: '0 6,18 * * *'
+    - cron: '0 4 * * *'  # naponta 1x, hajnali 4 UTC (5:00 magyar idő)
   workflow_dispatch:
 
 permissions:
