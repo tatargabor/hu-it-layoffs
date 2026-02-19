@@ -14,7 +14,7 @@ from src.report import generate_report
 from src.visualize import generate_html
 
 
-PAGES_URL = 'https://yourusername.github.io/reddit/'  # TODO: update with actual URL
+PAGES_URL = 'https://tatargabor.github.io/hu-it-layoffs/'
 
 
 def _generate_readme(report_path='data/report.md', output_path='README.md'):

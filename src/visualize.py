@@ -144,6 +144,13 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     ai_count = sum(1 for p in relevant if p.get('ai_attributed'))
     freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
 
+    # Date range for headcount label
+    if strong:
+        strong_dates = sorted(p['date'] for p in strong)
+        date_range_str = f'{strong_dates[0]} – {strong_dates[-1]}'
+    else:
+        date_range_str = '?'
+
     # Build detailed table rows
     detailed_rows = ''
     for p in all_relevant:
@@ -283,16 +290,14 @@ details summary:hover {{ color: #fff; }}
   <div class="sub">Reddit (r/programmingHungary, r/hungary) publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
   <div class="tagline">1 óra tervezés, 2 óra generálás</div>
   <div class="share-row">
-    <a class="share-btn watch" href="https://github.com/tothandras/reddit" target="_blank">&#9733; Watch on GitHub</a>
-    <a class="share-btn" href="https://twitter.com/intent/tweet?text=Magyar%20IT%20le%C3%A9p%C3%ADt%C3%A9s%20radar%20%E2%80%94%20{len(companies)}%20c%C3%A9g%2C%20~{total_min}%E2%80%93{total_max}%20%C3%A9rintett&amp;url=" target="_blank">&#120143; / X</a>
+    <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
     <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=" target="_blank">LinkedIn</a>
-    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">Facebook</a>
     <a class="share-btn" id="copyLink" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{{let b=document.getElementById('copyLink');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy Link',2000)}})">Copy Link</a>
   </div>
 </div>
 
 <div class="stats">
-  <div class="stat primary"><div class="num">~{total_min:,}–{total_max:,}</div><div class="label">Becsült érintett fő</div></div>
+  <div class="stat primary"><div class="num">~{total_min:,}–{total_max:,}</div><div class="label">Becsült érintett fő<br><span style="font-size:0.85em;color:#666">({date_range_str}, erős jelzések alapján)</span></div></div>
   <div class="stat"><div class="num">{len(direct)}</div><div class="label">Közvetlen leépítés</div></div>
   <div class="stat"><div class="num">{len(relevant)}</div><div class="label">Releváns poszt</div></div>
   <div class="stat"><div class="num">{len(companies)}</div><div class="label">Érintett cég</div></div>
