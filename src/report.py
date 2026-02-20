@@ -81,6 +81,10 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
     lines.append(f'**Hiring freeze jelzések:** {freeze_count}')
 
+    total_score = sum(p.get('score', 0) for p in relevant)
+    total_comments = sum(p.get('num_comments', 0) for p in relevant)
+    lines.append(f'**Összes reakció:** {total_score:,} upvote, {total_comments:,} komment')
+
     # LLM validation stats
     llm_count = sum(1 for p in relevant if p.get('llm_validated'))
     if llm_count > 0:
@@ -98,15 +102,17 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         if q in q_data:
             q_data[q].append(p)
 
-    lines.append('| Negyedév | Posztok | Cégek | Események |')
-    lines.append('|----------|---------|-------|-----------|')
+    lines.append('| Negyedév | Posztok | Score | Komment | Cégek | Események |')
+    lines.append('|----------|---------|-------|---------|-------|-----------|')
 
     for q in quarters:
         qposts = q_data[q]
         if not qposts:
-            lines.append(f'| {q} | 0 | — | Nincs adat |')
+            lines.append(f'| {q} | 0 | — | — | — | Nincs adat |')
             continue
 
+        q_score = sum(p.get('score', 0) for p in qposts)
+        q_comments = sum(p.get('num_comments', 0) for p in qposts)
         q_companies = set(
             p.get('company') or p.get('llm_company')
             for p in qposts if p.get('company') or p.get('llm_company')
@@ -116,7 +122,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         if len(qposts) > 3:
             events += f'; +{len(qposts) - 3} más'
 
-        lines.append(f'| {q} | {len(qposts)} | {company_str} | {events} |')
+        lines.append(f'| {q} | {len(qposts)} | {q_score} | {q_comments} | {company_str} | {events} |')
 
     lines.append('')
 
@@ -181,6 +187,48 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         for sector, count in sorted(by_sector.items(), key=lambda x: -x[1]):
             lines.append(f'- {sector}: {count} poszt')
         lines.append('')
+
+    # === ENGAGEMENT ===
+    lines.append('## Közösségi Engagement')
+    lines.append('')
+
+    cat_labels_eng = {
+        'layoff': 'Közvetlen leépítés',
+        'freeze': 'Hiring freeze / álláspiac',
+        'anxiety': 'Karrier aggodalom',
+        'other': 'Egyéb',
+    }
+    eng_cats = defaultdict(lambda: {'posts': 0, 'score': 0, 'comments': 0})
+    for p in relevant:
+        cat = p.get('llm_category', p.get('category', 'other'))
+        eng_cats[cat]['posts'] += 1
+        eng_cats[cat]['score'] += p.get('score', 0)
+        eng_cats[cat]['comments'] += p.get('num_comments', 0)
+
+    lines.append('| Kategória | Posztok | Össz score | Össz komment | Átl. score | Átl. komment |')
+    lines.append('|-----------|---------|------------|--------------|------------|--------------|')
+    for cat in ['layoff', 'freeze', 'anxiety']:
+        d = eng_cats[cat]
+        if d['posts'] > 0:
+            label = cat_labels_eng.get(cat, cat)
+            avg_s = d['score'] / d['posts']
+            avg_c = d['comments'] / d['posts']
+            lines.append(f'| {label} | {d["posts"]} | {d["score"]:,} | {d["comments"]:,} | {avg_s:.0f} | {avg_c:.0f} |')
+    lines.append('')
+
+    # Top 5 by score
+    top_score = sorted(relevant, key=lambda x: x.get('score', 0), reverse=True)[:5]
+    lines.append('**Legtöbb reakció (upvote):**')
+    for p in top_score:
+        lines.append(f'- {p["score"]} upvote — [{p["title"][:60]}]({p["url"]})')
+    lines.append('')
+
+    # Top 5 by comments
+    top_comments = sorted(relevant, key=lambda x: x.get('num_comments', 0), reverse=True)[:5]
+    lines.append('**Legtöbb komment:**')
+    for p in top_comments:
+        lines.append(f'- {p["num_comments"]} komment — [{p["title"][:60]}]({p["url"]})')
+    lines.append('')
 
     # === TECHNOLOGIES & ROLES ===
     tech_counts = defaultdict(int)

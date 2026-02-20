@@ -137,6 +137,20 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     ai_count = sum(1 for p in relevant if p.get('ai_attributed'))
     freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
 
+    # Engagement data
+    total_score = sum(p.get('score', 0) for p in relevant)
+    total_comments = sum(p.get('num_comments', 0) for p in relevant)
+
+    eng_cats = defaultdict(lambda: {'posts': 0, 'score': 0, 'comments': 0})
+    for p in relevant:
+        cat = p.get('llm_category', p.get('category', 'other'))
+        eng_cats[cat]['posts'] += 1
+        eng_cats[cat]['score'] += p.get('score', 0)
+        eng_cats[cat]['comments'] += p.get('num_comments', 0)
+
+    top_by_score = sorted(relevant, key=lambda x: x.get('score', 0), reverse=True)[:5]
+    top_by_comments = sorted(relevant, key=lambda x: x.get('num_comments', 0), reverse=True)[:5]
+
     # Source breakdown
     by_source = defaultdict(int)
     for p in relevant:
@@ -298,6 +312,8 @@ details summary:hover {{ color: #fff; }}
   <div class="stat"><div class="num">{len(direct)}</div><div class="label">Közvetlen leépítés</div></div>
   <div class="stat"><div class="num">{len(relevant)}</div><div class="label">Releváns poszt</div></div>
   <div class="stat"><div class="num">{len(companies)}</div><div class="label">Érintett cég</div></div>
+  <div class="stat"><div class="num">{total_score:,}</div><div class="label">Upvote</div></div>
+  <div class="stat"><div class="num">{total_comments:,}</div><div class="label">Komment</div></div>
   <div class="stat"><div class="num">{ai_count}</div><div class="label">AI-t említő poszt</div></div>
   <div class="stat"><div class="num">{freeze_count}</div><div class="label">Hiring freeze jelzés</div></div>
 </div>
@@ -333,6 +349,31 @@ details summary:hover {{ color: #fff; }}
 
 {roles_chart_html}
 
+</div>
+
+<div class="table-section" id="engagement">
+  <h2>Közösségi Engagement <a class="section-anchor" href="#engagement" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#engagement')">&#128279;</a></h2>
+  <table>
+    <tr><th>Kategória</th><th>Posztok</th><th>Össz score</th><th>Össz komment</th><th>Átl. score</th><th>Átl. komment</th></tr>
+    {"".join(f'<tr><td><span class="tag tag-{cat}">{cat}</span></td><td>{eng_cats[cat]["posts"]}</td><td>{eng_cats[cat]["score"]:,}</td><td>{eng_cats[cat]["comments"]:,}</td><td>{eng_cats[cat]["score"]//max(eng_cats[cat]["posts"],1)}</td><td>{eng_cats[cat]["comments"]//max(eng_cats[cat]["posts"],1)}</td></tr>' for cat in ['layoff', 'freeze', 'anxiety'] if eng_cats[cat]['posts'] > 0)}
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px">
+    <div>
+      <h3 style="color:#ccc;font-size:0.95em;margin-bottom:8px">Legtöbb upvote</h3>
+      <table>
+        <tr><th>Score</th><th>Poszt</th></tr>
+        {"".join(f'<tr><td style="color:#e94560;font-weight:700">{p["score"]}</td><td><a href="{p["url"]}" target="_blank">{p["title"][:55].replace("&","&amp;").replace("<","&lt;")}{"..." if len(p["title"])>55 else ""}</a></td></tr>' for p in top_by_score)}
+      </table>
+    </div>
+    <div>
+      <h3 style="color:#ccc;font-size:0.95em;margin-bottom:8px">Legtöbb komment</h3>
+      <table>
+        <tr><th>Komment</th><th>Poszt</th></tr>
+        {"".join(f'<tr><td style="color:#4ecdc4;font-weight:700">{p["num_comments"]}</td><td><a href="{p["url"]}" target="_blank">{p["title"][:55].replace("&","&amp;").replace("<","&lt;")}{"..." if len(p["title"])>55 else ""}</a></td></tr>' for p in top_by_comments)}
+      </table>
+    </div>
+  </div>
 </div>
 
 <div class="table-section" id="top-posts">
