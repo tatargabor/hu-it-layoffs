@@ -58,6 +58,8 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}*')
     lines.append(f'*Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*')
     lines.append('')
+    lines.append('> **Interaktív dashboard:** [tatargabor.github.io/hu-it-layoffs](https://tatargabor.github.io/hu-it-layoffs/report.html)')
+    lines.append('')
 
     # Date range
     if relevant:
@@ -307,6 +309,46 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         )
 
     lines.append('')
+
+    # === METHODOLOGY ===
+    lines.append('## Módszertan')
+    lines.append('')
+    lines.append('### Adatgyűjtés')
+    lines.append('A projekt automatizált scraper-rel gyűjt publikus Reddit posztokat az alábbi subredditekről:')
+    lines.append('- **r/programmingHungary** — magyar fejlesztői közösség')
+    lines.append('- **r/hungary** — általános magyar subreddit')
+    lines.append('- **r/Layoffs** — nemzetközi leépítési hírek')
+    lines.append('- **r/cscareerquestions** — IT karrierkérdések')
+    lines.append('')
+    lines.append('Keresési lekérdezések magyar és angol nyelven: `elbocsátás`, `leépítés`, `layoff`, `hiring freeze`, `álláskereső`, valamint cégspecifikus keresések (Ericsson, Continental, OTP, NNG, Lensa, Microsoft, stb.).')
+    lines.append('')
+    lines.append('### Elemzési pipeline')
+    lines.append('1. **Scraping** — Reddit JSON API-n keresztül, kommentekkel együtt')
+    lines.append('2. **Kulcsszó-alapú elemzés** — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás')
+    lines.append('3. **LLM validáció** — minden relevancia >= 1 posztot LLM értékel (structured JSON output)')
+    lines.append('4. **Report generálás** — Markdown + interaktív HTML dashboard')
+    lines.append('')
+    lines.append('### LLM validáció')
+    lines.append('A relevancia >= 1 posztokat nyelvi modell validálja, amely eldönti:')
+    lines.append('- Ténylegesen IT leépítésről szól-e (is_actual_layoff)')
+    lines.append('- Melyik cég érintett (company)')
+    lines.append('- Confidence score (0.0-1.0)')
+    lines.append('- 1 mondatos magyar összefoglaló')
+    lines.append('- Érintett technológiák és munkakörök')
+    lines.append('')
+    if llm_stats and llm_stats.get('validated', 0) > 0:
+        lines.append(f'Jelen futásban **{llm_stats["validated"]} poszt** validálva **{llm_stats.get("elapsed_seconds", 0):.0f} másodperc** alatt.')
+    lines.append('')
+    lines.append('### Korlátok')
+    lines.append('- Csak publikus Reddit posztok — zárt csoportok, belső kommunikáció nem elérhető')
+    lines.append('- A Reddit keresés nem garantálja a teljességet')
+    lines.append('- LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot')
+    lines.append('- Angol nyelvű posztok Budapest/Hungary említéssel nem feltétlenül magyar IT szektorra vonatkoznak')
+    lines.append('')
+    lines.append('### Forráskód')
+    lines.append('A teljes pipeline nyílt forráskódú: [github.com/tatargabor/hu-it-layoffs](https://github.com/tatargabor/hu-it-layoffs)')
+    lines.append('')
+
     # === TRANSPARENCY STATS ===
     if llm_stats and llm_stats.get('validated', 0) > 0:
         est_input = llm_stats.get('est_input_tokens', 0)

@@ -374,6 +374,43 @@ details summary:hover {{ color: #fff; }}
   </table>
 </details>
 
+<details id="methodology" style="margin-top:8px">
+  <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
+  <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
+    <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
+    <p>Automatizált scraper gyűjt publikus Reddit posztokat az alábbi subredditekről:</p>
+    <ul style="margin:8px 0 16px 20px">
+      <li><strong>r/programmingHungary</strong> — magyar fejlesztői közösség</li>
+      <li><strong>r/hungary</strong> — általános magyar subreddit</li>
+      <li><strong>r/Layoffs</strong> — nemzetközi leépítési hírek</li>
+      <li><strong>r/cscareerquestions</strong> — IT karrierkérdések</li>
+    </ul>
+    <p>Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, NNG, Lensa, Microsoft, stb.).</p>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
+    <ol style="margin:8px 0 16px 20px">
+      <li><strong>Scraping</strong> — Reddit JSON API-n keresztül, kommentekkel együtt</li>
+      <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
+      <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
+      <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>
+    </ol>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">LLM validáció</h3>
+    <p>A relevancia &ge; 1 posztokat nyelvi modell validálja: ténylegesen IT leépítésről szól-e, melyik cég érintett, confidence score (0.0-1.0), magyar összefoglaló, érintett technológiák és munkakörök.</p>
+    {"<p style='margin-top:8px'><strong>" + str(llm_stats['validated']) + " poszt</strong> validálva <strong>" + f"{llm_stats.get('elapsed_seconds', 0):.0f}" + " másodperc</strong> alatt.</p>" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
+
+    <h3 style="color:#e94560;margin:16px 0 8px">Korlátok</h3>
+    <ul style="margin:8px 0 16px 20px">
+      <li>Csak publikus Reddit posztok — zárt csoportok, belső kommunikáció nem elérhető</li>
+      <li>A Reddit keresés nem garantálja a teljességet</li>
+      <li>LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot</li>
+      <li>Angol nyelvű posztok Budapest/Hungary említéssel nem feltétlenül magyar IT szektorra vonatkoznak</li>
+    </ul>
+
+    <p><strong>Forráskód:</strong> <a href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">github.com/tatargabor/hu-it-layoffs</a></p>
+  </div>
+</details>
+
 <div class="footer">
   Források: {", ".join(f"{k} ({v})" for k, v in sorted(by_source.items(), key=lambda x: -x[1]))} | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec &middot; Agentic
   {"<br>" + f"{llm_stats['validated']} poszt LLM-validálva {llm_stats['elapsed_seconds']:.0f}s alatt | ~{llm_stats['est_input_tokens']:,}+{llm_stats['est_output_tokens']:,} token | Költség: $0.00 (GitHub Models) | Kézzel ez ~{llm_stats['est_manual_hours']:.0f} óra lett volna" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}

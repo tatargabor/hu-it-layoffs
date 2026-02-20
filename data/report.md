@@ -1,7 +1,9 @@
 # Magyar IT Szektor Leépítések — Kimutatás
 
-*Generálva: 2026-02-20 10:52*
+*Generálva: 2026-02-20 11:46*
 *Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*
+
+> **Interaktív dashboard:** [tatargabor.github.io/hu-it-layoffs](https://tatargabor.github.io/hu-it-layoffs/report.html)
 
 **Időszak:** 2023-08-14 – 2026-02-18
 **Összes releváns poszt:** 13
@@ -137,6 +139,42 @@ Nem találtunk explicit hiring freeze jelzéseket.
 - [2024-04-22] [Leépítések a Lensa-nál. Mi vezetett idáig?](https://reddit.com/r/programmingHungary/comments/1cakzeo/leépítések_a_lensanál_mi_vezetett_idáig/) (score: 30, 23 komment) ***
 - [2024-04-16] [Red flag, nem red flag?](https://reddit.com/r/programmingHungary/comments/1c5hmb9/red_flag_nem_red_flag/) (score: 39, 47 komment) ***
 - [2023-08-14] [NNG leépítés, megint](https://reddit.com/r/programmingHungary/comments/15qx4r1/nng_leépítés_megint/) (score: 79, 63 komment) ***
+
+## Módszertan
+
+### Adatgyűjtés
+A projekt automatizált scraper-rel gyűjt publikus Reddit posztokat az alábbi subredditekről:
+- **r/programmingHungary** — magyar fejlesztői közösség
+- **r/hungary** — általános magyar subreddit
+- **r/Layoffs** — nemzetközi leépítési hírek
+- **r/cscareerquestions** — IT karrierkérdések
+
+Keresési lekérdezések magyar és angol nyelven: `elbocsátás`, `leépítés`, `layoff`, `hiring freeze`, `álláskereső`, valamint cégspecifikus keresések (Ericsson, Continental, OTP, NNG, Lensa, Microsoft, stb.).
+
+### Elemzési pipeline
+1. **Scraping** — Reddit JSON API-n keresztül, kommentekkel együtt
+2. **Kulcsszó-alapú elemzés** — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás
+3. **LLM validáció** — minden relevancia >= 1 posztot LLM értékel (structured JSON output)
+4. **Report generálás** — Markdown + interaktív HTML dashboard
+
+### LLM validáció
+A relevancia >= 1 posztokat nyelvi modell validálja, amely eldönti:
+- Ténylegesen IT leépítésről szól-e (is_actual_layoff)
+- Melyik cég érintett (company)
+- Confidence score (0.0-1.0)
+- 1 mondatos magyar összefoglaló
+- Érintett technológiák és munkakörök
+
+Jelen futásban **107 poszt** validálva **336 másodperc** alatt.
+
+### Korlátok
+- Csak publikus Reddit posztok — zárt csoportok, belső kommunikáció nem elérhető
+- A Reddit keresés nem garantálja a teljességet
+- LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot
+- Angol nyelvű posztok Budapest/Hungary említéssel nem feltétlenül magyar IT szektorra vonatkoznak
+
+### Forráskód
+A teljes pipeline nyílt forráskódú: [github.com/tatargabor/hu-it-layoffs](https://github.com/tatargabor/hu-it-layoffs)
 
 ---
 
