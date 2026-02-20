@@ -13,29 +13,31 @@ GITHUB_API_URL = 'https://models.inference.ai.azure.com/chat/completions'
 OLLAMA_API_URL = 'http://localhost:11434/v1/chat/completions'
 ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
 
-TRIAGE_SYSTEM_PROMPT = """Te egy magyar IT munkaerőpiaci elemző vagy. A feladatod egy poszt-lista szűrése: jelöld meg melyik posztok RELEVÁNSAK az IT munkaerőpiac szempontjából.
+TRIAGE_SYSTEM_PROMPT = """Te egy magyar IT munkaerőpiaci elemző vagy. A feladatod egy poszt-lista szűrése: jelöld meg melyik posztok RELEVÁNSAK a MAGYAR IT munkaerőpiac szempontjából.
 
-Releváns posztok (BŐVEN szűrj, inkább legyen több mint kevesebb):
-- Leépítés, elbocsátás, létszámcsökkentés az IT/tech szektorban vagy IT pozíciókban
-- Leépítés más szektorban, DE IT/tech pozíciókat érint (pl. bank IT osztály, autógyár fejlesztőközpont)
-- Hiring freeze, felvételi stop, álláspiac-romlás az IT-ben
-- Nehéz elhelyezkedés, álláskeresési nehézségek az IT-ben
-- Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések IT-sektorra vonatkozóan
-- AI/automatizáció hatása az IT munkára, munkahelyek megszűnése
-- IT munkaerőpiaci kérdések (fizetés, piac helyzete, kereslet/kínálat)
-- Tech cégekről szóló hírek amik a munkaerőpiacot érintik
+FONTOS: CSAK magyar vonatkozású ÉS IT/tech szektort érintő posztokat jelölj relevánsnak!
+
+Releváns posztok:
+- Leépítés, elbocsátás, létszámcsökkentés az IT/tech szektorban Magyarországon vagy magyar munkavállalókat érintően
+- Leépítés más szektorban, DE IT/tech pozíciókat érint Magyarországon (pl. bank IT osztály, autógyár fejlesztőközpont)
+- Hiring freeze, felvételi stop, álláspiac-romlás a MAGYAR IT-ben
+- Nehéz elhelyezkedés, álláskeresési nehézségek a MAGYAR IT-ben
+- Karrier-aggodalom, bizonytalanság, pályaváltás kérdések a MAGYAR IT szektorra vonatkozóan
+- AI/automatizáció hatása a MAGYAR IT munkára
+- MAGYAR IT munkaerőpiaci kérdések (fizetés, piac helyzete)
+- Globális tech cég leépítése CSAK AKKOR ha kifejezetten megemlíti a magyar/budapesti hatást
 
 NEM releváns:
-- Nem-IT szektorok leépítései (katonai, oktatási, agrár, gyártási, közlekedési) — KIVÉVE ha kifejezetten IT/tech pozíciókat érintenek
-- Technikai kérdések (milyen monitort vegyek, kód hibakeresés)
-- Tanulási kérdések amik NEM kapcsolódnak a munkaerőpiachoz
-- Általános politika/gazdaság ami NEM érinti közvetlenül az IT munkaerőpiacot
+- Globális tech leépítések magyar vonatkozás nélkül (Amazon USA, Ubisoft Torontó, Google globális, HP, Nestlé) — még ha magyar nyelven is írták!
+- Nem-IT szektorok leépítései (bolti eladó, gyári munkás, textil, élelmiszer, katonai, oktatási, agrár, közlekedési) — KIVÉVE ha kifejezetten IT/tech pozíciókat érintenek
+- Külföldi leépítések magyar vonatkozás nélkül (Dél-Korea, Szlovákia, Románia — kivéve ha magyar hatást említ)
+- Technikai kérdések, tanulási kérdések, általános politika/gazdaság
 - Szórakozás, mém, offtopic
 
 Válaszolj JSON formátumban: {"relevant": [1, 5, 12, ...]}
 Ahol a számok a releváns posztok SORSZÁMAI (1-től kezdve).
 
-FONTOS: Inkább jelölj relevánsnak egy kétes posztot, mint hogy kihagyd! A következő lépésben részletesen is megvizsgáljuk. Csak JSON-t válaszolj!"""
+FONTOS: Ha kétes a magyar vonatkozás, inkább jelöld relevánsnak. De ha egyértelműen külföldi hír magyar nyelven, NE jelöld! Csak JSON-t válaszolj!"""
 
 SYSTEM_PROMPT = """Te egy magyar IT szektorral foglalkozó elemző vagy. A feladatod Reddit posztok kategorizálása az IT munkaerőpiac szempontjából.
 
@@ -51,7 +53,9 @@ Válaszolj JSON formátumban az alábbi sémával:
   "technologies": ["technológia1", "technológia2"],
   "roles": ["munkakör1", "munkakör2"],
   "ai_role": "direct|factor|concern|none",
-  "ai_context": "1 mondatos magyarázat vagy null"
+  "ai_context": "1 mondatos magyarázat vagy null",
+  "hungarian_relevance": "direct|indirect|none",
+  "hungarian_context": "1 mondatos magyarázat vagy null"
 }
 
 Mezők:
@@ -87,38 +91,69 @@ Mezők:
   - "concern": AI-val kapcsolatos szorongás, aggodalom (pl. "megéri tanulni, ha AI elveszi a munkát?", "ChatGPT kiváltja a juniorokat")
   - "none": nincs AI/automatizáció vonatkozás
 - ai_context: ha ai_role nem "none", 1 mondatos magyar magyarázat az AI szerepéről. Ha ai_role "none", legyen null.
+- hungarian_relevance: a poszt magyar vonatkozása:
+  - "direct": Magyarországon történik, magyar céget érint, vagy magyar munkavállalók érintettek (pl. OTP, Ericsson Budapest, Szállás Group, magyar álláspiac)
+  - "indirect": Globális cég leépítése ahol a cégnek ismert magyar jelenléte van, VAGY a cikk/poszt kifejezetten megemlíti a magyar hatást (pl. "Continental globális leépítés, Budapestet is érinti")
+  - "none": Semmi magyar vonatkozás — külföldi cég külföldi leépítése, még ha magyar nyelven is írták (pl. "Amazon 14 ezer embert küld el az USA-ban", "Ubisoft torontói stúdió leépítés", "Dél-Korea AI munkahelyek")
+- hungarian_context: ha hungarian_relevance nem "none", 1 mondatos magyarázat a magyar vonatkozásról. Ha "none", legyen null.
+
+FONTOS A MAGYAR VONATKOZÁSRÓL:
+- Magyar NYELVŰ cikk NEM jelent magyar VONATKOZÁST! A Portfolio.hu, HVG, Index cikkei gyakran globális híreket tárgyalnak magyarul — ezek "none" ha nincs magyar szál.
+- Globális tech cégek (Amazon, Google, Meta, Microsoft, HP, Nestlé) leépítése CSAK akkor "direct" vagy "indirect", ha kifejezetten magyar munkavállalókat vagy budapesti irodát említ.
+- Reddit r/programmingHungary és r/hungary posztjai általában "direct" — a közösség magyar kontextusban beszél.
+
+FONTOS A NEM-IT SZEKTOROKRÓL:
+- Bolti eladó, áruházi dolgozó, gyári munkás, textilipari dolgozó, élelmiszeripari dolgozó leépítése = category: "other", sector: "other" — MÉG HA magyar vonatkozású is!
+- Heineken, Nestlé, Dacia gyári leépítés = category: "other" (hacsak nem IT pozíciókat érint)
+- Barkácsáruház, élelmiszerlánc leépítés = category: "other"
+- CSAK akkor "layoff" ha IT/tech pozíciók érintettek (fejlesztő, informatikus, DevOps, QA, stb.)
 
 Példák:
 
 Poszt: "Ericsson 200 embert bocsát el Budapesten, főleg firmware és embedded fejlesztők érintettek"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Ericsson", "sector": "telecom", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Ericsson", "sector": "telecom", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Az Ericsson budapesti irodájában történő leépítés, magyar munkavállalók érintettek."}
 
 Poszt: "Szállás Group közel 70 fejlesztőt bocsát el, az AI által megoldott fejlesztések az indoklás"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Szállás Group", "sector": "retail tech", "headcount": 70, "summary": "A Szállás Group 70 fejlesztőt bocsát el, AI-val indokolva.", "technologies": ["AI"], "roles": ["fejlesztő"], "ai_role": "factor", "ai_context": "A cég az AI-val kiváltott fejlesztésekkel indokolta a leépítést."}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Szállás Group", "sector": "retail tech", "headcount": 70, "summary": "A Szállás Group 70 fejlesztőt bocsát el, AI-val indokolva.", "technologies": ["AI"], "roles": ["fejlesztő"], "ai_role": "factor", "ai_context": "A cég az AI-val kiváltott fejlesztésekkel indokolta a leépítést.", "hungarian_relevance": "direct", "hungarian_context": "Magyar cég (Szállás Group), magyar fejlesztők érintettek."}
 
 Poszt: "Lassan egy éve nem találok munkát, merre tovább?"
-Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "sector": "general IT", "headcount": null, "summary": "A szerző egy éve nem talál IT munkát, az álláspiac beszűkült.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "sector": "general IT", "headcount": null, "summary": "A szerző egy éve nem talál IT munkát, az álláspiac beszűkült.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar IT álláspiacról szóló poszt."}
 
 Poszt: "Megéri programozónak tanulni 2025-ben? AI elveszi a munkánkat?"
-Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "company": null, "sector": "general IT", "headcount": null, "summary": "Karrier-aggodalom az AI hatásáról az IT szektorra.", "technologies": ["AI"], "roles": ["programozó"], "ai_role": "concern", "ai_context": "A szerző az AI munkaerőpiaci hatása miatt aggódik."}
+Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "company": null, "sector": "general IT", "headcount": null, "summary": "Karrier-aggodalom az AI hatásáról az IT szektorra.", "technologies": ["AI"], "roles": ["programozó"], "ai_role": "concern", "ai_context": "A szerző az AI munkaerőpiaci hatása miatt aggódik.", "hungarian_relevance": "direct", "hungarian_context": "Magyar közösségben feltett kérdés a magyar IT munkaerőpiacról."}
 
 Poszt: "Continental AI Center Budapest leépítés — a divízió áthelyezése az ok"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Continental", "sector": "automotive", "headcount": null, "summary": "A Continental budapesti AI Center-ben leépítés a divízió áthelyezése miatt.", "technologies": ["AI"], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Continental", "sector": "automotive", "headcount": null, "summary": "A Continental budapesti AI Center-ben leépítés a divízió áthelyezése miatt.", "technologies": ["AI"], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "A Continental budapesti AI Center-jében történő leépítés."}
 
 Poszt: "Partizán interjú egy kirúgott katonával — a Magyar Honvédség átszervezése"
-Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Magyar Honvédség", "sector": "other", "headcount": null, "summary": "Katonai átszervezés a Magyar Honvédségnél, nem IT szektor.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Magyar Honvédség", "sector": "other", "headcount": null, "summary": "Katonai átszervezés a Magyar Honvédségnél, nem IT szektor.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar szervezet, de nem IT szektor."}
 
 Poszt: "Költségoptimalizálásra hivatkozva leépítik az idegennyelv-oktatást a Corvinuson"
-Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Corvinus Egyetem", "sector": "other", "headcount": null, "summary": "Nyelvtanárok elbocsátása a Corvinuson, nem IT pozíciók.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Corvinus Egyetem", "sector": "other", "headcount": null, "summary": "Nyelvtanárok elbocsátása a Corvinuson, nem IT pozíciók.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar intézmény, de nem IT pozíciók."}
 
 Poszt: "Banki IT osztályon nagy leépítés, belső fejlesztés megszűnik"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.85, "company": null, "sector": "fintech", "headcount": null, "summary": "Egy bank IT osztályán leépítés, a belső fejlesztés megszűnik.", "technologies": [], "roles": ["fejlesztő"], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.85, "company": null, "sector": "fintech", "headcount": null, "summary": "Egy bank IT osztályán leépítés, a belső fejlesztés megszűnik.", "technologies": [], "roles": ["fejlesztő"], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar banki IT osztályon történő leépítés."}
 
 Poszt: "Junior Frontend fejlesztőnek tanács? 2 év után leépítés volt a cégnél"
-Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "sector": "general IT", "headcount": null, "summary": "A szerző frontend fejlesztőként elvesztette állását leépítés miatt és tanácsot kér.", "technologies": ["frontend"], "roles": ["frontend fejlesztő"], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "sector": "general IT", "headcount": null, "summary": "A szerző frontend fejlesztőként elvesztette állását leépítés miatt és tanácsot kér.", "technologies": ["frontend"], "roles": ["frontend fejlesztő"], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar IT álláskereső a magyar munkaerőpiacon."}
 
 Poszt: "Milyen monitort ajánlotok home office-hoz?"
-Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "sector": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "sector": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": null}
+
+Poszt: "Az Amazon 14 ezer embert küld el, akiket mesterséges intelligenciával fog pótolni"
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Amazon", "sector": "big tech", "headcount": 14000, "summary": "Az Amazon 14 ezer embert bocsát el, AI-val helyettesítve őket.", "technologies": ["AI"], "roles": [], "ai_role": "direct", "ai_context": "Az Amazon AI-val váltja ki az elbocsátott dolgozókat.", "hungarian_relevance": "none", "hungarian_context": null}
+
+Poszt: "Leépítés van a Ubisoft torontói stúdiójában is, de a Splinter Cell remake készül tovább"
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Ubisoft", "sector": "entertainment", "headcount": null, "summary": "Leépítés az Ubisoft torontói stúdiójában.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "none", "hungarian_context": null}
+
+Poszt: "Dr. Kulja András: Ma reggel kirúgták a feleségem édesanyját — eladóként dolgozott egy élelmiszerlánc boltjában"
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "sector": "other", "headcount": null, "summary": "Bolti eladó kirúgása egy élelmiszerlánc boltjából, nem IT pozíció.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyarországi eset, de nem IT pozíció."}
+
+Poszt: "6000 fős leépítés jöhet a Heinekennél"
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Heineken", "sector": "other", "headcount": 6000, "summary": "A Heineken gyári leépítése, nem IT szektor.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "none", "hungarian_context": null}
+
+Poszt: "Magyar Posta elbocsát félszáz informatikust — túl sokat kerestek"
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Magyar Posta", "sector": "government", "headcount": 50, "summary": "A Magyar Posta 50 informatikust bocsát el magas bérköltsége miatt.", "technologies": [], "roles": ["informatikus"], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar állami intézmény IT pozíciókat érintő leépítése."}
 
 FONTOS: Csak JSON-t válaszolj, semmi mást!"""
 
@@ -313,30 +348,44 @@ def _call_llm(backend, system_prompt, prompt, max_retries=5):
 
 
 def _map_relevance(llm_result):
-    """Map LLM result to relevance 0-3 using category if available."""
+    """Map LLM result to relevance 0-3 using category and hungarian_relevance."""
+    hungarian = llm_result.get('hungarian_relevance', 'direct')
+
+    # Non-Hungarian posts get 0 relevance
+    if hungarian == 'none':
+        return 0
+
     category = llm_result.get('category')
     confidence = llm_result.get('confidence', 0.0)
 
     if category:
         if category == 'layoff' and confidence >= 0.7:
-            return 3
-        if category == 'layoff':
-            return 2
-        if category == 'freeze':
-            return 2
-        if category == 'anxiety':
-            return 1
-        return 0
+            base = 3
+        elif category == 'layoff':
+            base = 2
+        elif category == 'freeze':
+            base = 2
+        elif category == 'anxiety':
+            base = 1
+        else:
+            base = 0
+    else:
+        # Fallback for old data without category
+        is_layoff = llm_result.get('is_actual_layoff', False)
+        if is_layoff and confidence >= 0.8:
+            base = 3
+        elif is_layoff and confidence >= 0.5:
+            base = 2
+        elif not is_layoff and confidence < 0.7:
+            base = 1
+        else:
+            base = 0
 
-    # Fallback for old data without category
-    is_layoff = llm_result.get('is_actual_layoff', False)
-    if is_layoff and confidence >= 0.8:
-        return 3
-    if is_layoff and confidence >= 0.5:
-        return 2
-    if not is_layoff and confidence < 0.7:
-        return 1
-    return 0
+    # Indirect Hungarian relevance: cap at 2
+    if hungarian == 'indirect' and base > 2:
+        base = 2
+
+    return base
 
 
 def _build_prompt(post):
@@ -513,7 +562,7 @@ def validate_posts(posts, triage_results=None):
     start_time = time.time()
 
     for i, post in enumerate(to_validate):
-        if post.get('llm_validated') and 'llm_sector' in post:
+        if post.get('llm_validated') and 'llm_sector' in post and 'llm_hungarian_relevance' in post:
             stats['validated'] += 1
             continue
 
@@ -552,6 +601,8 @@ def validate_posts(posts, triage_results=None):
         post['llm_roles'] = result.get('roles', [])
         post['llm_ai_role'] = result.get('ai_role', 'none')
         post['llm_ai_context'] = result.get('ai_context')
+        post['llm_hungarian_relevance'] = result.get('hungarian_relevance', 'direct')
+        post['llm_hungarian_context'] = result.get('hungarian_context')
         stats['validated'] += 1
 
     stats['elapsed_seconds'] = time.time() - start_time

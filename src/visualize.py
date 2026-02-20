@@ -33,6 +33,11 @@ def _eff_relevance(post):
     return post.get('relevance', 0)
 
 
+def _is_hungarian_relevant(post):
+    """Check if post has Hungarian relevance (not 'none'). Posts without the field are assumed relevant."""
+    return post.get('llm_hungarian_relevance', 'direct') != 'none'
+
+
 def _is_ai_attributed(post):
     """Check if post is AI-attributed. Uses LLM ai_role if available, else keyword."""
     if post.get('llm_validated') and 'llm_ai_role' in post:
@@ -59,9 +64,9 @@ def _is_named_company(name):
 
 
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
-    relevant = [p for p in posts if _eff_relevance(p) >= 1]
-    strong = [p for p in posts if _eff_relevance(p) >= 2]
-    direct = [p for p in posts if _eff_relevance(p) >= 3]
+    relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p)]
+    strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p)]
+    direct = [p for p in posts if _eff_relevance(p) >= 3 and _is_hungarian_relevant(p)]
 
     quarters = _all_quarters()
 
