@@ -2,8 +2,8 @@
   "validated": 107,
   "errors": 0,
   "skipped": 259,
-  "est_input_tokens": 131054,
-  "est_output_tokens": 6365,
+  "est_input_tokens": 170078,
+  "est_output_tokens": 7090,
   "est_manual_hours": 44.475,
-  "elapsed_seconds": 336.25710701942444
+  "elapsed_seconds": 254.94118666648865
 }

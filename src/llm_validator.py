@@ -11,11 +11,12 @@ import urllib.error
 GITHUB_API_URL = 'https://models.inference.ai.azure.com/chat/completions'
 OLLAMA_API_URL = 'http://localhost:11434/v1/chat/completions'
 
-SYSTEM_PROMPT = """Te egy magyar IT szektorral foglalkozó elemző vagy. A feladatod Reddit posztok validálása: eldönteni hogy egy poszt ténylegesen IT leépítésről/elbocsátásról szól-e, vagy sem.
+SYSTEM_PROMPT = """Te egy magyar IT szektorral foglalkozó elemző vagy. A feladatod Reddit posztok kategorizálása az IT munkaerőpiac szempontjából.
 
 Válaszolj JSON formátumban az alábbi sémával:
 {
   "is_actual_layoff": true/false,
+  "category": "layoff|freeze|anxiety|other",
   "confidence": 0.0-1.0,
   "company": "cégnév vagy null",
   "headcount": szám vagy null,
@@ -25,8 +26,13 @@ Válaszolj JSON formátumban az alábbi sémával:
 }
 
 Mezők:
-- is_actual_layoff: true ha a poszt konkrét IT leépítésről/elbocsátásról szól (nem csak kérdez róla, nem csak általánosságban beszél)
-- confidence: mennyire vagy biztos (0.0 = teljesen bizonytalan, 1.0 = teljesen biztos)
+- is_actual_layoff: true ha a poszt konkrét IT leépítésről/elbocsátásról szól
+- category: a poszt kategóriája az alábbiak közül:
+  - "layoff": Konkrét elbocsátás, leépítés, létszámcsökkentés (pl. "200 embert kirúgtak")
+  - "freeze": Hiring freeze, álláspiac-romlás, nehéz elhelyezkedés, felvételi stop (pl. "egy éve nem találok munkát", "nem vesznek fel senkit")
+  - "anxiety": Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések az IT szektorra vonatkozóan (pl. "megéri programozónak tanulni?", "AI elveszi a munkánkat?")
+  - "other": Nem kapcsolódik az IT munkaerőpiachoz (általános kérdés, hír, offtopic)
+- confidence: mennyire vagy biztos a category besorolásban (0.0-1.0)
 - company: az érintett cég neve ha azonosítható, egyébként null
 - headcount: becsült érintett létszám ha kiderül a posztból, egyébként null
 - summary: 1 mondatos magyar összefoglaló a poszt lényegéről
@@ -36,10 +42,16 @@ Mezők:
 Példák:
 
 Poszt: "Ericsson 200 embert bocsát el Budapesten, főleg firmware és embedded fejlesztők érintettek"
-Válasz: {"is_actual_layoff": true, "confidence": 0.95, "company": "Ericsson", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"]}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Ericsson", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"]}
 
-Poszt: "Megéri programozónak tanulni 2025-ben? Merre menjek?"
-Válasz: {"is_actual_layoff": false, "confidence": 0.9, "company": null, "headcount": null, "summary": "Karriertanács kérés, nem leépítésről szól.", "technologies": [], "roles": ["programozó"]}
+Poszt: "Lassan egy éve nem találok munkát, merre tovább?"
+Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "headcount": null, "summary": "A szerző egy éve nem talál IT munkát, az álláspiac beszűkült.", "technologies": [], "roles": []}
+
+Poszt: "Megéri programozónak tanulni 2025-ben? AI elveszi a munkánkat?"
+Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "company": null, "headcount": null, "summary": "Karrier-aggodalom az AI hatásáról az IT szektorra.", "technologies": ["AI"], "roles": ["programozó"]}
+
+Poszt: "Milyen mass monitort ajánlotok home office-hoz?"
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": []}
 
 FONTOS: Csak JSON-t válaszolj, semmi mást!"""
 
@@ -151,10 +163,23 @@ def _call_llm(backend, prompt, max_retries=5):
 
 
 def _map_relevance(llm_result):
-    """Map LLM result to relevance 0-3."""
-    is_layoff = llm_result.get('is_actual_layoff', False)
+    """Map LLM result to relevance 0-3 using category if available."""
+    category = llm_result.get('category')
     confidence = llm_result.get('confidence', 0.0)
 
+    if category:
+        if category == 'layoff' and confidence >= 0.7:
+            return 3
+        if category == 'layoff':
+            return 2
+        if category == 'freeze':
+            return 2
+        if category == 'anxiety':
+            return 1
+        return 0
+
+    # Fallback for old data without category
+    is_layoff = llm_result.get('is_actual_layoff', False)
     if is_layoff and confidence >= 0.8:
         return 3
     if is_layoff and confidence >= 0.5:
@@ -284,6 +309,7 @@ def validate_posts(posts):
 
         post['llm_validated'] = True
         post['llm_relevance'] = _map_relevance(result)
+        post['llm_category'] = result.get('category', 'other')
         post['llm_company'] = result.get('company')
         post['llm_headcount'] = result.get('headcount')
         post['llm_confidence'] = result.get('confidence', 0.0)
