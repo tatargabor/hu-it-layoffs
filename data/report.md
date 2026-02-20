@@ -1,6 +1,6 @@
 # Magyar IT Szektor Leépítések — Kimutatás
 
-*Generálva: 2026-02-20 01:29*
+*Generálva: 2026-02-20 01:45*
 *Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*
 
 **Időszak:** 2019-10-09 – 2026-02-19
