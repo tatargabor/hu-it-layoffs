@@ -26,6 +26,14 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Restore frozen posts cache
+        uses: actions/cache@v4
+        with:
+          path: persisted_data/frozen_posts.json
+          key: frozen-posts-${{ github.run_number }}
+          restore-keys: |
+            frozen-posts-
+
       - name: Run pipeline
         env:
           LLM_BACKEND: anthropic

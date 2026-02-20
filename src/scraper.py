@@ -551,19 +551,24 @@ def run_scraper(frozen_ids=None):
     posts_list = sorted(merged.values(), key=lambda x: x.get('created_utc', 0), reverse=True)
 
     skipped_frozen = 0
+    skipped_has_comments = 0
+    fetched = 0
     for i, post in enumerate(posts_list):
         if post.get('source') != 'reddit':
             continue
         if post['id'] in frozen_ids:
             skipped_frozen += 1
             continue
-        # Only fetch details if we don't have comments yet or post is from this scrape
+        # Skip if already have comments from previous run (not a new post)
+        if post.get('top_comments') and post['id'] not in reddit_posts:
+            skipped_has_comments += 1
+            continue
         if post['id'] in reddit_posts:
             print(f'  [{i+1}/{len(posts_list)}] {post["title"][:60]}...')
             fetch_post_details(post)
+            fetched += 1
 
-    if skipped_frozen > 0:
-        print(f'  Skipped {skipped_frozen} frozen posts')
+    print(f'  Fetched details: {fetched}, skipped frozen: {skipped_frozen}, skipped (has comments): {skipped_has_comments}')
 
     return posts_list
 

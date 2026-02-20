@@ -38,6 +38,23 @@ def _is_hungarian_relevant(post):
     return post.get('llm_hungarian_relevance', 'direct') != 'none'
 
 
+_NON_IT_SECTORS = {'automotive', 'other', 'energy', 'retail', 'manufacturing'}
+_IT_ROLE_KEYWORDS = {'fejlesztő', 'programozó', 'informatikus', 'szoftver', 'devops', 'qa',
+                     'developer', 'engineer', 'software', 'IT', 'data', 'backend', 'frontend'}
+
+
+def _is_it_relevant(post):
+    """Filter out non-IT sector layoffs unless IT roles/technologies are mentioned."""
+    sector = _eff_sector(post)
+    if sector not in _NON_IT_SECTORS:
+        return True
+    roles = post.get('llm_roles', [])
+    techs = post.get('llm_technologies', [])
+    summary = post.get('llm_summary', '')
+    text = ' '.join(roles + techs) + ' ' + summary
+    return any(kw in text.lower() for kw in _IT_ROLE_KEYWORDS)
+
+
 def _count_events(posts):
     """Count unique events. Posts with same event_label count as 1."""
     labels = set()
@@ -95,8 +112,8 @@ def _is_named_company(name):
 
 
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
-    relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p)]
-    strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p)]
+    relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
+    strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
     direct = [p for p in posts if _eff_relevance(p) >= 3 and _is_hungarian_relevant(p)]
 
     quarters = _all_quarters()
