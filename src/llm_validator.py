@@ -64,8 +64,8 @@ def _resolve_token():
     return None
 
 
-def _call_llm(token, prompt):
-    """Call GitHub Models API. Returns parsed JSON dict or None on error."""
+def _call_llm(token, prompt, max_retries=5):
+    """Call GitHub Models API with exponential backoff. Returns parsed JSON dict or None."""
     body = json.dumps({
         'model': MODEL,
         'messages': [
@@ -76,26 +76,35 @@ def _call_llm(token, prompt):
         'temperature': 0.1,
     }).encode()
 
-    req = urllib.request.Request(
-        API_URL,
-        data=body,
-        headers={
-            'Authorization': f'Bearer {token}',
-            'Content-Type': 'application/json',
-        },
-    )
+    for attempt in range(max_retries):
+        req = urllib.request.Request(
+            API_URL,
+            data=body,
+            headers={
+                'Authorization': f'Bearer {token}',
+                'Content-Type': 'application/json',
+            },
+        )
 
-    try:
-        resp = urllib.request.urlopen(req, timeout=30)
-        data = json.loads(resp.read())
-        content = data['choices'][0]['message']['content']
-        return json.loads(content)
-    except (urllib.error.HTTPError, urllib.error.URLError) as e:
-        print(f'    API error: {e}')
-        return None
-    except (json.JSONDecodeError, KeyError, IndexError) as e:
-        print(f'    Parse error: {e}')
-        return None
+        try:
+            resp = urllib.request.urlopen(req, timeout=30)
+            data = json.loads(resp.read())
+            content = data['choices'][0]['message']['content']
+            return json.loads(content)
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < max_retries - 1:
+                delay = 10 * (2 ** attempt)  # 10s, 20s, 40s, 80s, 160s
+                print(f'    Rate limited (429), waiting {delay}s (attempt {attempt+1}/{max_retries})...')
+                time.sleep(delay)
+                continue
+            print(f'    API error: {e}')
+            return None
+        except urllib.error.URLError as e:
+            print(f'    API error: {e}')
+            return None
+        except (json.JSONDecodeError, KeyError, IndexError) as e:
+            print(f'    Parse error: {e}')
+            return None
 
 
 def _map_relevance(llm_result):
@@ -191,6 +200,10 @@ def validate_posts(posts):
     start_time = time.time()
 
     for i, post in enumerate(to_validate):
+        if post.get('llm_validated'):
+            stats['validated'] += 1
+            continue
+
         print(f'  [{i+1}/{len(to_validate)}] {post["title"][:50]}...')
 
         prompt = _build_prompt(post)

@@ -60,9 +60,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A posztoló leépítés áldozata lett, és IT support területen szeretne elhelyezkedni.",
     "llm_technologies": [],
     "llm_roles": [
@@ -227,9 +227,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.85,
     "llm_company": "szállás.hu",
     "llm_headcount": 70,
-    "llm_confidence": 0.85,
     "llm_summary": "A szállás.hu közel 70 embert bocsát el, mivel az AI codinggal kívánják megoldani a fejlesztések nagy részét.",
     "llm_technologies": [
       "AI",
@@ -598,10 +598,10 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.95,
     "llm_company": "OTP Bank",
     "llm_headcount": 200,
-    "llm_confidence": 0.95,
-    "llm_summary": "Az OTP Bank közel 200 főt bocsát el digitális divíziójából.",
+    "llm_summary": "Az OTP Bank közel 200 főt bocsát el digitális divíziójából a működés hatékonyságának növelése érdekében.",
     "llm_technologies": [],
     "llm_roles": []
   },
@@ -747,9 +747,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.85,
     "llm_company": "Unisys",
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "Az Unisys-nél várható egy masszív leépítés, mivel elvesztettek egy nagy ügyfelet.",
     "llm_technologies": [],
     "llm_roles": []
@@ -951,12 +951,13 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "A poszt az álláskeresés nehézségeiről és a cégek elvárásairól szól, nem leépítésről.",
     "llm_technologies": [
       "Angular JS",
+      "Angular",
       "Azure",
       "Win forms"
     ],
@@ -1204,11 +1205,11 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
-    "llm_relevance": 3,
-    "llm_company": "Tungsram Operations Kft.",
+    "llm_relevance": 0,
+    "llm_confidence": 0.85,
+    "llm_company": "Tungsram",
     "llm_headcount": 1600,
-    "llm_confidence": 0.9,
-    "llm_summary": "A Tungsram Operations Kft. 2022-ben 1600 embert bocsátott el Nagykanizsán, ami jelentős hatással volt a helyi munkaerőpiacra.",
+    "llm_summary": "A poszt a Tungsram 2022-es tömeges leépítéséről szól, nem aktuális elbocsátásokról.",
     "llm_technologies": [],
     "llm_roles": []
   },
@@ -1531,10 +1532,10 @@
     "category": "anxiety",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A posztoló IT-s karrierváltásról érdeklődik, nem leépítésről.",
+    "llm_summary": "A posztoló IT-s munkáját megunt, és más területek iránt érdeklődik, de nem leépítésről van szó.",
     "llm_technologies": [],
     "llm_roles": [
       "business analyst"
@@ -1631,10 +1632,10 @@
     "category": "anxiety",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
-    "llm_summary": "A posztoló kiégésről és a munkahelyi stresszről beszél, nem konkrét leépítésről.",
+    "llm_summary": "A posztoló kiégésről és karrierlehetőségekről beszél, nem konkrét leépítésről.",
     "llm_technologies": [],
     "llm_roles": [
       "technikai lead",
@@ -2166,9 +2167,9 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt a programozásra való átképzésről és az egyetemre való beiratkozásról szól, nem leépítésről.",
     "llm_technologies": [],
     "llm_roles": [
@@ -2251,9 +2252,9 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt egy kezdő junior programozó tapasztalatait és aggályait osztja meg, nem leépítésről szól.",
     "llm_technologies": [],
     "llm_roles": [
@@ -2341,9 +2342,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.9,
     "llm_company": "Audi",
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "Leépítés várható a győri Audinál, annak ellenére, hogy termelési rekordot várnak.",
     "llm_technologies": [],
     "llm_roles": []
@@ -2424,10 +2425,10 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
-    "llm_summary": "A poszt a Magyar Honvédség átalakításáról és a kirúgásokról szól, de nem IT leépítésről.",
+    "llm_summary": "A poszt a Magyar Honvédség átalakulásáról és a kirúgásokról szól, de nem IT leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
   },
@@ -3228,10 +3229,10 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
-    "llm_summary": "A posztoló csoportos leépítés miatt kezdett interjúzni, ami a startupok és nem startupok közötti különbségekre is rávilágít.",
+    "llm_summary": "A posztoló csoportos leépítés miatt kezdett interjúzni, és megosztja a startupnál szerzett rossz interjúélményét.",
     "llm_technologies": [
       "React"
     ],
@@ -3533,9 +3534,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.85,
     "llm_company": "Rail Cargo Hungary",
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "A Rail Cargo Hungariánál leépítés várható a támogatások megvonása miatt.",
     "llm_technologies": [],
     "llm_roles": []
@@ -3758,9 +3759,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": "Corvinus Egyetem",
     "llm_headcount": null,
-    "llm_confidence": 0.8,
     "llm_summary": "A Corvinus Egyetem költségoptimalizálásra hivatkozva leépíti az idegennyelv-oktatást, de nem IT területen.",
     "llm_technologies": [],
     "llm_roles": [
@@ -7549,7 +7550,14 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 3,
+    "llm_company": "Samsung",
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A Samsung gödi gyárában dolgozói létszámcsökkentés történt a jelentős veszteségek miatt.",
+    "llm_technologies": [],
+    "llm_roles": []
   },
   {
     "id": "1l08jub",
@@ -7605,7 +7613,16 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "anxiety",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A posztoló munkahelyváltáson gondolkodik, de nem említ konkrét leépítést vagy elbocsátást.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "data szakember"
+    ]
   },
   {
     "id": "1kzri5r",
@@ -7734,10 +7751,10 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.9,
     "llm_company": "MNB",
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "Leépítés történt az MNB-nél, ahol a kirúgott dolgozók azonnali hozzáférés-eltávolítást kaptak.",
+    "llm_summary": "Leépítés történt az MNB-nél, ahol a kirúgott dolgozók azonnali hozzáférés-eltávolítást tapasztaltak.",
     "llm_technologies": [],
     "llm_roles": []
   },
@@ -7928,10 +7945,10 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
-    "llm_summary": "A poszt a bújtatott létszámcsökkentésről és a munkakörülmények romlásáról szól, de konkrét elbocsátásokról nem számol be.",
+    "llm_summary": "A poszt a bújtatott létszámcsökkentésről és a munkakörülmények romlásáról szól, nem konkrét leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
   },
@@ -8219,9 +8236,9 @@
     "category": "freeze",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "A poszt a programozói álláspiaci helyzetről és a kereslet-kínálat problémáiról szól, nem leépítésről.",
     "llm_technologies": [
       "javascript",
@@ -8304,14 +8321,13 @@
     "category": "anxiety",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt az IT karrier jövőjéről és alternatív tervekről szól, nem leépítésről.",
     "llm_technologies": [],
     "llm_roles": [
-      "programozó",
-      "senior fejlesztő"
+      "programozó"
     ]
   },
   {
@@ -8640,9 +8656,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.85,
     "llm_company": "Microsoft",
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "A Microsoft ismét leépítéseket tervez, ami aggodalmat kelt a MAUI jövőjével kapcsolatban.",
     "llm_technologies": [
       ".NET",
@@ -9707,9 +9723,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A posztoló leépítés miatt hagyta el az első munkahelyét, és tanácsokat kér a Frontend fejlesztői álláskereséshez.",
     "llm_technologies": [
       "Angular",
@@ -10432,9 +10448,9 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt interjúztatási tippekről szól, nem leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
@@ -10520,9 +10536,9 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A posztoló junior fejlesztői álláskeresési nehézségeiről beszél, nem leépítésről.",
     "llm_technologies": [
       "full-stack"
@@ -11006,9 +11022,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 3,
+    "llm_confidence": 0.95,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
     "llm_summary": "A posztban egy vidéki bolt eladójának elbocsátásáról van szó, aki 40 év munkaviszony után nyugdíjba ment volna.",
     "llm_technologies": [],
     "llm_roles": [
@@ -11314,9 +11330,9 @@
     "category": "anxiety",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.95,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt billentyűzet vásárlásról szól, nem leépítésről.",
     "llm_technologies": [
       "Mac Mini",
@@ -11378,9 +11394,9 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt álláskereső weboldalak API használatáról és web scrapingről szól, nem leépítésről.",
     "llm_technologies": [
       "API",
@@ -12153,9 +12169,9 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.95,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt a hibrid munkalehetőségekről érdeklődik, nem leépítésről szól.",
     "llm_technologies": [
       "SAP",
@@ -12278,11 +12294,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 3,
+    "llm_confidence": 0.95,
     "llm_company": "PlayStation",
     "llm_headcount": null,
-    "llm_confidence": 0.95,
     "llm_summary": "A PlayStation korábbi munkatársa elbocsátásáról számol be, amely februárban történt.",
     "llm_technologies": [
       "hardware"
@@ -12526,11 +12542,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "anxiety",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A posztoló kiégésről és pályaváltásról beszél, nem leépítésről.",
     "llm_technologies": [
       "Linux"
@@ -18626,7 +18642,18 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "freeze",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A posztoló a munkahelyi körülmények és a fizetés miatt fontolgatja a karrierváltást, de nem említ konkrét leépítést.",
+    "llm_technologies": [
+      "iOS"
+    ],
+    "llm_roles": [
+      "iOS fejlesztő"
+    ]
   },
   {
     "id": "15ep4ko",
@@ -18732,7 +18759,14 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "layoff",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A poszt a cégek pénzügyi helyzetéről és megszorításairól kérdez, de konkrét leépítésekről nem számol be.",
+    "llm_technologies": [],
+    "llm_roles": []
   },
   {
     "id": "13pnv2w",
@@ -18905,7 +18939,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.85,
+    "llm_summary": "A posztoló a távmunkás állásával és a bérnövekedés hiányával kapcsolatos aggodalmait osztja meg, nem leépítésről beszél.",
+    "llm_technologies": [
+      "Java"
+    ],
+    "llm_roles": [
+      "full stack fejlesztő"
+    ]
   },
   {
     "id": "137fpyb",
@@ -18961,7 +19006,27 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "freeze",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A poszt a gyakornoki álláskeresésről és a programozói karrier lehetőségeiről szól, nem leépítésről.",
+    "llm_technologies": [
+      "C#",
+      "Python",
+      "Java",
+      "Kotlin",
+      "NodeJS",
+      "Typescript",
+      "React",
+      "NextJS",
+      "Flutter"
+    ],
+    "llm_roles": [
+      "gyakornok",
+      "junior fejlesztő"
+    ]
   },
   {
     "id": "12rrbkp",
@@ -19083,7 +19148,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A poszt az álláskeresésről szól, nem leépítésről.",
+    "llm_technologies": [
+      "Python",
+      ".NET"
+    ],
+    "llm_roles": [
+      "Python developer",
+      "Business Analyst"
+    ]
   },
   {
     "id": "11hz162",
@@ -19129,7 +19207,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 3,
+    "llm_company": null,
+    "llm_headcount": 1000,
+    "llm_confidence": 0.85,
+    "llm_summary": "A posztoló egy új munkahelyén értesült egy 1000 fős leépítésről, ahol a korábbi munkatársakat kirúgták.",
+    "llm_technologies": [
+      ".net"
+    ],
+    "llm_roles": [
+      "system analyst",
+      "support",
+      "tesztelő"
+    ]
   },
   {
     "id": "1116172",
@@ -19195,7 +19286,16 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A poszt a rendőri pályáról és a toborzásról szól, nem IT leépítésről.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "rendőr"
+    ]
   },
   {
     "id": "10semr8",
@@ -19276,7 +19376,29 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "freeze",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.85,
+    "llm_summary": "A posztoló álláskeresési nehézségeiről és a piaci helyzetről beszél, nem konkrét leépítésről.",
+    "llm_technologies": [
+      "Go",
+      "GraphQL",
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Solidity",
+      "PHP",
+      "Laravel",
+      "Symfony",
+      "CodeIgniter",
+      "Yii",
+      "REST APIs"
+    ],
+    "llm_roles": [
+      "fejlesztő"
+    ]
   },
   {
     "id": "10ge18c",
@@ -19605,7 +19727,14 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A poszt a munkaügyi központtal kapcsolatos kérdésekről szól, nem leépítésről.",
+    "llm_technologies": [],
+    "llm_roles": []
   },
   {
     "id": "wffvpg",
@@ -19712,7 +19841,14 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A poszt UX meetupokról és eseményekről szól, nem leépítésről.",
+    "llm_technologies": [],
+    "llm_roles": []
   },
   {
     "id": "vqp1uz",
@@ -19819,7 +19955,14 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "llm_relevance": 0,
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A poszt álláskeresési lehetőségekről és LinkedIn profil készítéséről szól, nem leépítésről.",
+    "llm_technologies": [],
+    "llm_roles": []
   },
   {
     "id": "vpn89r",
@@ -19887,10 +20030,10 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A posztoló álláskeresés közben önképzésről és új készségek elsajátításáról érdeklődik, nem leépítésről.",
+    "llm_summary": "A posztoló álláskeresés közben önképzésről és a szükséges készségek fejlesztéséről érdeklődik.",
     "llm_technologies": [
       "Excel"
     ],
@@ -19945,9 +20088,9 @@
     "category": "other",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt a Codecool bootcamp véleményezéséről szól, nem leépítésről.",
     "llm_technologies": [
       "FullStack"
@@ -20035,10 +20178,10 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
-    "llm_summary": "A posztoló a munkahelyi környezetről és a stresszről panaszkodik, de nem említ konkrét leépítést.",
+    "llm_summary": "A posztoló a munkahelyi környezet toxikus voltáról és a leépítésekről beszél, de nem konkrét elbocsátásokról.",
     "llm_technologies": [],
     "llm_roles": [
       "ügyfélszolgálati munkatárs"
@@ -20181,9 +20324,9 @@
     "category": "layoff",
     "llm_validated": true,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt a szavazatszámlálás tapasztalatairól szól, nem IT leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
@@ -20273,11 +20416,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt a külföldi munkavállalásról és a kiköltözésről szól, nem leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
@@ -20347,11 +20490,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "A posztoló a munkahelyváltásról és a leépítések lehetőségéről osztja meg aggodalmait, de nem konkrét leépítésről beszél.",
     "llm_technologies": [],
     "llm_roles": [
@@ -20457,11 +20600,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A posztoló álláskeresési tippeket kér, nem leépítésről szól.",
     "llm_technologies": [
       "gazdaságinformatika"
@@ -20510,11 +20653,11 @@
     "ai_context": "[comments] ...mélyíthető ebben a vertikumban. cloud (aws, azure, gcp), docker, ci/cd pipeline automatizálás, ansible/chef/puppet/terraform vonalon kezdenék el olvasgatni és j...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "A posztoló álláskeresési tanácsokat kér, nem leépítésről beszél.",
     "llm_technologies": [
       "webhosting"
@@ -20588,11 +20731,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt a munkahelykeresésről és a munkahelyi környezetről szól, nem leépítésről.",
     "llm_technologies": [],
     "llm_roles": [
@@ -20683,11 +20826,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt politikai helyzetről és lehetséges gazdasági következményekről szól, nem IT leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
@@ -20761,11 +20904,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt gazdasági és politikai helyzetről szól, nem IT leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
@@ -20952,11 +21095,11 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt egy pályakezdő álláskereséséről szól, nem IT leépítésről.",
     "llm_technologies": [],
     "llm_roles": [
@@ -21038,11 +21181,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt az álláskeresés nehézségeiről és az interjúztatási folyamatok hosszúságáról szól, nem leépítésről.",
     "llm_technologies": [],
     "llm_roles": [
@@ -21128,11 +21271,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.9,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
     "llm_summary": "A poszt a bérigények és a bértranszparencia hiányáról szól az álláshirdetésekben, nem leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
@@ -21217,11 +21360,11 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": true,
+    "llm_validated": false,
     "llm_relevance": 0,
+    "llm_confidence": 0.85,
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.85,
     "llm_summary": "A poszt a bértámogatás változásairól és a munkahelyteremtő program kritikájáról szól, nem konkrét leépítésről.",
     "llm_technologies": [],
     "llm_roles": []
