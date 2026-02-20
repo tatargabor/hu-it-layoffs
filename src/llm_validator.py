@@ -1,4 +1,4 @@
-"""LLM validator — validates analyzed posts using GitHub Models API (gpt-4o-mini)."""
+"""LLM validator — validates analyzed posts using GitHub Models API or local Ollama."""
 
 import json
 import os
@@ -8,9 +8,8 @@ import urllib.request
 import urllib.error
 
 
-API_URL = 'https://models.inference.ai.azure.com/chat/completions'
-MODEL = 'gpt-4o-mini'
-REQUEST_DELAY = 0.5
+GITHUB_API_URL = 'https://models.inference.ai.azure.com/chat/completions'
+OLLAMA_API_URL = 'http://localhost:11434/v1/chat/completions'
 
 SYSTEM_PROMPT = """Te egy magyar IT szektorral foglalkozó elemző vagy. A feladatod Reddit posztok validálása: eldönteni hogy egy poszt ténylegesen IT leépítésről/elbocsátásról szól-e, vagy sem.
 
@@ -45,6 +44,36 @@ Válasz: {"is_actual_layoff": false, "confidence": 0.9, "company": null, "headco
 FONTOS: Csak JSON-t válaszolj, semmi mást!"""
 
 
+def _resolve_backend():
+    """Resolve LLM backend config from env vars. Returns dict with url, headers, model, delay."""
+    backend = os.environ.get('LLM_BACKEND', 'github').lower()
+
+    if backend == 'ollama':
+        model = os.environ.get('LLM_MODEL', 'llama3.1')
+        return {
+            'name': 'ollama',
+            'url': OLLAMA_API_URL,
+            'headers': {'Content-Type': 'application/json'},
+            'model': model,
+            'delay': 0,
+        }
+
+    # Default: github
+    token = _resolve_token()
+    model = os.environ.get('LLM_MODEL', 'gpt-4o-mini')
+    return {
+        'name': 'github',
+        'url': GITHUB_API_URL,
+        'headers': {
+            'Authorization': f'Bearer {token}' if token else '',
+            'Content-Type': 'application/json',
+        },
+        'model': model,
+        'delay': 0.5,
+        'token': token,
+    }
+
+
 def _resolve_token():
     """Resolve GitHub token: env var → gh CLI → None."""
     token = os.environ.get('GITHUB_TOKEN')
@@ -64,36 +93,50 @@ def _resolve_token():
     return None
 
 
-def _call_llm(token, prompt, max_retries=5):
-    """Call GitHub Models API with exponential backoff. Returns parsed JSON dict or None."""
-    body = json.dumps({
-        'model': MODEL,
+def _check_ollama():
+    """Check if Ollama is reachable. Returns True if available."""
+    try:
+        req = urllib.request.Request('http://localhost:11434/v1/models')
+        urllib.request.urlopen(req, timeout=5)
+        return True
+    except (urllib.error.URLError, urllib.error.HTTPError, OSError):
+        return False
+
+
+def _call_llm(backend, prompt, max_retries=5):
+    """Call LLM API with exponential backoff. Returns parsed JSON dict or None."""
+    body_dict = {
+        'model': backend['model'],
         'messages': [
             {'role': 'system', 'content': SYSTEM_PROMPT},
             {'role': 'user', 'content': prompt},
         ],
-        'response_format': {'type': 'json_object'},
         'temperature': 0.1,
-    }).encode()
+    }
+
+    # JSON mode: different param for Ollama vs OpenAI
+    if backend['name'] == 'ollama':
+        body_dict['format'] = 'json'
+    else:
+        body_dict['response_format'] = {'type': 'json_object'}
+
+    body = json.dumps(body_dict).encode()
 
     for attempt in range(max_retries):
         req = urllib.request.Request(
-            API_URL,
+            backend['url'],
             data=body,
-            headers={
-                'Authorization': f'Bearer {token}',
-                'Content-Type': 'application/json',
-            },
+            headers=backend['headers'],
         )
 
         try:
-            resp = urllib.request.urlopen(req, timeout=30)
+            resp = urllib.request.urlopen(req, timeout=60)
             data = json.loads(resp.read())
             content = data['choices'][0]['message']['content']
             return json.loads(content)
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < max_retries - 1:
-                delay = 10 * (2 ** attempt)  # 10s, 20s, 40s, 80s, 160s
+                delay = 10 * (2 ** attempt)
                 print(f'    Rate limited (429), waiting {delay}s (attempt {attempt+1}/{max_retries})...')
                 time.sleep(delay)
                 continue
@@ -175,17 +218,29 @@ def validate_posts(posts):
         'elapsed_seconds': 0.0,
     }
 
-    token = _resolve_token()
+    backend = _resolve_backend()
 
-    if not token:
-        print('\nLLM validation: SKIPPED (no GitHub token available)')
-        print('  Set GITHUB_TOKEN or install gh CLI for LLM validation')
-        for post in posts:
-            post['llm_validated'] = False
-        stats['skipped'] = len(posts)
-        # Still estimate manual time
-        stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
-        return posts, stats
+    # Check backend availability
+    if backend['name'] == 'ollama':
+        if not _check_ollama():
+            print('\nLLM validation: SKIPPED (Ollama not reachable at localhost:11434)')
+            print('  Start Ollama: ollama serve')
+            for post in posts:
+                post['llm_validated'] = False
+            stats['skipped'] = len(posts)
+            stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
+            return posts, stats
+        print(f'\nUsing Ollama backend (model: {backend["model"]})')
+    else:
+        if not backend.get('token'):
+            print('\nLLM validation: SKIPPED (no GitHub token available)')
+            print('  Set GITHUB_TOKEN or install gh CLI for LLM validation')
+            for post in posts:
+                post['llm_validated'] = False
+            stats['skipped'] = len(posts)
+            stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
+            return posts, stats
+        print(f'\nUsing GitHub Models backend (model: {backend["model"]})')
 
     # Filter to relevant posts only
     to_validate = [p for p in posts if p.get('relevance', 0) >= 1]
@@ -195,7 +250,7 @@ def validate_posts(posts):
         p['llm_validated'] = False
     stats['skipped'] = len(skip)
 
-    print(f'\nLLM validation: {len(to_validate)} posts to validate (skipping {len(skip)} irrelevant)')
+    print(f'LLM validation: {len(to_validate)} posts to validate (skipping {len(skip)} irrelevant)')
 
     start_time = time.time()
 
@@ -212,9 +267,10 @@ def validate_posts(posts):
         est_input = (len(SYSTEM_PROMPT) + len(prompt)) / 3
         stats['est_input_tokens'] += int(est_input)
 
-        time.sleep(REQUEST_DELAY)
+        if backend['delay'] > 0:
+            time.sleep(backend['delay'])
 
-        result = _call_llm(token, prompt)
+        result = _call_llm(backend, prompt)
 
         if result is None:
             print(f'    FAILED — keeping keyword scoring')
@@ -239,19 +295,23 @@ def validate_posts(posts):
     stats['elapsed_seconds'] = time.time() - start_time
     stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
 
-    # Cost estimation (gpt-4o-mini pricing, even though GitHub Models is free)
+    # Cost estimation
     est_input_cost = stats['est_input_tokens'] / 1_000_000 * 0.15
     est_output_cost = stats['est_output_tokens'] / 1_000_000 * 0.60
     est_total_cost = est_input_cost + est_output_cost
 
     print(f'\nLLM validation complete:')
+    print(f'  Backend: {backend["name"]} ({backend["model"]})')
     print(f'  Validated: {stats["validated"]}')
     print(f'  Errors: {stats["errors"]}')
     print(f'  Skipped: {stats["skipped"]}')
     print(f'  Time: {stats["elapsed_seconds"]:.0f}s')
     print(f'  Est. tokens: ~{stats["est_input_tokens"]:,} input + ~{stats["est_output_tokens"]:,} output')
-    print(f'  Est. cost (gpt-4o-mini rates): ${est_total_cost:.3f}')
-    print(f'  Actual cost (GitHub Models): $0.00')
+    if backend['name'] == 'ollama':
+        print(f'  Cost: $0.00 (local)')
+    else:
+        print(f'  Est. cost (gpt-4o-mini rates): ${est_total_cost:.3f}')
+        print(f'  Actual cost (GitHub Models): $0.00')
     print(f'  Manual equivalent: ~{stats["est_manual_hours"]:.0f} hours')
 
     return posts, stats
