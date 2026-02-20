@@ -36,31 +36,12 @@ def _eff_relevance(post):
     return post.get('relevance', 0)
 
 
-def _eff_headcount(post):
-    """Effective headcount: llm_headcount if available, else keyword-based."""
-    if post.get('llm_validated') and post.get('llm_headcount') is not None:
-        hc = post['llm_headcount']
-        return hc, hc, 'llm'
-    return post.get('headcount_min'), post.get('headcount_max'), post.get('headcount_source')
-
-
 def _source_str(post):
     """Format source as display string."""
     source = post.get('source', 'reddit')
     if source == 'reddit':
         return f'r/{post.get("subreddit", "?")}'
     return source
-
-
-def _headcount_str(post):
-    """Format headcount as string."""
-    hmin, hmax, src = _eff_headcount(post)
-    if hmin is None:
-        return '?'
-    prefix = '~' if src == 'estimated' else ''
-    if hmin == hmax:
-        return f'{prefix}{hmin}'
-    return f'{prefix}{hmin}-{hmax}'
 
 
 def generate_report(posts, output_path='data/report.md', llm_stats=None):
@@ -76,13 +57,6 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('')
     lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}*')
     lines.append(f'*Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*')
-    lines.append('')
-
-    # Headcount FIRST
-    total_min = sum((_eff_headcount(p)[0] or 0) for p in strong)
-    total_max = sum((_eff_headcount(p)[1] or 0) for p in strong)
-    if total_min > 0:
-        lines.append(f'**Becsült összes érintett: ~{total_min}–{total_max} fő**')
     lines.append('')
 
     # Date range
@@ -119,36 +93,33 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         if q in q_data:
             q_data[q].append(p)
 
-    lines.append('| Negyedév | Posztok | Cégek | Becsült fők | Események |')
-    lines.append('|----------|---------|-------|-------------|-----------|')
+    lines.append('| Negyedév | Posztok | Cégek | Események |')
+    lines.append('|----------|---------|-------|-----------|')
 
     for q in quarters:
         qposts = q_data[q]
         if not qposts:
-            lines.append(f'| {q} | 0 | — | — | Nincs adat |')
+            lines.append(f'| {q} | 0 | — | Nincs adat |')
             continue
 
         q_companies = set(
             p.get('company') or p.get('llm_company')
             for p in qposts if p.get('company') or p.get('llm_company')
         )
-        q_min = sum((_eff_headcount(p)[0] or 0) for p in qposts)
-        q_max = sum((_eff_headcount(p)[1] or 0) for p in qposts)
-        hc_str = f'~{q_min}–{q_max}' if q_min > 0 else '?'
         company_str = ', '.join(sorted(q_companies)) if q_companies else '?'
         events = '; '.join(p['title'][:40] for p in qposts[:3])
         if len(qposts) > 3:
             events += f'; +{len(qposts) - 3} más'
 
-        lines.append(f'| {q} | {len(qposts)} | {company_str} | {hc_str} | {events} |')
+        lines.append(f'| {q} | {len(qposts)} | {company_str} | {events} |')
 
     lines.append('')
 
     # === COMPANY TABLE ===
     lines.append('## Érintett Cégek')
     lines.append('')
-    lines.append('| Cég | Dátum | Becsült fők | Szektor | AI-faktor | Forrás | Link |')
-    lines.append('|-----|-------|-------------|---------|-----------|--------|------|')
+    lines.append('| Cég | Dátum | Szektor | AI-faktor | Forrás | Link |')
+    lines.append('|-----|-------|---------|-----------|--------|------|')
 
     company_posts = [p for p in strong if p.get('company') or p.get('llm_company')]
     company_posts.sort(key=lambda x: x['date'], reverse=True)
@@ -158,7 +129,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         ai_str = 'igen' if p.get('ai_attributed') else '—'
         link = f'[link]({p["url"]})'
         lines.append(
-            f'| {company} | {p["date"]} | {_headcount_str(p)} | '
+            f'| {company} | {p["date"]} | '
             f'{p.get("company_sector", "?")} | {ai_str} | {_source_str(p)} | {link} |'
         )
 
@@ -298,19 +269,18 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     # === DETAILED TABLE ===
     lines.append('## Részletes Táblázat')
     lines.append('')
-    lines.append('| Dátum | Cím | Cég | Létszám | Kategória | Forrás | Score | Komment | Rel. | LLM Conf. | AI |')
-    lines.append('|-------|-----|-----|---------|-----------|--------|-------|---------|------|-----------|----|')
+    lines.append('| Dátum | Cím | Cég | Kategória | Forrás | Score | Komment | Rel. | LLM Conf. | AI |')
+    lines.append('|-------|-----|-----|-----------|--------|-------|---------|------|-----------|----|')
 
     for p in sorted(relevant, key=lambda x: x['date'], reverse=True):
         company = p.get('company') or p.get('llm_company') or '—'
-        hc = _headcount_str(p)
         cat = p.get('category', 'other')
         rel = _eff_relevance(p)
         conf = f'{p["llm_confidence"]:.0%}' if p.get('llm_validated') else '—'
         ai_str = 'igen' if p.get('ai_attributed') else '—'
         title_short = p['title'][:50] + ('...' if len(p['title']) > 50 else '')
         lines.append(
-            f'| {p["date"]} | [{title_short}]({p["url"]}) | {company} | {hc} | '
+            f'| {p["date"]} | [{title_short}]({p["url"]}) | {company} | '
             f'{cat} | {_source_str(p)} | {p["score"]} | {p["num_comments"]} | {rel} | {conf} | {ai_str} |'
         )
 

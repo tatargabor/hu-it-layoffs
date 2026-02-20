@@ -63,7 +63,7 @@ details summary:hover { color: #fff; }
 <div class="header">
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
-  <div class="sub">Reddit (r/programmingHungary, r/hungary) publikus adatok | Generálva: 2026-02-20 00:25</div>
+  <div class="sub">Reddit (r/programmingHungary, r/hungary) publikus adatok | Generálva: 2026-02-20 01:29</div>
   <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
@@ -86,11 +86,6 @@ details summary:hover { color: #fff; }
 <div class="chart-box full" id="timeline">
   <h2>Negyedéves Timeline — Posztok száma <a class="section-anchor" href="#timeline" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#timeline')">&#128279;</a></h2>
   <canvas id="timelineChart"></canvas>
-</div>
-
-<div class="chart-box full" id="headcount">
-  <h2>Becsült Érintett Létszám Negyedévenként <a class="section-anchor" href="#headcount" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#headcount')">&#128279;</a></h2>
-  <canvas id="headcountChart"></canvas>
 </div>
 
 <div class="chart-box">
@@ -444,7 +439,6 @@ details summary:hover { color: #fff; }
       <th>Dátum</th>
       <th>Cím</th>
       <th>Cég</th>
-      <th>Létszám</th>
       <th>Kategória</th>
       <th>Forrás</th>
       <th>Score</th>
@@ -457,7 +451,6 @@ details summary:hover { color: #fff; }
       <td>2026-02-19</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r94yog/fejlesztőből_it_support/" target="_blank">Fejlesztőből IT support?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>11</td>
@@ -469,7 +462,6 @@ details summary:hover { color: #fff; }
       <td>2026-02-18</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r842vt/szállás_group_leépítésről_van_belsős_infótok/" target="_blank">Szállás Group leépítésről van belsős infótok?</a></td>
       <td>Szállás Group</td>
-      <td><strong>70</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>54</td>
@@ -481,7 +473,6 @@ details summary:hover { color: #fff; }
       <td>2026-02-15</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/" target="_blank">OTP bank - leépítés IT területen</a></td>
       <td>OTP Bank</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>175</td>
@@ -493,7 +484,6 @@ details summary:hover { color: #fff; }
       <td>2026-02-13</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/" target="_blank">Unisys munkahelyről tud valaki valamit?</a></td>
       <td>Unisys</td>
-      <td><span style="color:#888">~20-80</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>3</td>
@@ -505,7 +495,6 @@ details summary:hover { color: #fff; }
       <td>2026-02-12</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r363xx/remekül_lehagonló_manapság_állást_keresni/" target="_blank">Remekül lehagonló manapság állást keresni.</a></td>
       <td>—</td>
-      <td><strong>100</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>311</td>
@@ -517,7 +506,6 @@ details summary:hover { color: #fff; }
       <td>2026-02-11</td>
       <td><a href="https://reddit.com/r/hungary/comments/1r1u7pe/szijjártó_péter_száznegyven_új_munkahelyet_teremt/" target="_blank">Szijjártó Péter: száznegyven új munkahelyet teremt az olasz ...</a></td>
       <td>—</td>
-      <td><strong>3000</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>46</td>
@@ -529,7 +517,6 @@ details summary:hover { color: #fff; }
       <td>2026-01-30</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1qr8jn7/ki_mire_váltana_itról_vagy_nyugisabb_it_részre/" target="_blank">Ki mire váltana IT-ról vagy nyugisabb IT részre?</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>48</td>
@@ -541,7 +528,6 @@ details summary:hover { color: #fff; }
       <td>2026-01-29</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1qq780u/merre_tovább/" target="_blank">Merre tovább?</a></td>
       <td>—</td>
-      <td><strong>120</strong></td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>25</td>
@@ -553,7 +539,6 @@ details summary:hover { color: #fff; }
       <td>2026-01-15</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1qdd16f/tippek_hogy_hogyan_hozzam_ki_a_legtöbbet_az/" target="_blank">Tippek hogy hogyan hozzam ki a legtöbbet az egyetemből ha le...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>14</td>
@@ -565,7 +550,6 @@ details summary:hover { color: #fff; }
       <td>2026-01-14</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1qcqj6m/abszolút_kezdő_juniornak_jó_tanácsok/" target="_blank">Abszolút kezdő juniornak jó tanácsok?</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>37</td>
@@ -577,7 +561,6 @@ details summary:hover { color: #fff; }
       <td>2026-01-14</td>
       <td><a href="https://reddit.com/r/hungary/comments/1qcj91f/leépítés_jön_a_győri_audinál_hiába_a_várható/" target="_blank">Leépítés jön a győri Audinál, hiába a várható termelési reko...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>80</td>
@@ -589,7 +572,6 @@ details summary:hover { color: #fff; }
       <td>2026-01-14</td>
       <td><a href="https://reddit.com/r/hungary/comments/1qcg3r8/partizán_interjú_2023ból_egy_kirúgott_katonával_a/" target="_blank">Partizán interjú 2023-ból egy kirúgott katonával- A Call of ...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>223</td>
@@ -601,7 +583,6 @@ details summary:hover { color: #fff; }
       <td>2025-12-17</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1potvh2/nagyon_rossz_interjú_élmény_startupnál/" target="_blank">Nagyon rossz interjú élmény startupnál</a></td>
       <td>—</td>
-      <td><span style="color:#888">~5-30</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>230</td>
@@ -613,7 +594,6 @@ details summary:hover { color: #fff; }
       <td>2025-12-08</td>
       <td><a href="https://reddit.com/r/hungary/comments/1phglkk/lázárék_megvonták_a_támogatást_egy_osztrák_cégtől/" target="_blank">Lázárék megvonták a támogatást egy osztrák cégtől: leépítés ...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>30</td>
@@ -625,7 +605,6 @@ details summary:hover { color: #fff; }
       <td>2025-12-03</td>
       <td><a href="https://reddit.com/r/hungary/comments/1pd2r7f/költségoptimalizálásra_hivatkozva_leépítik_az/" target="_blank">Költségoptimalizálásra hivatkozva leépítik az idegennyelv-ok...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>55</td>
@@ -637,7 +616,6 @@ details summary:hover { color: #fff; }
       <td>2025-12-03</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1pd25uk/4ig_milyen_manapság/" target="_blank">4iG milyen manapság?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>22</td>
@@ -649,7 +627,6 @@ details summary:hover { color: #fff; }
       <td>2025-11-22</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1p42hrx/pozicionálás_a_piacon_dev_sa_specializált/" target="_blank">Pozicionálás a piacon (dev / sa) - specializált álláspiac</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>5</td>
@@ -661,7 +638,6 @@ details summary:hover { color: #fff; }
       <td>2025-11-18</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1p082dw/lassan_egy_éve_nem_találok_munkát_merre_tovább/" target="_blank">Lassan egy éve nem találok munkát, merre tovább?</a></td>
       <td>—</td>
-      <td><strong>3</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>64</td>
@@ -673,7 +649,6 @@ details summary:hover { color: #fff; }
       <td>2025-11-15</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1oxmnhc/docler_byborg_home_office_eltörlés/" target="_blank">Docler / Byborg home office eltörlés</a></td>
       <td>Docler/Byborg</td>
-      <td><strong>105</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>143</td>
@@ -685,7 +660,6 @@ details summary:hover { color: #fff; }
       <td>2025-11-12</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1ovbmbo/frontend_továbblépés_a_süllyedő_hajóról/" target="_blank">[Frontend] Továbblépés a süllyedő hajóról, ventilláció :D</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>13</td>
@@ -697,7 +671,6 @@ details summary:hover { color: #fff; }
       <td>2025-11-11</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1oulh1c/ilyen_a_munka_egy_outsourcing_cégnél_kiégés/" target="_blank">Ilyen a munka egy outsourcing cégnél? - kiégés</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>46</td>
@@ -709,7 +682,6 @@ details summary:hover { color: #fff; }
       <td>2025-11-10</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1osztuw/kilátástalanság_pályakezdőként/" target="_blank">Kilátástalanság pályakezdőként</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>93</td>
@@ -721,7 +693,6 @@ details summary:hover { color: #fff; }
       <td>2025-11-04</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1oog118/szakirányú_továbbképzésekcertek_mennyit_érnek/" target="_blank">Szakirányú továbbképzések(certek) mennyit érnek álláskeresés...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>9</td>
@@ -733,7 +704,6 @@ details summary:hover { color: #fff; }
       <td>2025-10-30</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1ok1x41/álláspiac_fe_webfejlesztőként/" target="_blank">álláspiac, FE webfejlesztőként</a></td>
       <td>—</td>
-      <td><strong>7</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>78</td>
@@ -745,7 +715,6 @@ details summary:hover { color: #fff; }
       <td>2025-10-20</td>
       <td><a href="https://reddit.com/r/hungary/comments/1obqkal/magyar_közlöny_25_évi_122_szám_20251020_210124/" target="_blank">Magyar Közlöny 25. évi 122. szám | - 2025.10.20 21:01:24</a></td>
       <td>—</td>
-      <td><strong>5</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>14</td>
@@ -757,7 +726,6 @@ details summary:hover { color: #fff; }
       <td>2025-10-15</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1o75171/10_év_kkv_után_multiba_mennék_segítsetek/" target="_blank">10 év KKV után multiba mennék, segítsetek!</a></td>
       <td>—</td>
-      <td><strong>10</strong></td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>22</td>
@@ -769,7 +737,6 @@ details summary:hover { color: #fff; }
       <td>2025-10-13</td>
       <td><a href="https://reddit.com/r/hungary/comments/1o5qy1r/digitális_polgári_körré_alakítottak_egy_sárvári/" target="_blank">Digitális Polgári Körré alakítottak egy sárvári álláskereső ...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>57</td>
@@ -781,7 +748,6 @@ details summary:hover { color: #fff; }
       <td>2025-09-28</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1nspwwb/elbizonytalanodtam_egyetemmel_kapcsolatban/" target="_blank">Elbizonytalanodtam egyetemmel kapcsolatban</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>47</td>
@@ -793,7 +759,6 @@ details summary:hover { color: #fff; }
       <td>2025-09-18</td>
       <td><a href="https://reddit.com/r/Layoffs/comments/1nju0sk/agoda_confirms_layoffs_of_singapore_shanghai_and/" target="_blank">Agoda confirms layoffs of Singapore, Shanghai and Budapest e...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/Layoffs</td>
       <td>34</td>
@@ -805,7 +770,6 @@ details summary:hover { color: #fff; }
       <td>2025-09-14</td>
       <td><a href="https://reddit.com/r/hungary/comments/1ngqpd7/az_idei_év_végére_az_audi_megdönti_győrben_a/" target="_blank">"Az idei év végére az Audi megdönti Győrben a foglalkoztatás...</a></td>
       <td>Audi</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>59</td>
@@ -817,7 +781,6 @@ details summary:hover { color: #fff; }
       <td>2025-09-12</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1nexgv5/ki_mit_gondol_erről_a_jelentkezési_kérdőívről/" target="_blank">Ki mit gondol erről a jelentkezési kérdőívről? Mennyire gyak...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>5</td>
@@ -829,7 +792,6 @@ details summary:hover { color: #fff; }
       <td>2025-08-04</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1mh7haf/melyek_ma_magyarországon_a_legjobban_fizető_cégek/" target="_blank">Melyek ma Magyarországon a legjobban fizető cégek, ahol norm...</a></td>
       <td>Tesco Technology</td>
-      <td><span style="color:#888">~20-80</span></td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>56</td>
@@ -841,7 +803,6 @@ details summary:hover { color: #fff; }
       <td>2025-08-03</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1mge414/új_munkahely_stressz_és_imposztor_szindróma/" target="_blank">Új munkahely - stressz és imposztor szindróma kezelése?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>20</td>
@@ -853,7 +814,6 @@ details summary:hover { color: #fff; }
       <td>2025-07-28</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1mbcpc3/álláskereső_statisztika/" target="_blank">Álláskereső statisztika</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>0</td>
@@ -865,7 +825,6 @@ details summary:hover { color: #fff; }
       <td>2025-07-27</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1mahnua/álláskeresős_dilemma/" target="_blank">Álláskeresős dilemma</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>16</td>
@@ -877,7 +836,6 @@ details summary:hover { color: #fff; }
       <td>2025-07-04</td>
       <td><a href="https://reddit.com/r/hungary/comments/1lrkcwb/nem_elég_hogy_már_teljesen_kirabolták_és/" target="_blank">Nem elég hogy már teljesen kirabolták és ellehetetlenítették...</a></td>
       <td>—</td>
-      <td><strong>100</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>214</td>
@@ -889,7 +847,6 @@ details summary:hover { color: #fff; }
       <td>2025-07-03</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1lqo9u0/ericsson_leépítés/" target="_blank">Ericsson leépítés?</a></td>
       <td>Ericsson</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>59</td>
@@ -901,7 +858,6 @@ details summary:hover { color: #fff; }
       <td>2025-06-16</td>
       <td><a href="https://reddit.com/r/hungary/comments/1lczxch/kezdődik_a_főszezon_a_balatonnál_volt_álláskereső/" target="_blank">Kezdődik a főszezon a Balatonnál, volt álláskereső, aki szó ...</a></td>
       <td>Szállás Group</td>
-      <td><span style="color:#888">~20-80</span></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>502</td>
@@ -913,7 +869,6 @@ details summary:hover { color: #fff; }
       <td>2025-06-09</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1l7g6iu/pet_project_fejlesztési_ötletek_wannabe_juniornak/" target="_blank">Pet project fejlesztési ötletek wannabe juniornak java fejle...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>3</td>
@@ -925,7 +880,6 @@ details summary:hover { color: #fff; }
       <td>2025-06-05</td>
       <td><a href="https://reddit.com/r/hungary/comments/1l3q12s/akkumulátorgyárak_veszteség_és_leépítés_amerre_a/" target="_blank">Akkumulátorgyárak: veszteség és leépítés, amerre a szem ellá...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>58</td>
@@ -937,7 +891,6 @@ details summary:hover { color: #fff; }
       <td>2025-05-31</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1l08jub/ti_váltanátok_a_helyemben/" target="_blank">Ti váltanátok a helyemben ?</a></td>
       <td>—</td>
-      <td><strong>25</strong></td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>1</td>
@@ -949,7 +902,6 @@ details summary:hover { color: #fff; }
       <td>2025-05-30</td>
       <td><a href="https://reddit.com/r/hungary/comments/1kyudvn/leépítés_az_mnbnél_egy_nap_alatt_zavarták_le_az/" target="_blank">Leépítés az MNB-nél: egy nap alatt zavarták le az egészet, f...</a></td>
       <td>MNB</td>
-      <td><span style="color:#888">~20-80</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>23</td>
@@ -961,7 +913,6 @@ details summary:hover { color: #fff; }
       <td>2025-05-29</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1kya76s/bújtatott_leépítés/" target="_blank">Bújtatott leépítés</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>61</td>
@@ -973,7 +924,6 @@ details summary:hover { color: #fff; }
       <td>2025-05-25</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1kv7glj/hol_van_a_rengeteg_álláskereső_aki_nem_talál/" target="_blank">Hol van a rengeteg álláskereső aki nem talál munkát</a></td>
       <td>—</td>
-      <td><strong>70</strong></td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>127</td>
@@ -985,7 +935,6 @@ details summary:hover { color: #fff; }
       <td>2025-05-25</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1kuxyp3/mi_az_exit_terved/" target="_blank">Mi az exit terved?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>57</td>
@@ -997,7 +946,6 @@ details summary:hover { color: #fff; }
       <td>2025-05-18</td>
       <td><a href="https://reddit.com/r/hungary/comments/1kpj4yr/az_orosz_típusú_provokátorok_szerepe_a_magyar/" target="_blank">Az orosz típusú provokátorok szerepe a magyar politikai tér ...</a></td>
       <td>—</td>
-      <td><strong>3</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>390</td>
@@ -1009,7 +957,6 @@ details summary:hover { color: #fff; }
       <td>2025-05-14</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1km1ajc/ismét_leépít_a_microsoft/" target="_blank">Ismét leépít a Microsoft</a></td>
       <td>Microsoft</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>9</td>
@@ -1021,7 +968,6 @@ details summary:hover { color: #fff; }
       <td>2025-03-25</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1jjrety/junior_frontend_fejlesztőnek_tanács/" target="_blank">Junior Frontend fejlesztőnek tanács?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>3</td>
@@ -1033,7 +979,6 @@ details summary:hover { color: #fff; }
       <td>2025-02-19</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1itef4l/interjú_tippek_a_másik_oldalnak/" target="_blank">Interjú tippek a másik oldalnak</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>25</td>
@@ -1045,7 +990,6 @@ details summary:hover { color: #fff; }
       <td>2025-02-18</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1iskkso/hol_vannak_a_junior_állások_amikre_fel_is_vesznek/" target="_blank">Hol vannak a junior állások, amikre fel is vesznek?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>26</td>
@@ -1057,7 +1001,6 @@ details summary:hover { color: #fff; }
       <td>2025-01-29</td>
       <td><a href="https://reddit.com/r/hungary/comments/1id4zk7/dr_kulja_andrás_ma_reggel_kirúgták_a_feleségem/" target="_blank">Dr. Kulja András: Ma reggel kirúgták a feleségem édesanyját</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>2186</td>
@@ -1069,7 +1012,6 @@ details summary:hover { color: #fff; }
       <td>2025-01-19</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1i54rtg/legjobb_mechanikus_billentyűzet_gaminghez_munkához/" target="_blank">Legjobb mechanikus billentyűzet gaminghez + munkához?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>8</td>
@@ -1081,7 +1023,6 @@ details summary:hover { color: #fff; }
       <td>2025-01-16</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1i2wb2o/apik_használata_álláskereső_oldalakról/" target="_blank">API-k használata álláskereső oldalakról.</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>0</td>
@@ -1093,7 +1034,6 @@ details summary:hover { color: #fff; }
       <td>2024-12-07</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1h8qnd7/hibrid_munkahelyek_ahol_lehet_átmenetileg/" target="_blank">Hibrid munkahelyek, ahol lehet átmenetileg külföldről is dol...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>5</td>
@@ -1105,7 +1045,6 @@ details summary:hover { color: #fff; }
       <td>2024-11-30</td>
       <td><a href="https://reddit.com/r/Layoffs/comments/1h2yjk9/i_was_former_playstation_employee_in_tokyo_and/" target="_blank">I was former PlayStation employee in Tokyo and got laid off.</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/Layoffs</td>
       <td>609</td>
@@ -1117,7 +1056,6 @@ details summary:hover { color: #fff; }
       <td>2024-11-27</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1h11u02/kiégés_pályaváltás/" target="_blank">Kiégés, pályaváltás</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>40</td>
@@ -1129,7 +1067,6 @@ details summary:hover { color: #fff; }
       <td>2024-11-04</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1gjfpfw/osztrák_piac_rant/" target="_blank">Osztrák piac rant</a></td>
       <td>—</td>
-      <td><strong>100</strong></td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>252</td>
@@ -1141,7 +1078,6 @@ details summary:hover { color: #fff; }
       <td>2024-10-25</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1gbwlg2/melyek_a_jobb_álláskereső_oldalak/" target="_blank">Melyek a jobb álláskereső oldalak?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>43</td>
@@ -1153,7 +1089,6 @@ details summary:hover { color: #fff; }
       <td>2024-10-20</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1g7sii9/junior_álláskeresés_perspektíva/" target="_blank">Junior álláskeresés perspektíva</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>28</td>
@@ -1165,7 +1100,6 @@ details summary:hover { color: #fff; }
       <td>2024-10-16</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1g4tz4d/jobb_fizetés_vagy_jobb_fejlődési_lehetőség/" target="_blank">Jobb fizetés vagy jobb fejlődési lehetőség?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>13</td>
@@ -1177,7 +1111,6 @@ details summary:hover { color: #fff; }
       <td>2024-10-09</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1fzrfbd/teljes_elkeseredettség/" target="_blank">Teljes elkeseredettség</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>32</td>
@@ -1189,7 +1122,6 @@ details summary:hover { color: #fff; }
       <td>2024-09-19</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1fkf5eu/vezetői_álláspiac_vagy_a_hiánya/" target="_blank">Vezetői álláspiac (vagy a hiánya)</a></td>
       <td>OTP Bank</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>18</td>
@@ -1201,7 +1133,6 @@ details summary:hover { color: #fff; }
       <td>2024-08-19</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1ewcxty/három_a_magyar_igazság/" target="_blank">Három a magyar igazság</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>0</td>
@@ -1213,7 +1144,6 @@ details summary:hover { color: #fff; }
       <td>2024-08-14</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1es90n7/első_éles_munkakeresés_cv_és_tech_stack/" target="_blank">Első éles munkakeresés, CV és tech stack</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>7</td>
@@ -1225,7 +1155,6 @@ details summary:hover { color: #fff; }
       <td>2024-06-28</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1dqrmyt/continental_ai_center_budapest_layoff/" target="_blank">Continental AI Center Budapest - layoff</a></td>
       <td>Continental</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>3</td>
@@ -1237,7 +1166,6 @@ details summary:hover { color: #fff; }
       <td>2024-06-16</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1dh7neb/kiégés/" target="_blank">Kiégés</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>0</td>
@@ -1249,7 +1177,6 @@ details summary:hover { color: #fff; }
       <td>2024-06-12</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1de33nd/tippeket_szeretnék_kérni_hogy_merre_érdemes_menni/" target="_blank">Tippeket szeretnék kérni, hogy merre érdemes menni</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>14</td>
@@ -1261,7 +1188,6 @@ details summary:hover { color: #fff; }
       <td>2024-06-07</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1dak4tn/ericcson_leépítés_közös_megegyezés/" target="_blank">Ericcson leépítés != közös megegyezés?</a></td>
       <td>—</td>
-      <td><strong>30</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>19</td>
@@ -1273,7 +1199,6 @@ details summary:hover { color: #fff; }
       <td>2024-04-22</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1cakzeo/leépítések_a_lensanál_mi_vezetett_idáig/" target="_blank">Leépítések a Lensa-nál. Mi vezetett idáig?</a></td>
       <td>Lensa</td>
-      <td><strong>35</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>29</td>
@@ -1285,7 +1210,6 @@ details summary:hover { color: #fff; }
       <td>2024-04-16</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1c5hmb9/red_flag_nem_red_flag/" target="_blank">Red flag, nem red flag?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>39</td>
@@ -1297,7 +1221,6 @@ details summary:hover { color: #fff; }
       <td>2024-04-14</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1c3olrp/ha_8_év_alatt_3x_rúgtak_ki_instabilabb_szektorból/" target="_blank">Ha 8 év alatt 3x rúgtak ki (instabilabb szektorból), mi lehe...</a></td>
       <td>—</td>
-      <td><strong>100</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>2</td>
@@ -1309,7 +1232,6 @@ details summary:hover { color: #fff; }
       <td>2024-04-12</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1c2dn33/home_office_hátrafelé_sült_el_hogyan_tovább/" target="_blank">Home office hátrafelé sült el: hogyan tovább családdal?</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>157</td>
@@ -1321,7 +1243,6 @@ details summary:hover { color: #fff; }
       <td>2024-02-22</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1ax0ktn/remote_munka_külföldre_mennyire_más/" target="_blank">Remote munka külföldre - mennyire más?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-anxiety">anxiety</span></td>
       <td>r/programmingHungary</td>
       <td>42</td>
@@ -1333,7 +1254,6 @@ details summary:hover { color: #fff; }
       <td>2024-01-25</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/19f6vru/clickbaitelés_az_ai_elveszi_a_munkát_ja_mégse/" target="_blank">Clickbaitelés: az AI elveszi a munkát, ja mégse</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>60</td>
@@ -1345,7 +1265,6 @@ details summary:hover { color: #fff; }
       <td>2024-01-08</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/191m2dp/codecool_munka/" target="_blank">Codecool munka</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>22</td>
@@ -1357,7 +1276,6 @@ details summary:hover { color: #fff; }
       <td>2023-11-07</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/17pvbbu/mennyi_lehet_most_reálisan_a_kezdőfizetése_egy/" target="_blank">Mennyi lehet most reálisan a kezdőfizetése egy Junior Data S...</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>0</td>
@@ -1369,7 +1287,6 @@ details summary:hover { color: #fff; }
       <td>2023-10-06</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/171b23f/megéri_váltani_több_pénzért_több_munkáért_cserébe/" target="_blank">Megéri váltani több pénzért, több munkáért cserébe?</a></td>
       <td>—</td>
-      <td><strong>20</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>3</td>
@@ -1381,7 +1298,6 @@ details summary:hover { color: #fff; }
       <td>2023-08-18</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/15uknkd/keresés_aial_vektoros_adatbázisokban_nagy/" target="_blank">Keresés AI-al vektoros adatbázisokban, nagy mennyiségű adatt...</a></td>
       <td>—</td>
-      <td><strong>60</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>17</td>
@@ -1393,7 +1309,6 @@ details summary:hover { color: #fff; }
       <td>2023-08-14</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/15qx4r1/nng_leépítés_megint/" target="_blank">NNG leépítés, megint</a></td>
       <td>NNG</td>
-      <td><strong>40</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>78</td>
@@ -1405,7 +1320,6 @@ details summary:hover { color: #fff; }
       <td>2023-08-10</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/15nd183/mobilos_karrier_upgrade_de_merre_hogyan/" target="_blank">Mobilos karrier: upgrade, de merre? hogyan?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>2</td>
@@ -1417,7 +1331,6 @@ details summary:hover { color: #fff; }
       <td>2023-07-31</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/15ep4ko/körkép_pénzügyi_hangulat/" target="_blank">Körkép: pénzügyi hangulat</a></td>
       <td>OTP Bank</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>19</td>
@@ -1429,7 +1342,6 @@ details summary:hover { color: #fff; }
       <td>2023-05-12</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/13fqal8/karrier_usa_távmunkát_követően/" target="_blank">Karrier USA távmunkát követően</a></td>
       <td>—</td>
-      <td><strong>50</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>27</td>
@@ -1441,7 +1353,6 @@ details summary:hover { color: #fff; }
       <td>2023-05-04</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/137fpyb/gyakornok_a_gyakorlatban/" target="_blank">Gyakornok a gyakorlatban</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>1</td>
@@ -1453,7 +1364,6 @@ details summary:hover { color: #fff; }
       <td>2023-03-09</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/11n05j4/álláskeresés_linkedinen_vagy_máshol/" target="_blank">Álláskeresés LinkedInen vagy máshol?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>17</td>
@@ -1465,7 +1375,6 @@ details summary:hover { color: #fff; }
       <td>2023-03-04</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/11hz162/tanács_kérése/" target="_blank">tanács kérése</a></td>
       <td>—</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
       <td>9</td>
@@ -1477,7 +1386,6 @@ details summary:hover { color: #fff; }
       <td>2023-02-13</td>
       <td><a href="https://reddit.com/r/hungary/comments/1116172/vannak_rendőri_szolgálattevők_a_subon_mennyire/" target="_blank">Vannak rendőri szolgálattevők a sub-on? Mennyire éri meg ren...</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>31</td>
@@ -1489,7 +1397,6 @@ details summary:hover { color: #fff; }
       <td>2023-02-03</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/10semr8/hiring_freeze/" target="_blank">Hiring freeze ?!</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-freeze">freeze</span></td>
       <td>r/programmingHungary</td>
       <td>47</td>
@@ -1501,7 +1408,6 @@ details summary:hover { color: #fff; }
       <td>2022-08-04</td>
       <td><a href="https://reddit.com/r/hungary/comments/wg3bmx/bejelentés/" target="_blank">Bejelentés</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>0</td>
@@ -1513,7 +1419,6 @@ details summary:hover { color: #fff; }
       <td>2022-07-18</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/w1rqwh/ux_portfólió_elemzés_a_héten_álláskereső_user/" target="_blank">UX portfólió elemzés a héten - álláskereső user experience d...</a></td>
       <td>—</td>
-      <td><strong>8</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>8</td>
@@ -1525,7 +1430,6 @@ details summary:hover { color: #fff; }
       <td>2022-07-03</td>
       <td><a href="https://reddit.com/r/hungary/comments/vq98fp/álláskereső_portálok/" target="_blank">Álláskereső portálok</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>17</td>
@@ -1537,7 +1441,6 @@ details summary:hover { color: #fff; }
       <td>2022-07-02</td>
       <td><a href="https://reddit.com/r/hungary/comments/vpn89r/mit_érdemes_önképzésként_tanulni_álláskeresés/" target="_blank">Mit érdemes önképzésként tanulni álláskeresés során?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>12</td>
@@ -1549,7 +1452,6 @@ details summary:hover { color: #fff; }
       <td>2022-05-27</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/uz5lqz/codecool_vélemények/" target="_blank">Codecool vélemények?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>4</td>
@@ -1561,7 +1463,6 @@ details summary:hover { color: #fff; }
       <td>2022-05-16</td>
       <td><a href="https://reddit.com/r/hungary/comments/ur4nlj/nem_bírom_tovább/" target="_blank">Nem bírom tovább.</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>32</td>
@@ -1573,7 +1474,6 @@ details summary:hover { color: #fff; }
       <td>2022-04-04</td>
       <td><a href="https://reddit.com/r/hungary/comments/tw5h1i/én_is_20ks_szavazatszámláló_voltam/" target="_blank">Én is 20k-s szavazatszámláló voltam</a></td>
       <td>—</td>
-      <td><strong>7000</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>233</td>
@@ -1585,7 +1485,6 @@ details summary:hover { color: #fff; }
       <td>2022-04-03</td>
       <td><a href="https://reddit.com/r/hungary/comments/tvki11/hollandiában_élő_magyarok/" target="_blank">Hollandiában élő magyarok</a></td>
       <td>—</td>
-      <td><strong>600</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>14</td>
@@ -1597,7 +1496,6 @@ details summary:hover { color: #fff; }
       <td>2022-03-05</td>
       <td><a href="https://reddit.com/r/cscareerquestions/comments/t6xd5r/quitting_job_during_times_like_these_in_eastern/" target="_blank">Quitting job during times like these in Eastern Europe?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/cscareerquestions</td>
       <td>1</td>
@@ -1609,7 +1507,6 @@ details summary:hover { color: #fff; }
       <td>2022-01-08</td>
       <td><a href="https://reddit.com/r/hungary/comments/ryymmq/kezdő_álláskereső_vagyok_önéletrajz_tippek/" target="_blank">Kezdő álláskereső vagyok, önéletrajz tippek?</a></td>
       <td>Microsoft</td>
-      <td><span style="color:#888">~50-200</span></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>49</td>
@@ -1621,7 +1518,6 @@ details summary:hover { color: #fff; }
       <td>2021-12-27</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/rplo0c/segítség_kérés_tudásom_beárazásában_és/" target="_blank">Segítség kérés tudásom beárazásában és álláskeresésben, hoss...</a></td>
       <td>—</td>
-      <td><strong>90</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>9</td>
@@ -1633,7 +1529,6 @@ details summary:hover { color: #fff; }
       <td>2021-11-30</td>
       <td><a href="https://reddit.com/r/hungary/comments/r5wkzu/hol_érdemes_melót_keresni/" target="_blank">Hol érdemes melót keresni?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>13</td>
@@ -1645,7 +1540,6 @@ details summary:hover { color: #fff; }
       <td>2021-11-16</td>
       <td><a href="https://reddit.com/r/hungary/comments/qvdwww/orbánnak_el_kéne_engednie_a_2022es_választásokat/" target="_blank">Orbánnak el kéne engednie a 2022-es választásokat?</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>25</td>
@@ -1657,7 +1551,6 @@ details summary:hover { color: #fff; }
       <td>2021-11-15</td>
       <td><a href="https://reddit.com/r/hungary/comments/qu91yx/kemény_kijózanodás_diétás_magyar_múzsa/" target="_blank">Kemény kijózanodás - Diétás Magyar Múzsa</a></td>
       <td>Szállás Group</td>
-      <td><strong>20</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>88</td>
@@ -1669,7 +1562,6 @@ details summary:hover { color: #fff; }
       <td>2021-04-19</td>
       <td><a href="https://reddit.com/r/hungary/comments/mu13lb/álláskeresés_diploma_és_munkatapasztalat_nélkül/" target="_blank">Álláskeresés diploma és munkatapasztalat nélkül.</a></td>
       <td>—</td>
-      <td><strong>80</strong></td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>17</td>
@@ -1681,7 +1573,6 @@ details summary:hover { color: #fff; }
       <td>2021-02-20</td>
       <td><a href="https://reddit.com/r/hungary/comments/lo9jiq/több_körös_állásinterjúk_és_megvárakoztatás/" target="_blank">Több körös állásinterjúk és megvárakoztatás</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>62</td>
@@ -1693,7 +1584,6 @@ details summary:hover { color: #fff; }
       <td>2021-02-09</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/lg2n1g/állások_bérigénye/" target="_blank">Állások bérigénye</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/programmingHungary</td>
       <td>67</td>
@@ -1705,7 +1595,6 @@ details summary:hover { color: #fff; }
       <td>2020-07-16</td>
       <td><a href="https://reddit.com/r/hungary/comments/hsb6dj/bértámogatás_update/" target="_blank">Bértámogatás update</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-other">other</span></td>
       <td>r/hungary</td>
       <td>42</td>
@@ -1717,7 +1606,6 @@ details summary:hover { color: #fff; }
       <td>2020-05-21</td>
       <td><a href="https://reddit.com/r/hungary/comments/gnt2s9/a_magyar_honvédségről/" target="_blank">A Magyar Honvédségről</a></td>
       <td>—</td>
-      <td>?</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
       <td>330</td>
@@ -1729,7 +1617,6 @@ details summary:hover { color: #fff; }
       <td>2019-10-09</td>
       <td><a href="https://reddit.com/r/cscareerquestions/comments/dfgucr/is_this_a_red_flag_or_i_am_just_overreacting/" target="_blank">Is this a red flag, or I am just overreacting?</a></td>
       <td>—</td>
-      <td><strong>70</strong></td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/cscareerquestions</td>
       <td>662</td>
@@ -1752,8 +1639,6 @@ const qDirect = [0, 0, 2, 0, 0, 3, 1, 0, 0, 4, 3, 3, 4];
 const qStrong = [4, 2, 2, 2, 2, 4, 2, 7, 5, 4, 4, 10, 6];
 const qIndirect = [0, 0, 0, 0, 1, 1, 0, 1, 1, 2, 3, 2, 2];
 const qFreeze = [1, 1, 2, 1, 0, 2, 0, 2, 0, 1, 0, 3, 0];
-const qHcMin = [50, 50, 150, 70, 0, 265, 100, 100, 0, 163, 250, 135, 3290];
-const qHcMax = [200, 50, 300, 220, 0, 565, 400, 100, 0, 433, 700, 160, 3650];
 const qLlmValidated = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const qKeywordOnly = [4, 2, 4, 2, 3, 8, 3, 8, 6, 10, 10, 15, 12];
 
@@ -1775,23 +1660,6 @@ new Chart(document.getElementById('timelineChart'), {
   options: {
     responsive: true,
     scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } },
-    plugins: { legend: { position: 'bottom' } }
-  }
-});
-
-// Headcount range chart
-new Chart(document.getElementById('headcountChart'), {
-  type: 'bar',
-  data: {
-    labels: quarters,
-    datasets: [
-      { label: 'Min becslés', data: qHcMin, backgroundColor: '#e9456088' },
-      { label: 'Max becslés', data: qHcMax, backgroundColor: '#e9456033' }
-    ]
-  },
-  options: {
-    responsive: true,
-    scales: { y: { beginAtZero: true } },
     plugins: { legend: { position: 'bottom' } }
   }
 });

@@ -33,12 +33,6 @@ def _eff_relevance(post):
     return post.get('relevance', 0)
 
 
-def _eff_headcount(post):
-    if post.get('llm_validated') and post.get('llm_headcount') is not None:
-        hc = post['llm_headcount']
-        return hc, hc, 'llm'
-    return post.get('headcount_min'), post.get('headcount_max'), post.get('headcount_source')
-
 
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
     relevant = [p for p in posts if _eff_relevance(p) >= 1]
@@ -51,8 +45,6 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     q_direct = defaultdict(int)
     q_strong = defaultdict(int)
     q_indirect = defaultdict(int)
-    q_headcount_min = defaultdict(int)
-    q_headcount_max = defaultdict(int)
     q_llm_validated = defaultdict(int)
     q_keyword_only = defaultdict(int)
 
@@ -67,10 +59,6 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
             q_strong[q] += 1
         elif r == 1:
             q_indirect[q] += 1
-        if r >= 2:
-            hmin, hmax, _ = _eff_headcount(p)
-            q_headcount_min[q] += hmin or 0
-            q_headcount_max[q] += hmax or 0
         if p.get('llm_validated'):
             q_llm_validated[q] += 1
         else:
@@ -161,14 +149,6 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     detailed_rows = ''
     for p in all_relevant:
         company = p.get('company') or p.get('llm_company') or '—'
-        hmin, hmax, hsrc = _eff_headcount(p)
-        if hmin is not None:
-            if hsrc == 'explicit' or hsrc == 'llm':
-                hc_html = f'<strong>{hmin}</strong>' if hmin == hmax else f'<strong>{hmin}-{hmax}</strong>'
-            else:
-                hc_html = f'<span style="color:#888">~{hmin}-{hmax}</span>'
-        else:
-            hc_html = '?'
         cat = p.get('category', 'other')
         rel = _eff_relevance(p)
         conf = f'{p["llm_confidence"]:.0%}' if p.get('llm_validated') else '—'
@@ -185,7 +165,6 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
       <td>{p["date"]}</td>
       <td><a href="{p["url"]}" target="_blank">{title_esc}</a></td>
       <td>{company}</td>
-      <td>{hc_html}</td>
       <td><span class="tag tag-{cat}">{cat}</span></td>
       <td>{src_label}</td>
       <td>{p["score"]}</td>
@@ -322,11 +301,6 @@ details summary:hover {{ color: #fff; }}
   <canvas id="timelineChart"></canvas>
 </div>
 
-<div class="chart-box full" id="headcount">
-  <h2>Becsült Érintett Létszám Negyedévenként <a class="section-anchor" href="#headcount" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#headcount')">&#128279;</a></h2>
-  <canvas id="headcountChart"></canvas>
-</div>
-
 <div class="chart-box">
   <h2>Érintett Cégek</h2>
   <canvas id="companyChart"></canvas>
@@ -388,7 +362,6 @@ details summary:hover {{ color: #fff; }}
       <th>Dátum</th>
       <th>Cím</th>
       <th>Cég</th>
-      <th>Létszám</th>
       <th>Kategória</th>
       <th>Forrás</th>
       <th>Score</th>
@@ -412,8 +385,6 @@ const qDirect = {json.dumps([q_direct.get(q, 0) for q in quarters])};
 const qStrong = {json.dumps([q_strong.get(q, 0) for q in quarters])};
 const qIndirect = {json.dumps([q_indirect.get(q, 0) for q in quarters])};
 const qFreeze = {json.dumps([freeze_by_q.get(q, 0) for q in quarters])};
-const qHcMin = {json.dumps([q_headcount_min.get(q, 0) for q in quarters])};
-const qHcMax = {json.dumps([q_headcount_max.get(q, 0) for q in quarters])};
 const qLlmValidated = {json.dumps([q_llm_validated.get(q, 0) for q in quarters])};
 const qKeywordOnly = {json.dumps([q_keyword_only.get(q, 0) for q in quarters])};
 
@@ -435,23 +406,6 @@ new Chart(document.getElementById('timelineChart'), {{
   options: {{
     responsive: true,
     scales: {{ x: {{ stacked: true }}, y: {{ stacked: true, beginAtZero: true }} }},
-    plugins: {{ legend: {{ position: 'bottom' }} }}
-  }}
-}});
-
-// Headcount range chart
-new Chart(document.getElementById('headcountChart'), {{
-  type: 'bar',
-  data: {{
-    labels: quarters,
-    datasets: [
-      {{ label: 'Min becslés', data: qHcMin, backgroundColor: '#e9456088' }},
-      {{ label: 'Max becslés', data: qHcMax, backgroundColor: '#e9456033' }}
-    ]
-  }},
-  options: {{
-    responsive: true,
-    scales: {{ y: {{ beginAtZero: true }} }},
     plugins: {{ legend: {{ position: 'bottom' }} }}
   }}
 }});
