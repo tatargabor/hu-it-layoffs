@@ -9,7 +9,7 @@ os.chdir(PROJECT_ROOT)
 
 from src.scraper import run_scraper, save_raw_posts
 from src.analyzer import analyze_posts, save_analyzed_posts
-from src.llm_validator import validate_posts, save_validated_posts
+from src.llm_validator import batch_triage, validate_posts, save_validated_posts
 from src.report import generate_report
 from src.visualize import generate_html
 
@@ -42,30 +42,34 @@ def main():
     os.makedirs('data', exist_ok=True)
 
     # Step 1: Scrape
-    print('\n[1/5] Reddit scrape indítása...')
+    print('\n[1/6] Reddit scrape indítása...')
     raw_posts = run_scraper()
     save_raw_posts(raw_posts, 'data/raw_posts.json')
 
     # Step 2: Analyze (keyword-based)
-    print('\n[2/5] Posztok elemzése...')
+    print('\n[2/6] Posztok elemzése...')
     analyzed = analyze_posts(raw_posts)
     save_analyzed_posts(analyzed, 'data/analyzed_posts.json')
 
-    # Step 3: LLM Validation
-    print('\n[3/5] LLM validáció...')
-    validated, llm_stats = validate_posts(analyzed)
+    # Step 3: Batch LLM Triage
+    print('\n[3/6] Batch LLM triage...')
+    triage_results = batch_triage(analyzed)
+
+    # Step 4: LLM Validation
+    print('\n[4/6] LLM validáció...')
+    validated, llm_stats = validate_posts(analyzed, triage_results=triage_results)
     save_validated_posts(validated, 'data/validated_posts.json')
 
     # Save stats alongside
     with open('data/llm_stats.json', 'w') as f:
         json.dump(llm_stats, f, indent=2)
 
-    # Step 4: Markdown Report
-    print('\n[4/5] Markdown riport generálása...')
+    # Step 5: Markdown Report
+    print('\n[5/6] Markdown riport generálása...')
     generate_report(validated, 'data/report.md', llm_stats=llm_stats)
 
-    # Step 5: HTML Dashboard
-    print('\n[5/5] HTML dashboard generálása...')
+    # Step 6: HTML Dashboard
+    print('\n[6/6] HTML dashboard generálása...')
     generate_html(validated, 'data/report.html', llm_stats=llm_stats)
 
     # Generate README.md

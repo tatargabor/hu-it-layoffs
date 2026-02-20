@@ -10,6 +10,29 @@ import urllib.error
 
 GITHUB_API_URL = 'https://models.inference.ai.azure.com/chat/completions'
 OLLAMA_API_URL = 'http://localhost:11434/v1/chat/completions'
+ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
+
+TRIAGE_SYSTEM_PROMPT = """Te egy magyar IT munkaerőpiaci elemző vagy. A feladatod egy poszt-lista szűrése: jelöld meg melyik posztok RELEVÁNSAK az IT munkaerőpiac szempontjából.
+
+Releváns posztok (BŐVEN szűrj, inkább legyen több mint kevesebb):
+- Leépítés, elbocsátás, létszámcsökkentés (bármely szektorban, ha magyarországi)
+- Hiring freeze, felvételi stop, álláspiac-romlás
+- Nehéz elhelyezkedés, álláskeresési nehézségek az IT-ben
+- Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések
+- AI/automatizáció hatása a munkára, munkahelyek megszűnése
+- IT munkaerőpiaci kérdések (fizetés, piac helyzete, kereslet/kínálat)
+- Cégekről szóló hírek amik a munkaerőpiacot érintik
+
+NEM releváns:
+- Technikai kérdések (milyen monitort vegyek, kód hibakeresés)
+- Tanulási kérdések amik NEM kapcsolódnak a munkaerőpiachoz
+- Általános politika/gazdaság ami NEM érinti közvetlenül a munkaerőpiacot
+- Szórakozás, mém, offtopic
+
+Válaszolj JSON formátumban: {"relevant": [1, 5, 12, ...]}
+Ahol a számok a releváns posztok SORSZÁMAI (1-től kezdve).
+
+FONTOS: Inkább jelölj relevánsnak egy kétes posztot, mint hogy kihagyd! A következő lépésben részletesen is megvizsgáljuk. Csak JSON-t válaszolj!"""
 
 SYSTEM_PROMPT = """Te egy magyar IT szektorral foglalkozó elemző vagy. A feladatod Reddit posztok kategorizálása az IT munkaerőpiac szempontjából.
 
@@ -22,7 +45,9 @@ Válaszolj JSON formátumban az alábbi sémával:
   "headcount": szám vagy null,
   "summary": "1 mondatos magyar összefoglaló",
   "technologies": ["technológia1", "technológia2"],
-  "roles": ["munkakör1", "munkakör2"]
+  "roles": ["munkakör1", "munkakör2"],
+  "ai_role": "direct|factor|concern|none",
+  "ai_context": "1 mondatos magyarázat vagy null"
 }
 
 Mezők:
@@ -38,20 +63,32 @@ Mezők:
 - summary: 1 mondatos magyar összefoglaló a poszt lényegéről
 - technologies: programozási nyelvek, keretrendszerek, eszközök amik a posztban szerepelnek (pl. "Java", "React", "SAP", "Kubernetes"). Üres lista ha nincs ilyen.
 - roles: munkakörök, pozíciók amik a posztban szerepelnek (pl. "backend fejlesztő", "DevOps", "QA", "project manager"). Üres lista ha nincs ilyen.
+- ai_role: az AI/automatizáció szerepe a posztban:
+  - "direct": AI/automatizáció közvetlen oka a leépítésnek/változásnak (pl. "AI-val kiváltották a tesztelőket", "robotizáció miatt szűkítettek")
+  - "factor": AI/automatizáció háttér-szerepet játszik (pl. "az AI által megoldott fejlesztések miatt kevesebb ember kell")
+  - "concern": AI-val kapcsolatos szorongás, aggodalom (pl. "megéri tanulni, ha AI elveszi a munkát?", "ChatGPT kiváltja a juniorokat")
+  - "none": nincs AI/automatizáció vonatkozás
+- ai_context: ha ai_role nem "none", 1 mondatos magyar magyarázat az AI szerepéről. Ha ai_role "none", legyen null.
 
 Példák:
 
 Poszt: "Ericsson 200 embert bocsát el Budapesten, főleg firmware és embedded fejlesztők érintettek"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Ericsson", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"]}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Ericsson", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"], "ai_role": "none", "ai_context": null}
+
+Poszt: "Szállás Group közel 70 fejlesztőt bocsát el, az AI által megoldott fejlesztések az indoklás"
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Szállás Group", "headcount": 70, "summary": "A Szállás Group 70 fejlesztőt bocsát el, AI-val indokolva.", "technologies": ["AI"], "roles": ["fejlesztő"], "ai_role": "factor", "ai_context": "A cég az AI-val kiváltott fejlesztésekkel indokolta a leépítést."}
 
 Poszt: "Lassan egy éve nem találok munkát, merre tovább?"
-Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "headcount": null, "summary": "A szerző egy éve nem talál IT munkát, az álláspiac beszűkült.", "technologies": [], "roles": []}
+Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "headcount": null, "summary": "A szerző egy éve nem talál IT munkát, az álláspiac beszűkült.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
 
 Poszt: "Megéri programozónak tanulni 2025-ben? AI elveszi a munkánkat?"
-Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "company": null, "headcount": null, "summary": "Karrier-aggodalom az AI hatásáról az IT szektorra.", "technologies": ["AI"], "roles": ["programozó"]}
+Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "company": null, "headcount": null, "summary": "Karrier-aggodalom az AI hatásáról az IT szektorra.", "technologies": ["AI"], "roles": ["programozó"], "ai_role": "concern", "ai_context": "A szerző az AI munkaerőpiaci hatása miatt aggódik."}
 
-Poszt: "Milyen mass monitort ajánlotok home office-hoz?"
-Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": []}
+Poszt: "Continental AI Center Budapest leépítés — a divízió áthelyezése az ok"
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Continental", "headcount": null, "summary": "A Continental budapesti AI Center-ben leépítés a divízió áthelyezése miatt.", "technologies": ["AI"], "roles": [], "ai_role": "none", "ai_context": null}
+
+Poszt: "Milyen monitort ajánlotok home office-hoz?"
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
 
 FONTOS: Csak JSON-t válaszolj, semmi mást!"""
 
@@ -68,6 +105,22 @@ def _resolve_backend():
             'headers': {'Content-Type': 'application/json'},
             'model': model,
             'delay': 0,
+        }
+
+    if backend == 'anthropic':
+        api_key = os.environ.get('ANTHROPIC_API_KEY', '')
+        model = os.environ.get('LLM_MODEL', 'claude-haiku-4-5-20241022')
+        return {
+            'name': 'anthropic',
+            'url': ANTHROPIC_API_URL,
+            'headers': {
+                'x-api-key': api_key,
+                'anthropic-version': '2023-06-01',
+                'Content-Type': 'application/json',
+            },
+            'model': model,
+            'delay': 0,
+            'api_key': api_key,
         }
 
     # Default: github
@@ -115,22 +168,57 @@ def _check_ollama():
         return False
 
 
-def _call_llm(backend, prompt, max_retries=5):
-    """Call LLM API with exponential backoff. Returns parsed JSON dict or None."""
-    body_dict = {
-        'model': backend['model'],
-        'messages': [
-            {'role': 'system', 'content': SYSTEM_PROMPT},
-            {'role': 'user', 'content': prompt},
-        ],
-        'temperature': 0.1,
-    }
-
-    # JSON mode: different param for Ollama vs OpenAI
+def _check_backend(backend):
+    """Check if the LLM backend is available. Returns True if usable."""
     if backend['name'] == 'ollama':
-        body_dict['format'] = 'json'
+        if not _check_ollama():
+            print('\nLLM: Ollama not reachable at localhost:11434')
+            print('  Start Ollama: ollama serve')
+            return False
+        print(f'\nUsing Ollama backend (model: {backend["model"]})')
+        return True
+    elif backend['name'] == 'anthropic':
+        if not backend.get('api_key'):
+            print('\nLLM: no Anthropic API key available')
+            print('  Set ANTHROPIC_API_KEY environment variable')
+            return False
+        print(f'\nUsing Anthropic backend (model: {backend["model"]})')
+        return True
     else:
-        body_dict['response_format'] = {'type': 'json_object'}
+        if not backend.get('token'):
+            print('\nLLM: no GitHub token available')
+            print('  Set GITHUB_TOKEN or install gh CLI')
+            return False
+        print(f'\nUsing GitHub Models backend (model: {backend["model"]})')
+        return True
+
+
+def _call_llm(backend, system_prompt, prompt, max_retries=5):
+    """Call LLM API with exponential backoff. Returns parsed JSON dict or None."""
+    if backend['name'] == 'anthropic':
+        body_dict = {
+            'model': backend['model'],
+            'max_tokens': 1024,
+            'system': system_prompt,
+            'messages': [
+                {'role': 'user', 'content': prompt},
+            ],
+            'temperature': 0.1,
+        }
+    else:
+        body_dict = {
+            'model': backend['model'],
+            'messages': [
+                {'role': 'system', 'content': system_prompt},
+                {'role': 'user', 'content': prompt},
+            ],
+            'temperature': 0.1,
+        }
+        # JSON mode: different param for Ollama vs OpenAI
+        if backend['name'] == 'ollama':
+            body_dict['format'] = 'json'
+        else:
+            body_dict['response_format'] = {'type': 'json_object'}
 
     body = json.dumps(body_dict).encode()
 
@@ -142,9 +230,13 @@ def _call_llm(backend, prompt, max_retries=5):
         )
 
         try:
-            resp = urllib.request.urlopen(req, timeout=60)
+            resp = urllib.request.urlopen(req, timeout=120)
             data = json.loads(resp.read())
-            content = data['choices'][0]['message']['content']
+            # Anthropic: content[0].text; OpenAI-compatible: choices[0].message.content
+            if backend['name'] == 'anthropic':
+                content = data['content'][0]['text']
+            else:
+                content = data['choices'][0]['message']['content']
             return json.loads(content)
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < max_retries - 1:
@@ -231,12 +323,90 @@ def _estimate_manual_minutes(post):
     return minutes
 
 
-def validate_posts(posts):
-    """Validate analyzed posts with LLM. Returns enriched post list + stats dict."""
+def batch_triage(posts, backend=None, batch_size=50):
+    """Batch triage: LLM calls to filter relevant posts by title.
+
+    Splits posts into batches (default 50) to stay within LLM context limits.
+    Returns dict {post_id: True/False} or None if all LLM calls fail.
+    """
+    if backend is None:
+        backend = _resolve_backend()
+
+    if not _check_backend(backend):
+        print('  Batch triage SKIPPED — no LLM available')
+        return None
+
+    print(f'\nBatch triage: {len(posts)} poszt címének szűrése ({batch_size}-es batch-ekben)...')
+
+    all_relevant_global_indices = set()
+    total_batches = (len(posts) + batch_size - 1) // batch_size
+    errors = 0
+
+    for batch_idx in range(total_batches):
+        start = batch_idx * batch_size
+        end = min(start + batch_size, len(posts))
+        batch = posts[start:end]
+
+        # Build numbered title list (1-based within batch)
+        numbered_titles = []
+        for i, post in enumerate(batch):
+            title = post.get('title', '').strip()
+            subreddit = post.get('subreddit', '')
+            numbered_titles.append(f'{i+1}. [r/{subreddit}] {title}')
+
+        prompt = '\n'.join(numbered_titles)
+        print(f'  Batch {batch_idx+1}/{total_batches} ({len(batch)} poszt)...', end=' ')
+
+        if backend['delay'] > 0:
+            time.sleep(backend['delay'])
+
+        result = _call_llm(backend, TRIAGE_SYSTEM_PROMPT, prompt)
+
+        if result is None:
+            print('FAILED')
+            errors += 1
+            continue
+
+        relevant_indices = result.get('relevant', [])
+
+        # Map batch-local indices back to global indices
+        for idx in relevant_indices:
+            if isinstance(idx, int) and 1 <= idx <= len(batch):
+                all_relevant_global_indices.add(start + idx)  # 1-based to global 1-based
+
+        relevant_in_batch = len([i for i in relevant_indices if isinstance(i, int) and 1 <= i <= len(batch)])
+        print(f'{relevant_in_batch}/{len(batch)} releváns')
+
+    if errors == total_batches:
+        print('  Összes batch FAILED — falling back to keyword filter')
+        return None
+
+    # Build result dict
+    triage_results = {}
+    for i, post in enumerate(posts):
+        post_id = post.get('id', str(i))
+        triage_results[post_id] = (i + 1) in all_relevant_global_indices
+
+    relevant_count = sum(1 for v in triage_results.values() if v)
+    print(f'  Batch triage összesítés: {relevant_count}/{len(posts)} releváns ({relevant_count*100//len(posts)}%)')
+
+    return triage_results
+
+
+def validate_posts(posts, triage_results=None):
+    """Validate analyzed posts with LLM. Returns enriched post list + stats dict.
+
+    Args:
+        posts: List of analyzed post dicts.
+        triage_results: Optional dict {post_id: bool} from batch_triage().
+                       If provided, only posts with True are validated.
+                       If None, falls back to keyword-based relevance >= 1 filter.
+    """
     stats = {
         'validated': 0,
         'errors': 0,
         'skipped': 0,
+        'triage_used': triage_results is not None,
         'est_input_tokens': 0,
         'est_output_tokens': 0,
         'est_manual_hours': 0.0,
@@ -246,36 +416,40 @@ def validate_posts(posts):
     backend = _resolve_backend()
 
     # Check backend availability
-    if backend['name'] == 'ollama':
-        if not _check_ollama():
-            print('\nLLM validation: SKIPPED (Ollama not reachable at localhost:11434)')
-            print('  Start Ollama: ollama serve')
-            for post in posts:
-                post['llm_validated'] = False
-            stats['skipped'] = len(posts)
-            stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
-            return posts, stats
-        print(f'\nUsing Ollama backend (model: {backend["model"]})')
-    else:
-        if not backend.get('token'):
-            print('\nLLM validation: SKIPPED (no GitHub token available)')
-            print('  Set GITHUB_TOKEN or install gh CLI for LLM validation')
-            for post in posts:
-                post['llm_validated'] = False
-            stats['skipped'] = len(posts)
-            stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
-            return posts, stats
-        print(f'\nUsing GitHub Models backend (model: {backend["model"]})')
+    if not _check_backend(backend):
+        print('LLM validation: SKIPPED')
+        for post in posts:
+            post['llm_validated'] = False
+        stats['skipped'] = len(posts)
+        stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
+        return posts, stats
 
-    # Filter to relevant posts only
-    to_validate = [p for p in posts if p.get('relevance', 0) >= 1]
-    skip = [p for p in posts if p.get('relevance', 0) < 1]
+    # Filter posts to validate: union of triage + keyword
+    if triage_results is not None:
+        # Union: relevant if triage says yes OR keyword relevance >= 1
+        def _is_relevant(p):
+            triage_yes = triage_results.get(p.get('id', ''), False)
+            keyword_yes = p.get('relevance', 0) >= 1
+            return triage_yes or keyword_yes
+        to_validate = [p for p in posts if _is_relevant(p)]
+        skip = [p for p in posts if not _is_relevant(p)]
+        filter_label = 'triage + keyword union'
+    else:
+        # Fallback: keyword-based relevance >= 1
+        to_validate = [p for p in posts if p.get('relevance', 0) >= 1]
+        skip = [p for p in posts if p.get('relevance', 0) < 1]
+        filter_label = 'keyword relevance >= 1'
+
+    # Mark triage_relevant on all posts
+    validate_ids = set(p.get('id', '') for p in to_validate)
+    for p in posts:
+        p['triage_relevant'] = p.get('id', '') in validate_ids
 
     for p in skip:
         p['llm_validated'] = False
     stats['skipped'] = len(skip)
 
-    print(f'LLM validation: {len(to_validate)} posts to validate (skipping {len(skip)} irrelevant)')
+    print(f'LLM validation: {len(to_validate)} posts to validate via {filter_label} (skipping {len(skip)})')
 
     start_time = time.time()
 
@@ -295,7 +469,7 @@ def validate_posts(posts):
         if backend['delay'] > 0:
             time.sleep(backend['delay'])
 
-        result = _call_llm(backend, prompt)
+        result = _call_llm(backend, SYSTEM_PROMPT, prompt)
 
         if result is None:
             print(f'    FAILED — keeping keyword scoring')
@@ -316,18 +490,27 @@ def validate_posts(posts):
         post['llm_summary'] = result.get('summary', '')
         post['llm_technologies'] = result.get('technologies', [])
         post['llm_roles'] = result.get('roles', [])
+        post['llm_ai_role'] = result.get('ai_role', 'none')
+        post['llm_ai_context'] = result.get('ai_context')
         stats['validated'] += 1
 
     stats['elapsed_seconds'] = time.time() - start_time
     stats['est_manual_hours'] = sum(_estimate_manual_minutes(p) for p in posts) / 60
 
-    # Cost estimation
-    est_input_cost = stats['est_input_tokens'] / 1_000_000 * 0.15
-    est_output_cost = stats['est_output_tokens'] / 1_000_000 * 0.60
+    # Cost estimation (per-million-token rates)
+    if backend['name'] == 'anthropic':
+        input_rate = 0.80   # Haiku 4.5
+        output_rate = 4.00
+    else:
+        input_rate = 0.15   # gpt-4o-mini
+        output_rate = 0.60
+    est_input_cost = stats['est_input_tokens'] / 1_000_000 * input_rate
+    est_output_cost = stats['est_output_tokens'] / 1_000_000 * output_rate
     est_total_cost = est_input_cost + est_output_cost
 
     print(f'\nLLM validation complete:')
     print(f'  Backend: {backend["name"]} ({backend["model"]})')
+    print(f'  Filter: {filter_label}')
     print(f'  Validated: {stats["validated"]}')
     print(f'  Errors: {stats["errors"]}')
     print(f'  Skipped: {stats["skipped"]}')
@@ -335,6 +518,8 @@ def validate_posts(posts):
     print(f'  Est. tokens: ~{stats["est_input_tokens"]:,} input + ~{stats["est_output_tokens"]:,} output')
     if backend['name'] == 'ollama':
         print(f'  Cost: $0.00 (local)')
+    elif backend['name'] == 'anthropic':
+        print(f'  Est. cost (Haiku rates): ${est_total_cost:.3f}')
     else:
         print(f'  Est. cost (gpt-4o-mini rates): ${est_total_cost:.3f}')
         print(f'  Actual cost (GitHub Models): $0.00')

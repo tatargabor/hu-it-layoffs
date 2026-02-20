@@ -36,6 +36,13 @@ def _eff_relevance(post):
     return post.get('relevance', 0)
 
 
+def _is_ai_attributed(post):
+    """Check if post is AI-attributed. Uses LLM ai_role if available, else keyword."""
+    if post.get('llm_validated') and 'llm_ai_role' in post:
+        return post['llm_ai_role'] in ('direct', 'factor', 'concern')
+    return post.get('ai_attributed', False)
+
+
 def _source_str(post):
     """Format source as display string."""
     source = post.get('source', 'reddit')
@@ -75,7 +82,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     companies = set(p.get('company') or p.get('llm_company') for p in relevant if p.get('company') or p.get('llm_company'))
     lines.append(f'**Érintett cégek száma:** {len(companies)}')
 
-    ai_count = sum(1 for p in relevant if p.get('ai_attributed'))
+    ai_count = sum(1 for p in relevant if _is_ai_attributed(p))
     lines.append(f'**AI-t említő posztok:** {ai_count}')
 
     freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
@@ -137,7 +144,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
 
     for p in company_posts:
         company = p.get('company') or p.get('llm_company')
-        ai_str = 'igen' if p.get('ai_attributed') else '—'
+        ai_str = 'igen' if _is_ai_attributed(p) else '—'
         link = f'[link]({p["url"]})'
         lines.append(
             f'| {company} | {p["date"]} | '
@@ -283,7 +290,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         if year not in ai_posts_by_year:
             ai_posts_by_year[year] = {'total': 0, 'ai': 0}
         ai_posts_by_year[year]['total'] += 1
-        if p.get('ai_attributed'):
+        if _is_ai_attributed(p):
             ai_posts_by_year[year]['ai'] += 1
 
     lines.append('**AI-attribúció évenként:**')
@@ -330,7 +337,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         cat = p.get('category', 'other')
         rel = _eff_relevance(p)
         conf = f'{p["llm_confidence"]:.0%}' if p.get('llm_validated') else '—'
-        ai_str = 'igen' if p.get('ai_attributed') else '—'
+        ai_str = 'igen' if _is_ai_attributed(p) else '—'
         title_short = p['title'][:50] + ('...' if len(p['title']) > 50 else '')
         lines.append(
             f'| {p["date"]} | [{title_short}]({p["url"]}) | {company} | '

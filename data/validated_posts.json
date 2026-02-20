@@ -64,17 +64,19 @@
     "hiring_freeze_signal": true,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Egy korábbi fejlesztő IT support szakmáról kérdez, humán diplomával és elektronikai végzettséggel.",
+    "llm_summary": "A szerző frontend fejlesztőből IT support-ba szeretne átállni, de nincs tapasztalata a területen.",
     "llm_technologies": [],
     "llm_roles": [
-      "IT support",
-      "L1-L2-L3"
-    ]
+      "IT support"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1r84s8m",
@@ -165,7 +167,8 @@
     "ai_context": "[comments] ...a nagy része passziv hallgatás nem elég. ahogy idézted ez el is hangzott.   \na copilot egyébként hasznos, ha már tudod az alapokat, illetve akkor ha iránymutat...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r842vt",
@@ -222,19 +225,22 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
-    "llm_company": "Szállás Group (szállás.hu)",
+    "llm_company": "Szállás Group",
     "llm_headcount": 70,
-    "llm_confidence": 0.8,
-    "llm_summary": "A Szállás Group közel 70 fejlesztőt bocsát el, az indoklás szerint az AI által megoldott fejlesztések miatt.",
+    "llm_confidence": 0.85,
+    "llm_summary": "A Szállás Group közel 70 fejlesztőt bocsát el, az AI által megoldott fejlesztések indoklásával.",
     "llm_technologies": [
       "AI",
       "Go"
     ],
     "llm_roles": [
       "fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "factor",
+    "llm_ai_context": "Az AI-val kiváltott fejlesztésekkel indokolva a leépítést."
   },
   {
     "id": "1r7y2wb",
@@ -345,7 +351,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r7vuah",
@@ -406,7 +413,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r685vt",
@@ -507,7 +515,8 @@
     "ai_context": "[title] ...ai elveszi a munkat problema megoldasa?...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r5hbgh",
@@ -594,6 +603,7 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "OTP Bank",
@@ -601,7 +611,9 @@
     "llm_confidence": 0.95,
     "llm_summary": "Az OTP Bank közel kétszáz főt bocsát el digitális divíziójából.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1r5gdg9",
@@ -687,7 +699,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r3s1dt",
@@ -744,14 +757,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": "Unisys",
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A Unisysnél stagnáló bérek, lehetséges leépítés és változások a cégnél.",
+    "llm_summary": "A szerző kérdez a Unisyssel kapcsolatban, bérek stagnálnak, közösség változó.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1r398yu",
@@ -776,7 +792,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r38kbe",
@@ -867,7 +884,8 @@
     "ai_context": "[comments] ...ebből építenek palotát, csak hogy a hazai it szektor a növekedés helyett inkább automatizált. sok itra szakosodott fejvadasz ceg is rolot huzott am. jelentosen...",
     "hiring_freeze_signal": true,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r363xx",
@@ -949,14 +967,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Az álláskeresési folyamat elterhelő és idegesítő, a cégek abszolút tökéletest keresnek.",
+    "llm_summary": "Az álláskeresési folyamat elterhelő és idegesítő, a cégek túl szigorúak.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1r34hzf",
@@ -1042,7 +1063,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r22vo0",
@@ -1093,7 +1115,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1r1u7pe",
@@ -1200,14 +1223,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A kormány bejelenti, hogy az olasz Meth-csoport új beruházása Nagykanizsán száznegyven új munkahelyet teremt.",
+    "llm_summary": "A kormány száznegyven új munkahelyet teremt az olasz Meth-csoport új beruházása Nagykanizsán.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1qypmjg",
@@ -1248,7 +1274,28 @@
     "ai_context": "[comments] ...lejtetted. pénzt kínálj. ötlet semmit sem ér. van 2 játékom készülőben még több llm-es projectem, amiket el kell kezdenem bruh...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "Indie játékprojekt keres fejlesztőket, Unity, C#, 3D művészek, animátorok, hangdizájnerek és game designerek szükségesek.",
+    "llm_technologies": [
+      "Unity",
+      "C#",
+      "AI"
+    ],
+    "llm_roles": [
+      "programozó",
+      "3D művész",
+      "animátor",
+      "hangdizájner",
+      "game designer"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1qw2c41",
@@ -1334,7 +1381,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qrkmoh",
@@ -1445,7 +1493,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qr8jn7",
@@ -1527,14 +1576,19 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző IT-ből kíván váltani, mert a cég problémás és nem érzi jól magát.",
+    "llm_summary": "A szerző IT-ből kíván váltani, mert a cég problémás és nem szeretne továbbra is ott dolgozni.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "business analyst"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1qq780u",
@@ -1626,17 +1680,21 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző kiégéséről szól, munkahelyi stressz és kaotikus cégműködés miatt.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző kiégési tüneteket tapasztal tanácsadói pozíciójában, és gondolkodik irányváltáson.",
     "llm_technologies": [],
     "llm_roles": [
+      "tanácsadó",
       "senior fejlesztő",
-      "tanácsadó"
-    ]
+      "management"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1qp9bvq",
@@ -1667,7 +1725,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qo8drq",
@@ -1708,7 +1767,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qnuuj6",
@@ -1744,7 +1804,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qjyile",
@@ -1840,7 +1901,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qhdawi",
@@ -1936,7 +1998,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qgyuuq",
@@ -2022,7 +2085,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qg7qas",
@@ -2063,7 +2127,8 @@
     "ai_context": "[selftext] ...ívesen veszem.\n\nköszi előre is minden infót és tapasztalatot!\n\nedit: kivettem a chatgpt generated disclaimert, hogy a topicra kapjak válaszokat, de persze így i...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qememo",
@@ -2104,7 +2169,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1qdd16f",
@@ -2161,14 +2227,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A szerző egyetemi tanulmányokról és a levelező szakos programozásról ír.",
+    "llm_summary": "A szerző egyetemi tanulmányokat tervez a PTI szakra levelezőként, hogy kiegészítse a munkahelyi tapasztalatait.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1qcqj6m",
@@ -2245,16 +2314,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Junior programozó aggályai a munka kezdete előtt, félelem a teljesítmény hiányától.",
+    "llm_summary": "Abszolút kezdő junior aggodalmai a munka elkezdésével kapcsolatban.",
     "llm_technologies": [],
     "llm_roles": [
-      "junior programozó"
-    ]
+      "junior"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1qcj91f",
@@ -2336,6 +2408,7 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "Audi",
@@ -2343,7 +2416,9 @@
     "llm_confidence": 0.8,
     "llm_summary": "Leépítés jön a győri Audinál, hiába a várható termelési rekord.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1qcg3r8",
@@ -2420,14 +2495,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Interjú egy kirúgott honvédségi tiszttel a haderőreformról és a vezetőváltásokról.",
+    "llm_summary": "A Magyar Honvédség átalakulása és tisztogatásai a közbeszéd tárgya.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1q8y6ts",
@@ -2478,7 +2556,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1q8fwo7",
@@ -2519,7 +2598,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1q8bzyy",
@@ -2585,7 +2665,18 @@
     "ai_context": "[comments] ...atva, ot elegge kikesziti sztem mentalisan ez a felelosseg kerdes. tudással. pl automatizált üzemeltetés. \n\nitt van magyarul egy jó példa ami bevezethet:  [http...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "B2B freelancerként a felelősség és a biztosítások fontosak, szerződésekben szerepelhetnek a kártalanítási limit",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1q7icvv",
@@ -2686,7 +2777,8 @@
     "ai_context": "[comments] ...incs, túl hamar elvesztetted az állasod, kérj fejlődési tervet egy llm-től, pl. chatgpttől)\n\n\nlehetőleg legyen mentorod. ha nem jelöltwk ki melléd, akkor kérj a...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1q6e4n8",
@@ -2747,7 +2839,8 @@
     "ai_context": "[comments] ...al “egészségesebb” lett a verseny. junior pozikba a gazdasági bizonytalanság és ai miatt pedig alig akarnak felvenni arcokat.\n\ntapasztalatom szerint ami most ny...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1q5uwdp",
@@ -2803,7 +2896,27 @@
     "ai_context": "[comments] ...h scripting+cron \n- python és php, mint futtatókörnyezet (telepítés, deployment automatizálás)\n- ha és clustering (mint fogalom, elvek, ez szoftveres környezetk...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Egy esti tagozatos hallgató aggódik a munkaerőpiaci lehetőségek miatt, és kérdezgeti hogyan tudna elindulni Cloud Engineer hivatásban.",
+    "llm_technologies": [
+      "AWS",
+      "Python",
+      "Linux",
+      "C#",
+      "SQL"
+    ],
+    "llm_roles": [
+      "Cloud Engineer",
+      "Sysadmin"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1q4gzll",
@@ -2849,7 +2962,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1q2ba0q",
@@ -2890,7 +3004,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik a társadalmi problémák hatásáért az IT munkaerőpiacra.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1pxr7sm",
@@ -2976,7 +3101,8 @@
     "ai_context": "[comments] ...lában a ceok gondolják - most pedig az a mentalistás van, hogy kódot írni tud a chatgpt, majd jól generáltatunk vele egy automata frameworköt első nekifutásra,...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1pqjgbc",
@@ -3042,7 +3168,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1pprlkw",
@@ -3133,7 +3260,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1potvh2",
@@ -3225,18 +3353,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
-    "llm_relevance": 1,
-    "llm_category": "anxiety",
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A szerző rossz interjú élménye a startupnál, nem megfelelő körök és kritikus hozzáállás.",
-    "llm_technologies": [
-      "React"
-    ],
-    "llm_roles": [
-      "Fullstack Staff Engineer"
-    ]
+    "llm_confidence": 0.95,
+    "llm_summary": "A szerző rossz interjú élménye a startupnál, nem kapcsolódik az IT munkaerőpiachoz.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1pnikfa",
@@ -3292,7 +3419,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": "Betson Group",
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A felhasználó érdeklődik a munkaválasztás iránt, kérdezve a frontendes pozíciókat és a cég által nyújtott lehetőségeket.",
+    "llm_technologies": [
+      "StencilJS"
+    ],
+    "llm_roles": [
+      "frontend fejlesztő",
+      "fejlesztési vezető"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1pks2lk",
@@ -3378,7 +3521,8 @@
     "ai_context": "[title] ...chatgpt no code kivitelezés...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1pkp142",
@@ -3464,7 +3608,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1phglkk",
@@ -3531,14 +3676,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A Lázár-féle támogatásvonás hatása a Rail Cargo Hungarián, lehetséges leépítés.",
+    "llm_summary": "A Lázár János által megvont támogatás a Rail Cargo Hungariára hatással lehet, de nem közvetlenül leépítésről szól.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1ph9k2f",
@@ -3624,7 +3772,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1pepzfe",
@@ -3670,7 +3819,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1pd2r7f",
@@ -3757,16 +3907,19 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "Corvinus Egyetem",
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A Corvinus Egyetemen leépítik az idegennyelv-oktatást, 7 nyelvet érint a döntés.",
+    "llm_summary": "A Corvinus Egyetemen leépítik az idegennyelv-oktatást, költségoptimalizálás miatt.",
     "llm_technologies": [],
     "llm_roles": [
       "nyelvtanár"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1pd25uk",
@@ -3833,14 +3986,17 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
-    "llm_relevance": 1,
-    "llm_category": "anxiety",
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
     "llm_company": "4iG",
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző kíváncsi a cég jelenlegi helyzetére és a felvételi lehetőségekre.",
+    "llm_summary": "A szerző kíváncsi a cég jelenlegi állapotára és a munkaválasztás lehetőségeire.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1p4x6to",
@@ -3901,7 +4057,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1p42hrx",
@@ -3953,31 +4110,39 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző generalista IT szakember, de nehézkes a pozicionálása a piacon.",
+    "llm_summary": "A szerző generalista IT szakember, de a munkaerőpiacban nehézkes a helyezkedés.",
     "llm_technologies": [
       "Angular",
       "React",
-      "Redux",
-      "JQuery",
-      "CSS",
-      "SCSS",
       "JavaScript",
-      "Node",
-      "Golang",
+      "PHP",
       "Java",
-      "Postgres"
+      "Go",
+      "Node",
+      "Next.js",
+      "Vanilla JS",
+      "JQuery",
+      "Bootstrap",
+      "Tailwind",
+      "SCSS",
+      "CSS"
     ],
     "llm_roles": [
       "fejlesztő",
-      "konzulens",
-      "adatelemző",
-      "infrátervező"
-    ]
+      "konzultáns",
+      "elemző",
+      "adatgyűjtő",
+      "CI/CD fejlesztő",
+      "infratervező"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1p1n70o",
@@ -4043,7 +4208,21 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "A felhasználó felsorolja a cégeket, amelyeknél logikai teszteket alkalmaznak.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "szoftverfejlesztő",
+      "mérnök"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1p16vsl",
@@ -4084,7 +4263,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1p082dw",
@@ -4161,14 +4341,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 2,
     "llm_category": "freeze",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
+    "llm_confidence": 0.85,
     "llm_summary": "A szerző egy éve nem talál IT munkát Debrecenben, az álláspiac beszűkült.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1oxmnhc",
@@ -4230,14 +4413,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 2,
     "llm_category": "freeze",
     "llm_company": "Docler/Byborg",
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A Docler/Byborg cég megszünteti a home office-t, és újabb leépítési veszély fenyeget.",
+    "llm_summary": "A Docler/Byborg elindítja a home office eltörlését, január 12-től teljesen megszüntetik.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1ovbmbo",
@@ -4304,12 +4490,13 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző karrier-aggodalommal küzd, túlélési tippjeit osztja meg a közösséggel.",
+    "llm_summary": "A szerző aggódik karrierje miatt, túlélési tippjeit osztja meg.",
     "llm_technologies": [
       "React",
       "Angular",
@@ -4320,9 +4507,10 @@
       "Ngrx"
     ],
     "llm_roles": [
-      "frontend fejlesztő",
-      "senior pozi"
-    ]
+      "frontend fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1oullzm",
@@ -4413,7 +4601,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1oulh1c",
@@ -4510,19 +4699,22 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A szerző kiégetve érzi magát egy outsourcing cégnél, ahol nehézkesek a folyamatok és a kódbázis borzalom.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző kiégett egy outsourcing cégnél, ahol rossz kódolási gyakorlatokkal és hiányos dokumentációval kell dolgoznia.",
     "llm_technologies": [
       "Java",
       "Spring"
     ],
     "llm_roles": [
       "fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1osztuw",
@@ -4604,17 +4796,20 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "Pályakezdőknek nehéz elhelyezkedni, a cégek hiring freeze-vel küzdenek, és az olcsó keleti munkaerő bevonása is problémát jelent.",
+    "llm_confidence": 0.9,
+    "llm_summary": "Pályakezdőként nehéz elhelyezkedni, a cégek nem vesznek fel senkit, és az olcsó keleti munkaerő érkezik.",
     "llm_technologies": [],
     "llm_roles": [
       "junior fejlesztő",
       "pályakezdő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1oq5lk9",
@@ -4705,7 +4900,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "PhD képzés tapasztalatok, kilátások a műegyetemen tanuló hallgatótól.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1oog118",
@@ -4782,12 +4988,13 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A szerző IT-tudományos továbbképzésről kérdez, mennyire éri meg a szakirányú certek megszerzése álláskeresésnél.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik a szakirányú továbbképzések értékéről az álláskeresésnél, és kérdez arra, hogy megéri-e energiát fektetni ezekbe.",
     "llm_technologies": [
       "docker",
       "Red hat linux",
@@ -4796,15 +5003,14 @@
       "postgresql db",
       "jboss/wildfly",
       "proxmox",
-      "haproxy",
-      "azure",
-      "aws",
-      "kubernetes"
+      "haproxy"
     ],
     "llm_roles": [
       "alkalmazás üzemeltető",
       "devops"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1olij2t",
@@ -4850,7 +5056,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ok1x41",
@@ -4897,12 +5104,13 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző elbocsátották és most keres állást, tapasztalatai az interjúkhoz.",
+    "llm_summary": "Az álláskeresés nehézségeiről szóló tapasztalatok, a szerzőt leépítés után kényszerült állást keresni.",
     "llm_technologies": [
       "React",
       "JavaScript"
@@ -4910,7 +5118,9 @@
     "llm_roles": [
       "FE webfejlesztő",
       "Full-stack fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1oi7fjn",
@@ -4966,7 +5176,20 @@
     "ai_context": "[comments] ...valójában a cv-be leírva, arról viszont az első benyomás az, hogy na egy újabb chatgpt-s körmondatos ai slop. a több néha kevesebb, nyugodtan kiveheted a nem r...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Egy felhasználó aggódik a product manager pozícióba való átmenet miatt, mivel túl sok tapasztalata van ahhoz, hogy junior/associate PM legyen.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "product manager"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1og55as",
@@ -5067,7 +5290,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Az opciók a saját projekt főállás mellett, egyedül vagy csapatban.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1od4xq4",
@@ -5108,7 +5342,23 @@
     "ai_context": "[comments] ...álisan telített a piac tele a piac reactosokkal, de még a padlás is ezzel az uj copilottal , medior az uj junior 😃\nbar webdev nekem hobbi csak , de durva mennyi...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző munkaváltáson gondolkodik React/Next.js stackkel, de a piac tele van fejlesztőkkel ezzel a technológiával.",
+    "llm_technologies": [
+      "React",
+      "Next.js"
+    ],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1obqkal",
@@ -5140,14 +5390,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 1.0,
-    "llm_summary": "A Magyar Közlöny legfrissebb számát tartalmazó poszt, mely a kormányzati intézkedésekről és törvényekről szól.",
+    "llm_summary": "A Magyar Közlöny legfrissebb számát tartalmazó poszt, azonban nem kapcsolódik a munkaerőpiachoz.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1o80pxq",
@@ -5203,7 +5456,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1o75171",
@@ -5285,17 +5539,20 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző IT-s pozícióból váltana multiba, de aggódik a verseny miatt és a hiányos tapasztalata miatt.",
+    "llm_summary": "A szerző IT-s pozícióból váltana multiba, de aggódik a verseny miatt.",
     "llm_technologies": [],
     "llm_roles": [
-      "full stack webfejlesztő",
-      "ügyvezető"
-    ]
+      "IT-s munkák",
+      "full stack webfejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1o5qy1r",
@@ -5382,14 +5639,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A Fidesz egy Facebook-csoportot átnevezett és elérhetetlenné tette, hasonlóan korábbi esethez.",
+    "llm_summary": "Egy sárvári álláskereső Facebook-csoportot Digitális Polgári Körré alakítottak, a Fidesz reagált.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1o157ph",
@@ -5430,7 +5690,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1nxvwrb",
@@ -5506,7 +5767,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1nspwwb",
@@ -5593,12 +5855,13 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "Elsőéves mérnökinformatikus hallgató elbizonytalanodott a szakmától, és keresi az IT piacra vonatkozó tanácsokat.",
+    "llm_confidence": 0.8,
+    "llm_summary": "Elsőéves mérnökinformatikus hallgató elbizonytalanodott a választásáról, és kételyei vannak az IT szakra.",
     "llm_technologies": [
       "Vue",
       "Express",
@@ -5612,7 +5875,9 @@
       "frontend fejlesztő",
       "backend fejlesztő",
       "junior fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1ns0jrw",
@@ -5683,7 +5948,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1nju0sk",
@@ -5730,16 +5996,19 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "Agoda",
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Az Agoda bejelentette a Singapore, Shanghai és Budapest irodájában történő leépítéseket.",
+    "llm_summary": "Az Agoda budapesti, shanghai és szingapúri alkalmazottait elbocsátja, a bérpótlási feltételek szerintük nem tisztességesek.",
     "llm_technologies": [],
     "llm_roles": [
       "customer service"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1nj6mdh",
@@ -5770,7 +6039,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1nim26d",
@@ -5846,7 +6116,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ngqpd7",
@@ -5933,14 +6204,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "Audi",
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "Leépítések zajlanak az Audi Győri gyárában, a cég állítása szerint foglalkoztatási rekordot akar elérni.",
+    "llm_confidence": 0.9,
+    "llm_summary": "Leépítések zajlanak az Audi Győri gyárában, a cég állítása szerint foglalkoztatási rekordot akarnak megdönteni.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1nexgv5",
@@ -6037,6 +6311,7 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
@@ -6044,7 +6319,9 @@
     "llm_confidence": 0.95,
     "llm_summary": "A felhasználó kritizálja a jelentkezési kérdőívet, amely túl hosszú és nevetséges kérdéseket tartalmaz.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1ne3ea7",
@@ -6110,7 +6387,20 @@
     "ai_context": "[comments] ...szoftverben (brevo pl) kb. össze lehet kattintgatni az email workflow-t előre, automatizálva, logika mentén és semmit nem kell csinálnod fejlesztőként csak bek...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Felhasználók beszélgetnek a projekt árazásáról és az elkészítési időről.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1n9vjd5",
@@ -6181,7 +6471,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1n9bsds",
@@ -6212,7 +6503,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1n7psfw",
@@ -6253,7 +6545,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1n5kqel",
@@ -6309,7 +6602,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1mw7l30",
@@ -6370,7 +6664,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző tapasztalatai a Dakai Groupnál, AI backend fejlesztő pozícióval kapcsolatban.",
+    "llm_technologies": [
+      "AI",
+      "backend"
+    ],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "concern",
+    "llm_ai_context": null
   },
   {
     "id": "1mq085j",
@@ -6431,7 +6741,8 @@
     "ai_context": "[comments] ...r/claudecode, r/claudeai és társai hasznos tud lenni ötletekhez. megkérdezem a copilotot. twitter, ha a megfelelő embereket követed. reddit és substack.\nsubsta...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1milz96",
@@ -6472,7 +6783,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1mh7haf",
@@ -6539,14 +6851,21 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
     "llm_summary": "A szerző keresi a legjobban fizető cégeket Magyarországon, ahol normális a munka-magánélet egyensúly.",
-    "llm_technologies": [],
-    "llm_roles": []
+    "llm_technologies": [
+      "Java"
+    ],
+    "llm_roles": [
+      "backend fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1mge414",
@@ -6623,14 +6942,19 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző új munkahelyén tapasztal stresszt és imposztor szindrómát, de tanácsokat kap a közösségtől.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző új munkahelyen tapasztal stresszt és imposztor szindrómát, de tanácsokat kap a kommentekben.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1mfs7em",
@@ -6676,7 +7000,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1mfrpjb",
@@ -6747,7 +7072,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1mbcpc3",
@@ -6799,14 +7125,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Álláskereső statisztika: a felvételi időpontok eloszlása az IT szektorban.",
+    "llm_summary": "A felhasználók beszámolnak a munkavállalásuk időpontjáról, nem kapcsolódik az IT munkaerőpiachoz.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1mahnua",
@@ -6853,12 +7182,13 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.9,
-    "llm_summary": "A szerző aggódik az IT munkaerőpiaci helyzetről, nehéz a stabil munkahely megtalálása.",
+    "llm_summary": "Az álláskereső aggódik a munkaerőpiaci helyzet miatt, és kér tanácsot.",
     "llm_technologies": [
       "Kali Linux",
       "CTF",
@@ -6867,7 +7197,9 @@
     "llm_roles": [
       "SOC Analyst",
       "blue team"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1m85ime",
@@ -6928,7 +7260,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1m689g8",
@@ -6984,7 +7317,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1m225n1",
@@ -7030,7 +7364,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1lzoqc5",
@@ -7101,7 +7436,8 @@
     "ai_context": "[comments] ...ogyasztó számára csak járulékos következmény.\n\n\nsocial media, sharing services, llm és egyéb ai tech stb. a metaverzumok is ennek készültek csak nem állták ki a...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1lt92es",
@@ -7126,7 +7462,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1lrkcwb",
@@ -7198,14 +7535,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A Magyar Agrár- és Élettudományi Egyetem (MATE) szétbontja a kutatóintézeteket, ami gyakorlatilag megszünteti a magyar növénynemesítést.",
+    "llm_summary": "A Magyar Agrár- és Élettudományi Egyetem (MATE) kutatóintézeteinek leépítése, a magyar növénynemesítés megszűnése.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1lrfg7g",
@@ -7251,7 +7591,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1lqo9u0",
@@ -7328,14 +7669,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
-    "llm_company": "Ericsson",
+    "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Hírek az Ericsson leépítéséről, de a szerző nem tudja megerősíteni.",
+    "llm_summary": "Hírek az Ericsson leépítéséről, de a szerző nem tudja igazán megbecsülni a helyzetet.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1lktzdm",
@@ -7441,7 +7785,24 @@
     "ai_context": "[selftext] ...éve próbálom összerakni a csapatomat (lead software developer vagyok egy ipari automatizálással foglalkozó kkv cégnél). egyszerűen minden platformon kerestem m...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": ".NET fejlesztők hiánya miatt aggódik a szerző, nehéz embereket találni.",
+    "llm_technologies": [
+      "VB.NET",
+      "C#",
+      "MSSQL"
+    ],
+    "llm_roles": [
+      "Full Stack fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1lj9xd2",
@@ -7482,7 +7843,8 @@
     "ai_context": "[selftext] ...jlesztőként.\n\na képzés 4 féléves, önköltséges  és erősen adatközpontú. rengeteg gépi tanulás, big data, deep learning, nlp, adatbiztonság, stb. kurzus szerepel...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1lczxch",
@@ -7554,6 +7916,7 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
@@ -7561,7 +7924,9 @@
     "llm_confidence": 0.95,
     "llm_summary": "A szerző havi 650-700 ezer forintos fizetésről szól, amit útszéli dinnyeárusításból keresnek.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1l7g6iu",
@@ -7618,20 +7983,22 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.8,
-    "llm_summary": "Junior Java fejlesztő kér tanácsot pet projecten, Spring backendel és Oracle adatbázissal.",
+    "llm_confidence": 0.95,
+    "llm_summary": "Junior programozó kér tanácsot pet projectjéhez, Spring backendel és Oracle adatbázissal.",
     "llm_technologies": [
-      "Java",
       "Spring",
       "Oracle"
     ],
     "llm_roles": [
-      "junior Java fejlesztő"
-    ]
+      "junior fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1l6okmm",
@@ -7727,7 +8094,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1l47z2t",
@@ -7758,7 +8126,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1l3q12s",
@@ -7830,14 +8199,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A magyarországi akkumulátorgyártás veszteségekről és leépítésekről szóló hír.",
+    "llm_summary": "A poszt az akkumulátorgyárairól szól, ahol veszteség és leépítés történt.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1l08jub",
@@ -7894,16 +8266,21 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző karrier-aggodalommal küzd, mert nem látja a fejlődési lehetőséget jelenlegi munkahelyén.",
-    "llm_technologies": [],
+    "llm_summary": "A szerző 27 éves, 5 év tapasztalattal rendelkező Data szakember, aki karrier-válságban van és kíváncsi mások véleményére.",
+    "llm_technologies": [
+      "Data"
+    ],
     "llm_roles": [
-      "Data szakértő"
-    ]
+      "Data szakember"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kzri5r",
@@ -7984,7 +8361,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1kyudvn",
@@ -8031,14 +8409,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "MNB (Magyar Nemzeti Bank)",
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Az MNB-nél egy nap alatt leépítettek mindenkit, a kirúgott dolgozóknak elvesztették hozzáférésüket a gépekhez.",
+    "llm_summary": "Az MNB-nél leépítés, egy nap alatt kirúgták az összes dolgozót.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kypouf",
@@ -8149,7 +8530,20 @@
     "ai_context": "[comments] ...mintha egy vallalkozast vinnel onmagad. reszben az intezmenyi hatter hianyossagai miatt, szoval mas teruleten lehet jobb a helyzet. phd itt, ha kitartóan keres...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző az IT szakma kihívásairól és a kutatói munkáról érdeklődik.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "programtervező informatikus"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kya76s",
@@ -8226,14 +8620,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 2,
     "llm_category": "freeze",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A vállalat bújtatott leépítést alkalmaz, fizetési emelés nélkül és túlóra nélküli fizetéssel.",
+    "llm_confidence": 0.85,
+    "llm_summary": "A szerző arról számol be, hogy a cég bújtatott leépítést folytat, például home office lehetőséget csökkentve és fizetési növelés hiányát.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kxvo5v",
@@ -8264,7 +8661,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": "ITware",
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző az ITware cégről szóló tapasztalatairól beszél, munka és fizetés leírásával.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kvl7kd",
@@ -8325,7 +8733,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1kvcgim",
@@ -8421,7 +8830,8 @@
     "ai_context": "[comments] ...olyan nincs, hogy egy fejlesztő unatkozzon. mindig lehet refactorálni  valamit automatizálni. ezeket a halott időket használd ki saját pet projektre  a cégen b...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1kv7glj",
@@ -8518,20 +8928,24 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 2,
     "llm_category": "freeze",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző egy budapesti cégnél keres fejlesztőket, de nehézkes a találat, mivel az elvárt fizetés magas és a jelentkezők hiányos tudásúak.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző egy budapesti cégnél keres fejlesztőket, de nehézkes a találat, mivel az elvárások magasak és a fizetési igények is emelkedtek.",
     "llm_technologies": [
       "JavaScript",
       "TypeScript"
     ],
     "llm_roles": [
-      "medior fejlesztő",
-      "senior fejlesztő"
-    ]
+      "fejlesztő",
+      "medior",
+      "senior"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kuxyp3",
@@ -8603,16 +9017,19 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Az IT-személyek karrier-aggodalomáról beszélnek, az életcélok és a munka elégtelenségéről.",
+    "llm_summary": "Az IT-szerző aggódik a jövőjéről és az életének irányáról.",
     "llm_technologies": [],
     "llm_roles": [
       "senior fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1krebk4",
@@ -8693,7 +9110,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1kqkmrh",
@@ -8734,7 +9152,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A felhasználó megkérdezi, hogy a Corvinus gazdinfo MSc nappali tagozaton történő elvégzése munka mellett teljesíthető-e.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kqevsa",
@@ -8785,7 +9214,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1kpj4yr",
@@ -8856,15 +9286,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "layoff",
-    "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
-    "llm_company": null,
-    "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "Az író egy segédletet készített a provokátorok felismerésére és kezelésére a politikai térben.",
-    "llm_technologies": [],
-    "llm_roles": []
+    "llm_validated": false,
+    "triage_relevant": true
   },
   {
     "id": "1kn1lqk",
@@ -8905,7 +9328,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1km1ajc",
@@ -8947,6 +9371,7 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "Microsoft",
@@ -8959,7 +9384,9 @@
     ],
     "llm_roles": [
       "fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kkswgv",
@@ -9000,7 +9427,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1kk10kj",
@@ -9086,7 +9514,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1khr10m",
@@ -9152,7 +9581,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző IT technikusi képesítés megszerzése szükséges-e elhelyezkedéshez.",
+    "llm_technologies": [
+      "Azure"
+    ],
+    "llm_roles": [
+      "IT rendszerüzemeltető technikus",
+      "Azure-specialista"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1kh1pby",
@@ -9238,7 +9683,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1kc750s",
@@ -9284,7 +9730,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1k9t5r1",
@@ -9370,7 +9817,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1k91vnv",
@@ -9456,7 +9904,8 @@
     "ai_context": "[comments] ...ta ...). mivel a steam nyomja a steam ost, ezért játékok támogatása egyre jobb. ai miatt az nvidia driverek is stabilok mostmár.\n\namit nem lehet sajnos kiváltan...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jzsczr",
@@ -9522,7 +9971,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jwzzvn",
@@ -9593,7 +10043,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jv9sdx",
@@ -9664,7 +10115,8 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jv3qmq",
@@ -9755,7 +10207,23 @@
     "ai_context": "[selftext] ...magamról : identitás krízisben vagyok, az egyetemen sokfelé bámészkodtam már : gépi tanulás, digi képfeldolgozás, webfejlesztés stb... nem érzem magam egyikben...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "20 éves, munkanélküli programtervező informatika hallgató, tapasztalatot keres a karrierjének építéséhez.",
+    "llm_technologies": [
+      "C++",
+      "OOP"
+    ],
+    "llm_roles": [
+      "programtervező"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1jti03k",
@@ -9816,7 +10284,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jr7oct",
@@ -9857,7 +10326,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jothv3",
@@ -9928,7 +10398,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jo143i",
@@ -9979,7 +10450,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jjrety",
@@ -10016,20 +10488,23 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "Junior frontend fejlesztő keres állást, tanácsokat kér a felhasználóktól.",
+    "llm_confidence": 0.9,
+    "llm_summary": "Junior Frontend fejlesztő keres állást, tanácsokat kér a felvételi folyamathoz.",
     "llm_technologies": [
       "Angular",
-      "Ts",
+      "TS",
       "React"
     ],
     "llm_roles": [
-      "frontend fejlesztő"
-    ]
+      "Frontend fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1jfp6l4",
@@ -10100,7 +10575,8 @@
     "ai_context": "[comments] ...amit feldobsz githubra es berakod az amugyis jol osszerakott oneletrajzodba.   \nchatgpt vagy itt tuti tudnak adni tippeket milyen projektek mutatosak meg haszno...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jeblic",
@@ -10171,7 +10647,8 @@
     "ai_context": "[comments] ...nem értettem mi az, hogy “hash collision mystery”. nekem erre amúgy pont jók az llm-ek. mint annyira sokan, én is le vagyok maradva c++ sztenderdekben valahol a...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1je9sdw",
@@ -10212,7 +10689,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1jcnogp",
@@ -10278,7 +10756,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1j9gs5b",
@@ -10339,7 +10818,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1j3hkn3",
@@ -10435,7 +10915,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1j3cqwe",
@@ -10466,7 +10947,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1j1y4bp",
@@ -10517,7 +10999,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1j08s21",
@@ -10573,7 +11056,8 @@
     "ai_context": "[selftext] ...ettség nélküli automata tesztelőt, aki munka és család mellett szeretne váltani machine learning engineer pályára.\na verzió: érdemes inkább valamilyen tanfolyam...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ix9ov5",
@@ -10669,7 +11153,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1itef4l",
@@ -10741,14 +11226,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Interjú tippek a másik oldal számára, hogyan kell viselkedni és mit érdemes tenni.",
+    "llm_summary": "Interjú tippek a másik oldal számára, interjúkészítési tapasztalatok.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1iskkso",
@@ -10830,16 +11318,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző nem talál munkát, és keresi a tanácsokat, hogy hogyan lehetne jobb jelölt lenni.",
+    "llm_summary": "A szerző aggódik a munkaerőpiaci helyzete miatt, nem talál junior állást.",
     "llm_technologies": [],
     "llm_roles": [
       "junior fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1ip7nts",
@@ -10870,7 +11361,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1iott6j",
@@ -10906,7 +11398,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1imv5pd",
@@ -10977,7 +11470,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1im1e4y",
@@ -11013,7 +11507,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ikjr8u",
@@ -11084,7 +11579,8 @@
     "ai_context": "[selftext] ...at találni és mindig double checkelek minden ötletemet interneten és külön féle llm-ekkel, ami sokat segített eddig, hogy tényleg a legjobb megoldást használjam...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ii9rbm",
@@ -11130,7 +11626,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A szerző C#-ből Java backendre való átállás nehézségéről kérdez.",
+    "llm_technologies": [
+      "C#",
+      "Java"
+    ],
+    "llm_roles": [
+      "backend fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1iej9kc",
@@ -11176,7 +11688,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A felhasználó ELTE Proginfó és BME mérnökinfó mesterképzés között dönt, kérdezve a tapasztalatokat másoktól.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "mesterhallgató"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1iehxui",
@@ -11242,7 +11767,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik azért, hogy folyamatosan kapják a szaros projekteket, amelyekhez nem ért, és ahogy ez befolyásolja a munkakörnyezetét.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "programozó"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1id4zk7",
@@ -11314,14 +11852,19 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző felesége anyját kirúgták egy élelmiszerláncból, a munkáltatók kihasználják a kisembereket.",
+    "llm_summary": "A szerző felesége édesanyját kirúgták egy vidéki boltból, a munkáltatók kiszolgáltatott helyzetbe hozzák az embereket.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "eladó"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1icpf1d",
@@ -11367,7 +11910,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Junior fejlesztő keres Android fejlesztő képzést, de aggódik a szakterület haldoklásától Magyarországon.",
+    "llm_technologies": [
+      "Android",
+      "Kotlin"
+    ],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1icfpjp",
@@ -11453,7 +12012,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ic5t5j",
@@ -11514,7 +12074,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik az Erasmus miatt a gyakornoki pozíciók elutasítása miatt.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "gyakornok"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1i54rtg",
@@ -11621,14 +12194,17 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A felhasználó keresi a legjobb mechanikus billentyűzetet gaminghez és munkához, többféle opcióval.",
+    "llm_summary": "A szerző keres mechanikus billentyűzetet gaminghez és munkához, többféle opcióval.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1i2wb2o",
@@ -11680,6 +12256,7 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
@@ -11690,7 +12267,9 @@
       "API",
       "webscraping"
     ],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1i2tzof",
@@ -11715,7 +12294,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1hznrgg",
@@ -11796,7 +12376,8 @@
     "ai_context": "[comments] ...kszóvá válik. már most látszik, hogy pl. a generatív ai túl van a csúcson és az llm-ek sem lesznek soha intelligensek.  \n6.) a teljes munkaidő mellett végzett m...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1hv3ozh",
@@ -11837,7 +12418,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1huw5ap",
@@ -11898,7 +12480,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "A felhasználó kérdez arról, hogy milyen gyógypapucsok vagy szőnyegek segítenek a hosszú ülésnél okozott fáradalmak enyhítésében.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1hp31to",
@@ -11949,7 +12542,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1hnmkqf",
@@ -12045,7 +12639,24 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik a karrierje miatt, mert egy low code platformon dolgozik és nem érzi, hogy fejlődik.",
+    "llm_technologies": [
+      "PEGA",
+      "Java",
+      "SQL"
+    ],
+    "llm_roles": [
+      "integrációs fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1hhovmo",
@@ -12131,7 +12742,24 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző karrier-váltást fontolgat az IT szektorba, de aggódik a fejlődési lehetőségek hiányáról.",
+    "llm_technologies": [
+      "UI/UX",
+      "Frontend",
+      "Backend"
+    ],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "concern",
+    "llm_ai_context": null
   },
   {
     "id": "1hh7zif",
@@ -12222,7 +12850,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1hbqtnx",
@@ -12283,7 +12912,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "Végzős hallgató kérdezi, éri-e meg a Digital Project Manager mesterszak megszerzése.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "Digital Project Manager"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1havkrp",
@@ -12359,7 +13001,21 @@
     "ai_context": "[comments] ...et olvasva haladj előre, gyakorolj, tanulj.\n\nnagyon hasznos, ha nyitva tartod a chatgpt-t és tőle is folyamatosan kérdezel, mi hogy van.\n\nha nem tudsz pythonban...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző karrier-váltásban gondolkodik, és keresi az ingyenes/olcsó képzéseket a data science/data analyst szakmához.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "data scientist",
+      "data analyst"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1h8qnd7",
@@ -12456,6 +13112,7 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
@@ -12463,7 +13120,9 @@
     "llm_confidence": 0.95,
     "llm_summary": "A szerző keres hibrid munkahelyeket, ahol lehet átmenetileg külföldről is dolgozni.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1h4r2nb",
@@ -12524,7 +13183,22 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik, hogy junior programozóként nem fog elhelyezkedni, és a céges kódolás nem az alkotásról szól.",
+    "llm_technologies": [
+      "C++"
+    ],
+    "llm_roles": [
+      "junior programozó"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1h2yjk9",
@@ -12581,18 +13255,21 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "PlayStation",
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A PlayStation Tokyo irodájában dolgozó hardvermérnök beszámolója a februárban bekövetkezett leépítésről.",
+    "llm_summary": "A PlayStations Tokyo irodájában dolgozó hardvermérnök leépítés áldozata lett.",
     "llm_technologies": [
       "hardver"
     ],
     "llm_roles": [
       "hardvermérnök"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1h23o70",
@@ -12617,7 +13294,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A felhasználó Doxis fejlesztőt kérdez, tapasztalatai hasznosak-e a továbbiakban.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1h1y4p7",
@@ -12733,7 +13423,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1h11u02",
@@ -12830,14 +13521,19 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző kiégett a munkájából, nem találja magát az IT szektorban.",
+    "llm_confidence": 0.9,
+    "llm_summary": "A szerző IT munkában kiégett, nem találja a motivációt, és aggódik az egész napos monitor előtt üléstől.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "IT"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1gyql1n",
@@ -12908,7 +13604,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1gweabn",
@@ -12949,7 +13646,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1gtp337",
@@ -13045,7 +13743,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1gpja57",
@@ -13081,7 +13780,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1gmc42u",
@@ -13157,7 +13857,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1gjfpfw",
@@ -13229,14 +13930,20 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
+    "triage_relevant": true,
+    "llm_relevance": 2,
+    "llm_category": "freeze",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző tapasztalatai a magyar IT munkaerőpiacról, elutasított álláskeresés.",
+    "llm_summary": "A szerző tapasztalatai az osztrák IT piacról, nehézségek a munkaerőpiacon.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "programozó",
+      "UX designer"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1gjdn6n",
@@ -13302,7 +14009,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1gbwlg2",
@@ -13364,6 +14072,7 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
@@ -13371,7 +14080,9 @@
     "llm_confidence": 0.95,
     "llm_summary": "A felhasználó kérdezi, hogy melyik álláskereső oldalt érdemes figyelemmel kísérni.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1g7sii9",
@@ -13433,16 +14144,22 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző és mások is tapasztalják, hogy nehéz a junior álláskeresés, magas fizetésekkel, de alacsony sikerességgel.",
-    "llm_technologies": [],
+    "llm_summary": "A szerző a junior álláskeresési időszak nehézségeiről beszél, és arra kéri a hallgatókat, hogy ne válogassanak a programozási nyelvek között.",
+    "llm_technologies": [
+      "Java",
+      "C#"
+    ],
     "llm_roles": [
       "programozó"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1g4tz4d",
@@ -13529,16 +14246,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Junior programozók dilemmája: jobb fizetés vagy fejlődési lehetőség?",
+    "llm_summary": "A szerző átgondolja, hogy jobb fizetés vagy fejlődési lehetőség fontosabb a munkaválasztásnál.",
     "llm_technologies": [],
     "llm_roles": [
-      "programozó"
-    ]
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1fzrfbd",
@@ -13640,14 +14360,20 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Pályakezdő IT-személyzeti problémákról szóló poszt, a szerző nem talál munkát és aggódik a jövőjéről.",
+    "llm_summary": "Pályakezdő programozó elkeseredettsége a munkaerőpiaci nehézségek miatt.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "programozó",
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1fvahuu",
@@ -13713,7 +14439,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ftmx68",
@@ -13804,7 +14531,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1fn1wqw",
@@ -13855,7 +14583,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1fkmfxx",
@@ -13916,7 +14645,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1fkk4x7",
@@ -13977,7 +14707,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1fkf5eu",
@@ -14074,17 +14805,20 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A szerző aggódik a vezetői álláspiac miatt, ritkák a pozíciók és nehéz karrierépítés.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik a vezetői álláspiac hiánya, és keres válaszokat a karrierépítésre.",
     "llm_technologies": [],
     "llm_roles": [
-      "vezető",
-      "director"
-    ]
+      "director",
+      "vezető"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1ffrcie",
@@ -14109,7 +14843,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző kételye a nehéz munka keresés narrativájával kapcsolatban.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1fe6t34",
@@ -14134,7 +14879,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1fcjx8o",
@@ -14159,7 +14905,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "A szerző aggódik a jelenlegi munkaerőpiaci helyzetről, és úgy érzi, hogy szükség van változtatásra.",
+    "llm_technologies": [
+      "C#",
+      ".NET"
+    ],
+    "llm_roles": [
+      "medior"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1fadsz2",
@@ -14184,7 +14946,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f8x9ip",
@@ -14209,7 +14972,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f83wrn",
@@ -14234,7 +14998,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f7v7yp",
@@ -14259,7 +15024,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f7ffu4",
@@ -14284,7 +15050,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f6m9ca",
@@ -14309,7 +15076,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f6klhn",
@@ -14334,7 +15102,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f1n56w",
@@ -14359,7 +15128,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1f07qu9",
@@ -14384,7 +15154,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "A szerző úgy gondolja, hogy az AI nem fog elvenni a programozók munkáját, mivel a precizitás és a specifikusság szükséges a programozáshoz.",
+    "llm_technologies": [
+      "AI",
+      "Python"
+    ],
+    "llm_roles": [
+      "programozó"
+    ],
+    "llm_ai_role": "concern",
+    "llm_ai_context": "A szerző úgy gondolja, hogy az AI nagy segítség lehet a programozásban, de nem fog elvenni a munkát a specifikus szakterületeken dolgozóktól."
   },
   {
     "id": "1ewcxty",
@@ -14410,17 +15196,21 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző tapasztalatlansága miatt nehézkes az elhelyezkedés, interjúk után is.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző tapasztalatlansága miatt nehézkes a munkaerő-piaci bekerülés.",
     "llm_technologies": [],
     "llm_roles": [
       "webprogramozó",
-      "szoftverfejlesztő és tesztelő"
-    ]
+      "szoftverfejlesztő",
+      "tesztelő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1etm55k",
@@ -14445,7 +15235,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1es90n7",
@@ -14471,12 +15262,13 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Egy újonnan végzett mérnökinformatikus részmunkaidős pozíciójáról és a karrierjének tervezéséről szóló poszt.",
+    "llm_summary": "Egy mérnökinformatikus részmunkaidős pozíciójáról, és a pályaváltásról szóló poszt.",
     "llm_technologies": [
       "Linux",
       "Samba AD",
@@ -14486,9 +15278,12 @@
       "Syncthing"
     ],
     "llm_roles": [
+      "mérnökinformatikus",
       "Linux sysadmin",
-      "backend fejlesztő"
-    ]
+      "hálózatkezelő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1efppou",
@@ -14513,7 +15308,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1eajo38",
@@ -14538,7 +15334,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1e7sfbh",
@@ -14563,7 +15360,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1e4zk2q",
@@ -14599,7 +15397,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1dwvj6g",
@@ -14624,7 +15423,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1drxmn4",
@@ -14649,7 +15449,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1dr447u",
@@ -14674,7 +15475,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1dqrmyt",
@@ -14721,18 +15523,19 @@
     "hiring_freeze_signal": true,
     "category": "layoff",
     "llm_validated": true,
-    "llm_relevance": 1,
-    "llm_category": "anxiety",
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Leépítések várhatóak a Continental AI Center Budapestben, de egy dolgozó cáfolja.",
+    "llm_summary": "Leépítések várhatóak a Continental AI Center Budapestben, de egyik munkatárs sem tudja megerősíteni.",
     "llm_technologies": [
       "AI"
     ],
-    "llm_roles": [
-      "fejlesztő"
-    ]
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1dobto0",
@@ -14757,7 +15560,24 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "Tanuló kérdez a webfejlesztői pálya megvalósíthatóságáról, tapasztalat és átképzés kapcsán.",
+    "llm_technologies": [
+      "Python",
+      "HTML"
+    ],
+    "llm_roles": [
+      "webfejlesztő",
+      "rendszer gazda"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1do13lv",
@@ -14782,7 +15602,22 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "A szerző egy gyakornoki data scientist pozícióra készül állásinterjúra, és kérdése van a bérigényről.",
+    "llm_technologies": [
+      "data science"
+    ],
+    "llm_roles": [
+      "gyakornoki data scientist"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1dmmznk",
@@ -14807,7 +15642,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "Karrier-aggodalom a programozás felé történő átállástól, háttérrel az orvosi pálya.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1dlu4z7",
@@ -14868,7 +15714,8 @@
     "ai_context": "[comments] ...ikvens.\n3. a 2. pont alapján rostálnék az 1. pontból.\n4. fel kell mérni, hogy a mesterséges intelligencia kb. hogyan változtatja majd meg az adott munkakört vag...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1dh7neb",
@@ -14965,14 +15812,19 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A szerző karrier-kiégésről szól, motivációhiányt tapasztal hazai cégben.",
+    "llm_summary": "A szerző kiégett a hazai IT munkaerőpiacról, motivációhiány miatt.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1dfyxza",
@@ -15063,7 +15915,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1de33nd",
@@ -15165,19 +16018,22 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Egy 28 éves, vidéki programozó keres tanácsot tesztelői karrierjéhez.",
+    "llm_summary": "A szerző teszteléssel szeretne foglalkozni, de nem tudja, merre tovább.",
     "llm_technologies": [
       "Java",
       "ISTQB CFTL"
     ],
     "llm_roles": [
       "tesztelő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1dc1c32",
@@ -15213,7 +16069,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1dak4tn",
@@ -15265,14 +16122,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": "Ericsson",
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Az Ericsson leépítésekről szóló bejelentés, közös megegyezések és végkielégítések kapcsán.",
+    "llm_summary": "Az Ericsson leépítésekről szóló bejelentés mögött közös megegyezések állnak, de a végkielégítés nem olyan kedvező, mint ahogy azt a cég beállítja.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1d4cbev",
@@ -15318,7 +16178,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző IT support munkát végez, és keres olyan céget, ahol kezdő IT supportereket fogadnák.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "IT support"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1cx2su9",
@@ -15409,7 +16282,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1cvyc0e",
@@ -15485,7 +16359,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1crbf4m",
@@ -15556,7 +16431,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1cpkc9y",
@@ -15607,7 +16483,25 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "Junior adatelemző interjú kérdések és elvárások, fizetési összeg.",
+    "llm_technologies": [
+      "SQL",
+      "PowerBi",
+      "Tableau",
+      "Python"
+    ],
+    "llm_roles": [
+      "adatelemző"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1cjus6v",
@@ -15658,7 +16552,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1cgspjf",
@@ -15709,7 +16604,8 @@
     "ai_context": "[selftext] ...fel is vehettek volna.\n\nhárom körös folyamat volt, a hr-esnek szimpi voltam, az automatizált programozós tesztet elvileg közel hibátlanra írtam (ezt ők jelezték...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1cakzeo",
@@ -15786,14 +16682,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "Lensa",
     "llm_headcount": 35,
-    "llm_confidence": 0.95,
-    "llm_summary": "A Lensa elbocsátja a munkavállalóit, akik között van magyarok is.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A Lensa elbocsát kb. 35 embert, a cég túlnövekedés miatt.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1c5hmb9",
@@ -15870,14 +16769,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző új cégénél tapasztalt kulturális problémákat, a felmondás kommunikációját és a munkakörök minőségét.",
+    "llm_summary": "A szerző aggódik a cég kulturális közegétől, mivel egy kollegát gyorsan kirúgtak és nem kommunikálták jól a döntést.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1c5e42n",
@@ -15918,7 +16820,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1c3olrp",
@@ -16000,18 +16903,21 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző 8 év alatt 3x rúgták ki a játékfejlesztési szektorból, erkölcsi dilemma az újabb lépések meghatározása.",
+    "llm_confidence": 0.9,
+    "llm_summary": "A szerző 8 év alatt 3x rúgtak ki a játékfejlesztési szektorból, erkölcsi dilemmában van.",
     "llm_technologies": [
       "game dev"
     ],
     "llm_roles": [
       "programozó"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1c2dn33",
@@ -16108,14 +17014,20 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A szerző a home office hátrányairól számol be, és arra kéri a feleségét, hogy dolgozzon hétfőtől, míg ő főállású apa lesz.",
+    "llm_summary": "A szerző a home office hátrányairól ír, és arra kéri a feleségét, hogy dolgozzon hétfőtől, míg ő főállású apa lesz.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "apák",
+      "munkavállalók"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1c0xsw4",
@@ -16151,7 +17063,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1c0llz2",
@@ -16192,7 +17105,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1byxm1l",
@@ -16238,7 +17152,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1buvw1l",
@@ -16269,7 +17184,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1bna4g0",
@@ -16305,7 +17221,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1bmqxb5",
@@ -16371,7 +17288,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző full-remote munkát keres, de aggódik a jövőbeni nehézség miatt.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "full-remote fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1bkf7y2",
@@ -16402,7 +17332,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1b5m2ze",
@@ -16453,7 +17384,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1b463h5",
@@ -16504,7 +17436,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1b3ricp",
@@ -16550,7 +17483,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1b39dxz",
@@ -16581,7 +17515,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1b2kry0",
@@ -16627,7 +17562,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1b1al1j",
@@ -16713,7 +17649,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.9,
+    "llm_summary": "Az Nvidia elnöke kijelenti, hogy a programozók nem lesznek szükségesek az AI fejlesztés miatt.",
+    "llm_technologies": [
+      "AI",
+      "programozás"
+    ],
+    "llm_roles": [
+      "programozó"
+    ],
+    "llm_ai_role": "concern",
+    "llm_ai_context": "Az Nvidia elnöke szerint a programozással kapcsolatos problémák az AI fejlesztésével függenek össze."
   },
   {
     "id": "1b0to20",
@@ -16744,7 +17696,22 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A GlobalLogic amerikai és nemzetközi munkahelyeinek összehasonlítása, több EU országban és Indiában több S/W fejlesztői pozíció van elérhető.",
+    "llm_technologies": [
+      "S/W"
+    ],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1azm18l",
@@ -16835,7 +17802,8 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1aycqyh",
@@ -16901,7 +17869,24 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző és a kommentelők aggodalmukról számolnak be a DevOps/SRE piac változásairól.",
+    "llm_technologies": [
+      "GCP",
+      "DevOps"
+    ],
+    "llm_roles": [
+      "SRE",
+      "DevOps"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1ax0ktn",
@@ -16968,16 +17953,19 @@
     "hiring_freeze_signal": false,
     "category": "anxiety",
     "llm_validated": true,
-    "llm_relevance": 1,
-    "llm_category": "anxiety",
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.8,
-    "llm_summary": "A szerző külföldi céghez kezd remote munkát, aggódik az elvárások miatt.",
+    "llm_confidence": 0.95,
+    "llm_summary": "A szerző külföldi céghez kezd remote munkát, és aggódik az elvárások miatt.",
     "llm_technologies": [],
     "llm_roles": [
-      "full stack fejlesztő"
-    ]
+      "EV"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1attb1m",
@@ -17053,7 +18041,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ap0cih",
@@ -17144,7 +18133,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1anftqn",
@@ -17210,7 +18200,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1alqawi",
@@ -17256,7 +18247,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1al88ys",
@@ -17327,7 +18319,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ah4wag",
@@ -17363,7 +18356,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1afmn4d",
@@ -17439,7 +18433,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1ad1ve5",
@@ -17520,7 +18515,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "19f6vru",
@@ -17592,19 +18588,19 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Karrier-aggodalom az AI hatásáról, a szerző kritizálja az újságírást és a cikkben említett hírt.",
+    "llm_summary": "A szerző kritizálja az újságírók AI-vel kapcsolatos híreit, amelyek gyakran túlzók és manipulatívak.",
     "llm_technologies": [
-      "AI",
-      "SAP"
+      "AI"
     ],
-    "llm_roles": [
-      "fejlesztő"
-    ]
+    "llm_roles": [],
+    "llm_ai_role": "concern",
+    "llm_ai_context": "A szerző aggódik az AI munkaerőpiaci hatása miatt, de úgy gondolja, hogy a cikkek túlzók és manipulatívak."
   },
   {
     "id": "19dol7a",
@@ -17635,7 +18631,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "19cszkg",
@@ -17686,7 +18683,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "19ak9dc",
@@ -17711,7 +18709,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "194jlp2",
@@ -17762,7 +18761,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "1944ht0",
@@ -17818,7 +18818,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "192mdc6",
@@ -17879,7 +18880,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "192irac",
@@ -17910,7 +18912,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző külföldi contractor-ként dolgozik, de a munkaerőpiac változásai miatt aggódik.",
+    "llm_technologies": [
+      "SAP"
+    ],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "191m2dp",
@@ -17992,14 +19007,19 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A szerző aggódik a munkaerőpiac miatt, és kérdezgeti a Codecool tapasztalatait.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A felhasználó aggódik a munkaerőpiaci lehetőségek miatt, és kérdezgeti a Codecool kapcsolatát.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "junior fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "190a0fd",
@@ -18070,7 +19090,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18ycspo",
@@ -18166,7 +19187,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18y83gn",
@@ -18222,7 +19244,26 @@
     "ai_context": null,
     "hiring_freeze_signal": true,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző 7 éves mainframe tapasztalattal keres entry level IT munkát Budapesten, de full remote.",
+    "llm_technologies": [
+      "mainframe",
+      "DB2",
+      "Websphere application"
+    ],
+    "llm_roles": [
+      "entry level IT munka",
+      "DBA",
+      "Network"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "18xt2ic",
@@ -18258,7 +19299,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18vzp67",
@@ -18314,7 +19356,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18tziwq",
@@ -18400,7 +19443,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18tpnbl",
@@ -18456,7 +19500,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18rc9p3",
@@ -18492,7 +19537,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18me9nj",
@@ -18553,7 +19599,26 @@
     "ai_context": "[comments] ...ineer előszobájának hangzik amit csinálsz, kezdj el tanulni a következő pozira. automatizálás, konfiguráció menedzsment, felhő. lesz mit.  \nnem látom a cv-det,...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Üzemeltetőként keres munkát, hátrányos helyzetben van a piac.",
+    "llm_technologies": [
+      "SAP",
+      ".NET",
+      "Java"
+    ],
+    "llm_roles": [
+      "üzemeltető",
+      "level 2 support",
+      "business analyst"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "18l9zx0",
@@ -18609,7 +19674,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "18l6gza",
@@ -18665,7 +19731,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "17pvbbu",
@@ -18722,16 +19789,19 @@
     "hiring_freeze_signal": true,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.9,
-    "llm_summary": "A szerző aggódik a fizetéséért, nem tudja beárazni magát a munkaerőpiacon.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző aggódik a kezdőfizetése miatt, nem tudja beárazni magát az interjúkon.",
     "llm_technologies": [],
     "llm_roles": [
       "Junior Data Scientist"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "17n8s63",
@@ -18767,7 +19837,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "171b23f",
@@ -18834,14 +19905,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A felhasználó szubjektív kérdést tesz fel, hogy éri-e meg a fizetési növekedésért több munkát és stresszt vállalni.",
+    "llm_summary": "A szerző válságos döntést kelljen hoznia, hogy váljon munkahelyet több pénzért és több munkaért cserébe.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "programozó"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "16rt5wd",
@@ -18902,7 +19978,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "15uknkd",
@@ -18954,17 +20031,20 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerzők kísérleteznek AI-al vektoros adatbázisokban, nagy mennyiségű adattal a tech álláspiac és a job boardokon pontatlan álláskeresés megoldására.",
+    "llm_summary": "A szerzők kísérleteznek AI-al vektoros adatbázisokban, nagy mennyiségű adattal a tech álláspiacra vonatkozóan.",
     "llm_technologies": [
       "AI",
       "vektoros adatbázis"
     ],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "15r7dad",
@@ -19030,7 +20110,8 @@
     "ai_context": "[comments] ...tan írj :) evosoft  \npro:  \n\\- jó kezdő munkahely, sok a fiatal/diák  \n\\- ipari automatizálás területen voltam, ott vannak érdekes projektek és játszhatsz plckk...",
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "15qx4r1",
@@ -19107,14 +20188,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 3,
     "llm_category": "layoff",
     "llm_company": "NNG",
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Az NNG újabb leépítést hajtott végre, több száz embert érintve.",
+    "llm_summary": "Az NNG másodjára leépít, 40-70 ember érintett, de nincs pontos információ.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "15nd183",
@@ -19156,16 +20240,19 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.9,
-    "llm_summary": "A szerző karrier-aggodalommal küzd, mivel fizetési fagyottban van és nem akar tovább ingázni.",
+    "llm_summary": "A szerző karrier-aggodalommal küzd a fizetési fagyás, az ingázás és a munkahely változása miatt.",
     "llm_technologies": [],
     "llm_roles": [
       "iOS fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "15ep4ko",
@@ -19272,14 +20359,17 @@
     "hiring_freeze_signal": true,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A felhasználók beszámolnak a cégeknél tapasztalt pénzügyi hangulatról, megszorításokról és változásokról.",
+    "llm_summary": "A felhasználók beszámolnak a cégeknél tapasztalt pénzügyi hangulatról, megszorításokról.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "13pnv2w",
@@ -19315,7 +20405,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "13pkbt5",
@@ -19366,7 +20457,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "13fqal8",
@@ -19453,14 +20545,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző a magyar munkaerőpiac és az európai piaci bérszintek közti különbségről számol be, tapasztalatai alapján.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző a magyar munkaerőpiac kihívásairól számol be, az USA-beli tapasztalatai alapján.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "137fpyb",
@@ -19517,12 +20612,13 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Egy programozó gyakornoki állások után kutat, de nehéznek tartja a junior pozíciók elhelyezkedését.",
+    "llm_summary": "Egy programozó gyakornoki állások után kutat, de aggódik a fizetés és a tapasztalat hiánya miatt.",
     "llm_technologies": [
       "Python",
       "Java",
@@ -19537,7 +20633,9 @@
       "backend fejlesztő",
       "mobilfejlesztő",
       "data scientist"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "12rrbkp",
@@ -19603,7 +20701,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "11n05j4",
@@ -19660,14 +20759,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző keresi a legjobb platformot az álláskereséshez, főleg külföldön.",
+    "llm_summary": "A szerző megkérdezi, hogy a LinkedIn továbbra is az elsődleges álláskereső portál az IT-ban, vagy más platformokat kell használni.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "11hz162",
@@ -19714,17 +20816,20 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző aggódik a munkahelye miatt, amit úgy érezte, hogy nem megfelelő pozícióban van.",
+    "llm_summary": "A szerző aggódik a munkahelye miatt, a cégben várható leépítés és nehéz feladatok.",
     "llm_technologies": [],
     "llm_roles": [
       "senior system analyst",
       "fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "1116172",
@@ -19791,14 +20896,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Rendőrséghez kapcsolódó álláskeresés és fizetések, nem IT szektor.",
+    "llm_summary": "A szerző egy felhívást kapott a munkaügyi központtól, hogy rendőröket akarnak toborozni, de sokan mondanak le az állományból a fizetés miatt.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "rendőr"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "10semr8",
@@ -19880,12 +20990,13 @@
     "hiring_freeze_signal": true,
     "category": "freeze",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 2,
     "llm_category": "freeze",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző tapasztalja, hogy a fejlesztői pozíciókra való jelentkezésre kevesebb reakciót kap, és az álláshirdetések száma is csökkent.",
+    "llm_summary": "A szerző tapasztalja, hogy a fejlesztői állásokra való jelentkezésre kevesebb reakció van, lehetséges a hiring freeze.",
     "llm_technologies": [
       "Go",
       "GraphQL",
@@ -19902,7 +21013,9 @@
     ],
     "llm_roles": [
       "fejlesztő"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "10ge18c",
@@ -19927,7 +21040,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "z1no7k",
@@ -20003,7 +21117,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": "Continental",
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző a Continentalnél dolgozott diákként, kritizálja a bürokráciát és az elvárásokat.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "wqlygl",
@@ -20028,7 +21155,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "A szerző úgy gondolja, hogy a magyar társadalom nem fogja érezni olyan nagyot a válságot, mint tizenpár évvel ezelőtt.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "wjj1fe",
@@ -20053,7 +21191,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "wg3bmx",
@@ -20079,14 +21218,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.8,
+    "llm_confidence": 0.95,
     "llm_summary": "A szerző kérdése a munkaügyi központ regisztrációjáról és az aktív korúak ellátásáról.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "wffvpg",
@@ -20111,7 +21253,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "wf3mq0",
@@ -20136,7 +21279,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "w1rqwh",
@@ -20162,14 +21306,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "UX portfólió elemzésre hívják fel a figyelmet, nem kapcsolódik az IT munkaerőpiachoz.",
+    "llm_summary": "UX portfólió elemzés a héten - álláskereső user experience designereknek kötelező",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "user experience designer"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "vqp1uz",
@@ -20194,7 +21343,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "vq98fp",
@@ -20220,6 +21370,7 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
@@ -20227,7 +21378,9 @@
     "llm_confidence": 0.8,
     "llm_summary": "Álláskeresési lehetőségek és LinkedIn profil készítése nélküli diplomás IT-s személyek számára.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "vpn89r",
@@ -20253,16 +21406,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "Az álláskereső szerző keresi a legjobb önképzési lehetőséget, hogy feljebb juthasson az IT szektorban.",
+    "llm_summary": "Az álláskereső szerző keres olyan szakmai készséget, amit az állásinterjúk során érdemes említeni.",
     "llm_technologies": [
       "Excel"
     ],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "uz5lqz",
@@ -20288,18 +21444,21 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
-    "llm_relevance": 0,
-    "llm_category": "other",
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A felhasználó kérdezi, éri meg-e egy FullStack Dev képzés elvégezni a Codecool-nál.",
+    "llm_confidence": 0.9,
+    "llm_summary": "A szerző kételyeiről, hogy éri meg egy FullStack Dev képzés elvégezni.",
     "llm_technologies": [
-      "FullStack"
+      "FullStack Dev"
     ],
     "llm_roles": [
-      "fullstack fejlesztő"
-    ]
+      "pályakezdő fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "ur4nlj",
@@ -20325,14 +21484,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző munkahelyi stresszről és a karrier-aggodalomról számol be, az álláspiac nehézségeiről.",
+    "llm_summary": "A szerző munkahelyi stresszről és a pályaváltás nehézségeiről szól, az álláspiac romlása miatt.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "uoscpn",
@@ -20357,7 +21519,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "tw5h1i",
@@ -20383,14 +21546,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A szerző és a bizottsága tapasztalatai az általános iskolai szavazókörben, nem kapcsolódik az IT munkaerőpiachoz.",
+    "llm_summary": "A szerző és felesége szavazatszámlálóként vett részt egy választáson, tapasztalataikról számolnak be.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "tw377p",
@@ -20415,7 +21581,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "tvki11",
@@ -20441,14 +21608,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Magyar fiatal kérdez a sikeres külföldi letelepedésről és az ottani munkaválasztásról.",
+    "llm_summary": "A szerző magyar, hollandiai életéről kérdezget a közösségben.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "tcevx4",
@@ -20473,7 +21643,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "t6xd5r",
@@ -20499,18 +21670,21 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 1,
     "llm_category": "anxiety",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző aggódik a munkahelyváltoztatás miatt, főleg a válság idején.",
+    "llm_summary": "A szerző aggódik a leépítés miatt, ha új munkahelyen válik el.",
     "llm_technologies": [
       "DevOps"
     ],
     "llm_roles": [
       "DevOps engineer"
-    ]
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "smzhxo",
@@ -20535,7 +21709,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "A szerző mérlegeli, hogy elköltözzön Nyugat-Európába, és melyik országban érdemes lenne lakni.",
+    "llm_technologies": [
+      "Azure"
+    ],
+    "llm_roles": [
+      "cloud infrastructure architect",
+      "DevOps"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "ryymmq",
@@ -20561,6 +21751,7 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
@@ -20568,7 +21759,11 @@
     "llm_confidence": 0.8,
     "llm_summary": "Kezdő álláskereső kérdez karrier-önéletrajz és interjú tippeket.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "gazdaságinformatikus"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "rplo0c",
@@ -20594,16 +21789,19 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A szerző művészeti pályafutásáról és a szükségessége álláskeresésről.",
+    "llm_summary": "A szerző művészeti tevékenysége miatt nincs végzettsége, és most keres állást.",
     "llm_technologies": [
       "webhosting"
     ],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "r5wkzu",
@@ -20629,14 +21827,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.8,
-    "llm_summary": "A szerző keres IT munkát, de nem akar szimplán irodában ülni. Kérdés a piacon lévő két véglet között.",
+    "llm_summary": "A szerző keres jobb munkahelyet, elutasítva a szimpla irodai munkát és az alacsony fizetésű állásokat.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "qvdwww",
@@ -20662,14 +21863,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A szerző arra gondol, hogy a Fidesznek el kellene engednie az ellenzéki összefogásnak a győzelmet, hogy az új kormány végrehajtsa a kellemetlen intézkedéseket.",
+    "llm_summary": "A szerző arra gondol, hogy a Fidesznek el kellene engednie az 2022-es választásokat, hogy az új kormánynak viselje a felelősséget a jövőbeni nehézségekért.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "qu91yx",
@@ -20741,14 +21945,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
-    "llm_confidence": 0.95,
-    "llm_summary": "A szerző kritizálja Orbán Viktort és a kormány gazdaságpolitikáját, hangsúlyozva hogy nincs külön magyar út.",
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző kritizálja Orbán Viktort és a kormány gazdaságpolitikáját, hangsúlyozva hogy Magyarországnak nincs saját útja.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "qono4g",
@@ -20789,7 +21996,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "pdprq2",
@@ -20820,7 +22028,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "nk0ev8",
@@ -20861,7 +22070,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "mu13lb",
@@ -20933,6 +22143,7 @@
     "hiring_freeze_signal": true,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
@@ -20940,7 +22151,11 @@
     "llm_confidence": 0.8,
     "llm_summary": "Pályakezdő diák tapasztalat nélkül keres gyakornoki állást Budapesten.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [
+      "gyakornok"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "lo9jiq",
@@ -21017,14 +22232,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "Az álláskeresők panaszkodnak a hosszú és elnyújtott interjú folyamatokról, több körös beszélgetésekről.",
+    "llm_summary": "Az interjúk hosszú ideig elnyújtódnak, sok cég várakoztatja a jelölteket.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "lg2n1g",
@@ -21106,14 +22324,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A poszt arról szól, hogy a magyar munkaerőpiac egyedi sajátossága, hogy az állásoknál nem divat megadni a bér intervallumot vagy iránymutatást.",
+    "llm_summary": "A szerző kritizálja, hogy a magyar cégek gyakran nem adják meg a bér intervallumot az álláshirdetésekben, ami problémát jelent a pályakezdőknek.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "jv57i9",
@@ -21149,7 +22370,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "hsb6dj",
@@ -21196,14 +22418,17 @@
     "hiring_freeze_signal": false,
     "category": "other",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A munkahelyteremtő bértámogatás feltételei megváltoztak, csak a 25 éven alattiak vagy az álláskeresők számára igényelhető.",
+    "llm_summary": "A szerző kritizálja a magyar kormányzatot, hogy hogyan tervezik elosztani a munkahelyteremtő bértámogatást.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "gnt2s9",
@@ -21270,14 +22495,17 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A szerző beszél a Magyar Honvédségről, az intézmény működéséről és a bevonulás feltételeiről.",
+    "llm_summary": "A szerző a Magyar Honvédség intézményéről és működéséről szóló posztot ír, nem kapcsolódik az IT munkaerőpiachoz.",
     "llm_technologies": [],
-    "llm_roles": []
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "g6ncuc",
@@ -21358,7 +22586,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "f3an8v",
@@ -21404,7 +22633,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A felhasználó egyetemi végzős, nem kapcsolódik az IT munkaerőpiachoz.",
+    "llm_technologies": [
+      "React",
+      "React Native"
+    ],
+    "llm_roles": [
+      "webfejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "egf8fk",
@@ -21429,7 +22674,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "dzunsa",
@@ -21470,7 +22716,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "dt4tgb",
@@ -21506,7 +22753,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "dj2n09",
@@ -21531,7 +22779,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "dfgucr",
@@ -21608,18 +22857,21 @@
     "hiring_freeze_signal": false,
     "category": "layoff",
     "llm_validated": true,
+    "triage_relevant": true,
     "llm_relevance": 0,
     "llm_category": "other",
     "llm_company": null,
     "llm_headcount": null,
     "llm_confidence": 0.95,
-    "llm_summary": "A cég a munkavállalók teljesítményét Hubstaff segítségével nyomon követi, és fizetésüket a teljesítményük alapján állapítja meg.",
+    "llm_summary": "A cég a munkavállalók teljesítményét Hubstaff segítségével nyomon követi, és a fizetésük a teljesítményüktől függ. A munkavállalóknak 70%-os teljesítménynél alacsonyabbat elérniük kell, különben kirúgják őket.",
     "llm_technologies": [
       "Hubstaff"
     ],
     "llm_roles": [
-      "webfejlesztő"
-    ]
+      "fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "aold55",
@@ -21675,7 +22927,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "a74r7n",
@@ -21716,7 +22969,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "9xe5d3",
@@ -21747,7 +23001,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "8ptgc9",
@@ -21778,7 +23033,22 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Front-end fejlesztő kérdezést a munkaválasztásról és az életszínvonalról Manchesterben.",
+    "llm_technologies": [
+      "frontend"
+    ],
+    "llm_roles": [
+      "front-end fejlesztő"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "8hoik1",
@@ -21824,7 +23094,20 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "A szerzőnek két lehetősége van: egy nagy brit cég és egy startup az USA-ban, ahol alacsonyabb fizetésre számíthat.",
+    "llm_technologies": [],
+    "llm_roles": [
+      "programozó"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "7akhtr",
@@ -21865,7 +23148,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "71q1nh",
@@ -21901,7 +23185,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "5o0m23",
@@ -21942,7 +23227,18 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.95,
+    "llm_summary": "Európai városok munkalehetőségeinek összehasonlítása, nem kapcsolódik a munkaerőpiachoz.",
+    "llm_technologies": [],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "5c4pgu",
@@ -21983,7 +23279,24 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A felhasználó aggódik az AI iránti érdeklődése miatt, nem tudja eldönteni, hogy melyik szakma a legjobb.",
+    "llm_technologies": [
+      "AI"
+    ],
+    "llm_roles": [
+      "AI fejlesztő",
+      "computer engineer",
+      "mathématicus"
+    ],
+    "llm_ai_role": "concern",
+    "llm_ai_context": "A felhasználó aggódik, hogy az AI munkaerőpiaci hatása miatt nem lesz elég lehetősége."
   },
   {
     "id": "4oev3z",
@@ -22034,7 +23347,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "4ayqbe",
@@ -22110,7 +23424,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "3aqdjo",
@@ -22141,7 +23456,23 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 1,
+    "llm_category": "anxiety",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A szerző unalmas, de stabil munkahelyén marad, vagy változtat a karrierjén egy főállású, de talán nem olyan érdekes pozícióért.",
+    "llm_technologies": [
+      "avaya",
+      "interactive voice response"
+    ],
+    "llm_roles": [
+      "programozó"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "3ankft",
@@ -22182,7 +23513,8 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   },
   {
     "id": "2st7vh",
@@ -22238,7 +23570,26 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "Egy román családban nevelkedett diák tanácsot ad a legjobb fizetésű IT készségekről.",
+    "llm_technologies": [
+      "C",
+      "C++",
+      "Java",
+      "Android",
+      ".NET",
+      "Pascal",
+      "Python"
+    ],
+    "llm_roles": [],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "10kbgb",
@@ -22269,7 +23620,24 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": true,
+    "triage_relevant": true,
+    "llm_relevance": 0,
+    "llm_category": "other",
+    "llm_company": null,
+    "llm_headcount": null,
+    "llm_confidence": 0.8,
+    "llm_summary": "A diák keres komputerszakmai gyakorlatot Budapesten, nem fizetésre van szükség.",
+    "llm_technologies": [
+      "data-mining",
+      "machine learning",
+      "networks"
+    ],
+    "llm_roles": [
+      "komputerszakmai gyakorlat"
+    ],
+    "llm_ai_role": "none",
+    "llm_ai_context": null
   },
   {
     "id": "smau1",
@@ -22294,6 +23662,7 @@
     "ai_context": null,
     "hiring_freeze_signal": false,
     "category": "other",
-    "llm_validated": false
+    "llm_validated": false,
+    "triage_relevant": false
   }
 ]
