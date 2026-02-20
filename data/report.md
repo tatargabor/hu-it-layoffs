@@ -1,6 +1,6 @@
 # Magyar IT Szektor Leépítések — Kimutatás
 
-*Generálva: 2026-02-20 00:54*
+*Generálva: 2026-02-20 00:25*
 *Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*
 
 **Becsült összes érintett: ~12541–14846 fő**
