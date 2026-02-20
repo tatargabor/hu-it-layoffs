@@ -45,6 +45,7 @@ Válaszolj JSON formátumban az alábbi sémával:
   "category": "layoff|freeze|anxiety|other",
   "confidence": 0.0-1.0,
   "company": "cégnév vagy null",
+  "sector": "fintech|automotive|telecom|big tech|IT services|entertainment|energy|retail tech|startup|government|general IT|other|null",
   "headcount": szám vagy null,
   "summary": "1 mondatos magyar összefoglaló",
   "technologies": ["technológia1", "technológia2"],
@@ -62,6 +63,20 @@ Mezők:
   - "other": Nem kapcsolódik az IT munkaerőpiachoz — általános kérdés, hír, offtopic, VAGY nem-IT szektorban történő leépítés (katonai, oktatási, agrár, közlekedési stb.)
 - confidence: mennyire vagy biztos a category besorolásban (0.0-1.0)
 - company: az érintett cég neve ha azonosítható, egyébként null
+- sector: az érintett iparág/szektor az alábbiak közül (a poszt kontextusából határozd meg, nem kell hozzá cégnév):
+  - "fintech": bank, pénzügyi szolgáltató, fizetési rendszer IT
+  - "automotive": autógyár, autóipari beszállító, járműtechnológia
+  - "telecom": telekommunikáció, hálózati infrastruktúra
+  - "big tech": nagy nemzetközi tech cég (Microsoft, Google, Meta, stb.)
+  - "IT services": IT outsourcing, tanácsadás, rendszerintegrátor
+  - "entertainment": szórakoztató ipar, média, gaming tech
+  - "energy": energiaszektor IT, olaj/gáz tech
+  - "retail tech": kiskereskedelmi tech, e-commerce
+  - "startup": startup, kis tech cég
+  - "government": állami IT, közigazgatási rendszer
+  - "general IT": IT szektor, de konkrét szegmens nem azonosítható (pl. általános álláspiac, karrierkérdés)
+  - "other": nem-IT szektor vagy nem besorolható
+  - null: a poszt nem ad elég kontextust szektormeghatározáshoz
 - headcount: becsült érintett létszám ha kiderül a posztból, egyébként null
 - summary: 1 mondatos magyar összefoglaló a poszt lényegéről
 - technologies: programozási nyelvek, keretrendszerek, eszközök amik a posztban szerepelnek (pl. "Java", "React", "SAP", "Kubernetes"). Üres lista ha nincs ilyen.
@@ -76,31 +91,34 @@ Mezők:
 Példák:
 
 Poszt: "Ericsson 200 embert bocsát el Budapesten, főleg firmware és embedded fejlesztők érintettek"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Ericsson", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Ericsson", "sector": "telecom", "headcount": 200, "summary": "Az Ericsson 200 firmware és embedded fejlesztőt bocsát el budapesti irodájából.", "technologies": ["firmware", "embedded"], "roles": ["firmware fejlesztő", "embedded fejlesztő"], "ai_role": "none", "ai_context": null}
 
 Poszt: "Szállás Group közel 70 fejlesztőt bocsát el, az AI által megoldott fejlesztések az indoklás"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Szállás Group", "headcount": 70, "summary": "A Szállás Group 70 fejlesztőt bocsát el, AI-val indokolva.", "technologies": ["AI"], "roles": ["fejlesztő"], "ai_role": "factor", "ai_context": "A cég az AI-val kiváltott fejlesztésekkel indokolta a leépítést."}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.95, "company": "Szállás Group", "sector": "retail tech", "headcount": 70, "summary": "A Szállás Group 70 fejlesztőt bocsát el, AI-val indokolva.", "technologies": ["AI"], "roles": ["fejlesztő"], "ai_role": "factor", "ai_context": "A cég az AI-val kiváltott fejlesztésekkel indokolta a leépítést."}
 
 Poszt: "Lassan egy éve nem találok munkát, merre tovább?"
-Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "headcount": null, "summary": "A szerző egy éve nem talál IT munkát, az álláspiac beszűkült.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "sector": "general IT", "headcount": null, "summary": "A szerző egy éve nem talál IT munkát, az álláspiac beszűkült.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
 
 Poszt: "Megéri programozónak tanulni 2025-ben? AI elveszi a munkánkat?"
-Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "company": null, "headcount": null, "summary": "Karrier-aggodalom az AI hatásáról az IT szektorra.", "technologies": ["AI"], "roles": ["programozó"], "ai_role": "concern", "ai_context": "A szerző az AI munkaerőpiaci hatása miatt aggódik."}
+Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "company": null, "sector": "general IT", "headcount": null, "summary": "Karrier-aggodalom az AI hatásáról az IT szektorra.", "technologies": ["AI"], "roles": ["programozó"], "ai_role": "concern", "ai_context": "A szerző az AI munkaerőpiaci hatása miatt aggódik."}
 
 Poszt: "Continental AI Center Budapest leépítés — a divízió áthelyezése az ok"
-Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Continental", "headcount": null, "summary": "A Continental budapesti AI Center-ben leépítés a divízió áthelyezése miatt.", "technologies": ["AI"], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Continental", "sector": "automotive", "headcount": null, "summary": "A Continental budapesti AI Center-ben leépítés a divízió áthelyezése miatt.", "technologies": ["AI"], "roles": [], "ai_role": "none", "ai_context": null}
 
 Poszt: "Partizán interjú egy kirúgott katonával — a Magyar Honvédség átszervezése"
-Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Magyar Honvédség", "headcount": null, "summary": "Katonai átszervezés a Magyar Honvédségnél, nem IT szektor.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Magyar Honvédség", "sector": "other", "headcount": null, "summary": "Katonai átszervezés a Magyar Honvédségnél, nem IT szektor.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
 
 Poszt: "Költségoptimalizálásra hivatkozva leépítik az idegennyelv-oktatást a Corvinuson"
-Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Corvinus Egyetem", "headcount": null, "summary": "Nyelvtanárok elbocsátása a Corvinuson, nem IT pozíciók.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Corvinus Egyetem", "sector": "other", "headcount": null, "summary": "Nyelvtanárok elbocsátása a Corvinuson, nem IT pozíciók.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+
+Poszt: "Banki IT osztályon nagy leépítés, belső fejlesztés megszűnik"
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.85, "company": null, "sector": "fintech", "headcount": null, "summary": "Egy bank IT osztályán leépítés, a belső fejlesztés megszűnik.", "technologies": [], "roles": ["fejlesztő"], "ai_role": "none", "ai_context": null}
 
 Poszt: "Junior Frontend fejlesztőnek tanács? 2 év után leépítés volt a cégnél"
-Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "headcount": null, "summary": "A szerző frontend fejlesztőként elvesztette állását leépítés miatt és tanácsot kér.", "technologies": ["frontend"], "roles": ["frontend fejlesztő"], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "sector": "general IT", "headcount": null, "summary": "A szerző frontend fejlesztőként elvesztette állását leépítés miatt és tanácsot kér.", "technologies": ["frontend"], "roles": ["frontend fejlesztő"], "ai_role": "none", "ai_context": null}
 
 Poszt: "Milyen monitort ajánlotok home office-hoz?"
-Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "sector": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
 
 FONTOS: Csak JSON-t válaszolj, semmi mást!"""
 
@@ -442,18 +460,19 @@ def validate_posts(posts, triage_results=None):
                        If provided, only posts with True are validated.
                        If None, falls back to keyword-based relevance >= 1 filter.
     """
+    backend = _resolve_backend()
+
     stats = {
         'validated': 0,
         'errors': 0,
         'skipped': 0,
         'triage_used': triage_results is not None,
+        'backend_name': backend['name'],
         'est_input_tokens': 0,
         'est_output_tokens': 0,
         'est_manual_hours': 0.0,
         'elapsed_seconds': 0.0,
     }
-
-    backend = _resolve_backend()
 
     # Check backend availability
     if not _check_backend(backend):
@@ -494,7 +513,7 @@ def validate_posts(posts, triage_results=None):
     start_time = time.time()
 
     for i, post in enumerate(to_validate):
-        if post.get('llm_validated'):
+        if post.get('llm_validated') and 'llm_sector' in post:
             stats['validated'] += 1
             continue
 
@@ -525,6 +544,7 @@ def validate_posts(posts, triage_results=None):
         post['llm_relevance'] = _map_relevance(result)
         post['llm_category'] = result.get('category', 'other')
         post['llm_company'] = result.get('company')
+        post['llm_sector'] = result.get('sector')
         post['llm_headcount'] = result.get('headcount')
         post['llm_confidence'] = result.get('confidence', 0.0)
         post['llm_summary'] = result.get('summary', '')

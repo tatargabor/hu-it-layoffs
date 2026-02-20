@@ -1,14 +1,17 @@
 """Multi-source scraper for Hungarian IT layoff posts.
 
-Sources: Reddit (old.reddit.com JSON API), HUP.hu (HTML scraping).
+Sources: Reddit (old.reddit.com JSON API), HUP.hu (HTML scraping), Google News (RSS).
 """
 
+import hashlib
 import json
 import os
 import time
 import urllib.request
 import urllib.parse
+import xml.etree.ElementTree as ET
 from datetime import datetime
+from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 
 
@@ -49,6 +52,26 @@ HUP_QUERIES = [
     'elbocsátás',
     'IT munkahely',
     'hiring freeze',
+]
+
+GNEWS_QUERIES = [
+    # Magyar IT leépítés
+    'leépítés IT',
+    'elbocsátás programozó',
+    'leépítés informatikus',
+    # AI / munkahely
+    'mesterséges intelligencia munkahely',
+    'AI leépítés',
+    # Angol query-k magyar kontextussal
+    'tech layoff Hungary',
+    'AI jobs Budapest',
+    # Hiring freeze
+    'hiring freeze Magyarország',
+    # Cégspecifikus
+    'Ericsson leépítés',
+    'Audi leépítés',
+    'Continental leépítés',
+    'OTP leépítés',
 ]
 
 USER_AGENT = 'hu-it-layoff-report/1.0 (research project)'
@@ -372,6 +395,89 @@ def run_hup_scraper():
     return all_posts
 
 
+# === GOOGLE NEWS SCRAPER ===
+
+def _parse_pubdate(pubdate_str):
+    """Parse RFC 2822 pubDate string to (date_str, timestamp)."""
+    try:
+        dt = parsedate_to_datetime(pubdate_str)
+        return dt.strftime('%Y-%m-%d'), dt.timestamp()
+    except Exception:
+        now = datetime.now()
+        return now.strftime('%Y-%m-%d'), now.timestamp()
+
+
+def _gnews_post_id(title, date_str):
+    """Generate deterministic ID from title + date."""
+    raw = f'{title}{date_str}'.encode('utf-8')
+    return f'gnews-{hashlib.sha256(raw).hexdigest()[:10]}'
+
+
+def run_google_news_scraper():
+    """Scrape Google News RSS for IT layoff related articles. Returns dict of {id: post}."""
+    all_posts = {}
+
+    print('\n=== Google News RSS ===')
+
+    for query in GNEWS_QUERIES:
+        encoded_q = urllib.parse.quote(query)
+        rss_url = f'https://news.google.com/rss/search?q={encoded_q}&hl=hu&gl=HU&ceid=HU:hu'
+        print(f'  Searching: "{query}"')
+
+        time.sleep(REQUEST_DELAY)
+        xml_text = _fetch_html(rss_url)
+        if not xml_text:
+            print(f'    Google News unreachable, skipping')
+            continue
+
+        try:
+            root = ET.fromstring(xml_text)
+        except ET.ParseError as e:
+            print(f'    XML parse error: {e}, skipping')
+            continue
+
+        new_count = 0
+        for item in root.iter('item'):
+            title_el = item.find('title')
+            link_el = item.find('link')
+            pubdate_el = item.find('pubDate')
+            source_el = item.find('source')
+
+            title = title_el.text.strip() if title_el is not None and title_el.text else ''
+            if not title:
+                continue
+
+            link = link_el.text.strip() if link_el is not None and link_el.text else ''
+            pubdate = pubdate_el.text.strip() if pubdate_el is not None and pubdate_el.text else ''
+            news_source = source_el.text.strip() if source_el is not None and source_el.text else 'unknown'
+
+            date_str, timestamp = _parse_pubdate(pubdate)
+            post_id = _gnews_post_id(title, date_str)
+
+            if post_id in all_posts:
+                continue
+
+            all_posts[post_id] = {
+                'id': post_id,
+                'title': title,
+                'subreddit': 'google-news',
+                'source': 'google-news',
+                'news_source': news_source,
+                'date': date_str,
+                'created_utc': timestamp,
+                'score': 0,
+                'num_comments': 0,
+                'url': link,
+                'selftext': '',
+                'top_comments': [],
+            }
+            new_count += 1
+
+        print(f'    Found {new_count} new (total: {len(all_posts)})')
+
+    return all_posts
+
+
 # === MAIN ORCHESTRATION ===
 
 def _load_existing_posts(path='data/raw_posts.json'):
@@ -423,8 +529,11 @@ def run_scraper():
     # Scrape HUP.hu
     hup_posts = run_hup_scraper()
 
+    # Scrape Google News
+    gnews_posts = run_google_news_scraper()
+
     # Merge all sources
-    all_new = {**reddit_posts, **hup_posts}
+    all_new = {**reddit_posts, **hup_posts, **gnews_posts}
     merged, added, updated = _merge_posts(existing, all_new)
 
     print(f'\nMerge: {added} new, {updated} updated, {len(merged)} total')

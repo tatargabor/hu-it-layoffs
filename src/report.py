@@ -43,6 +43,13 @@ def _is_ai_attributed(post):
     return post.get('ai_attributed', False)
 
 
+def _eff_sector(post):
+    """Effective sector: llm_sector if validated, else analyzer company_sector, else 'ismeretlen'."""
+    if post.get('llm_validated') and 'llm_sector' in post and post['llm_sector']:
+        return post['llm_sector']
+    return post.get('company_sector') or 'ismeretlen'
+
+
 _GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett']
 
 
@@ -59,6 +66,8 @@ def _source_str(post):
     source = post.get('source', 'reddit')
     if source == 'reddit':
         return f'r/{post.get("subreddit", "?")}'
+    if source == 'google-news':
+        return post.get('news_source', 'unknown')
     return source
 
 
@@ -159,7 +168,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         link = f'[link]({p["url"]})'
         lines.append(
             f'| {company} | {p["date"]} | '
-            f'{p.get("company_sector", "?")} | {ai_str} | {_source_str(p)} | {link} |'
+            f'{_eff_sector(p)} | {ai_str} | {_source_str(p)} | {link} |'
         )
 
     # Posts without identified company
@@ -197,7 +206,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
 
     by_sector = {}
     for p in strong:
-        sector = p.get('company_sector') or 'ismeretlen'
+        sector = _eff_sector(p)
         by_sector[sector] = by_sector.get(sector, 0) + 1
 
     if by_sector:
@@ -311,11 +320,30 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         lines.append(f'- {year}: {d["ai"]}/{d["total"]} poszt ({pct}%)')
     lines.append('')
 
-    multi_count = sum(1 for p in strong if (p.get('company_sector') or '').lower() not in ('', 'ai/startup'))
-    startup_count = sum(1 for p in strong if 'startup' in (p.get('company_sector') or '').lower())
+    _MULTI_SECTORS = {'big tech', 'telecom', 'automotive', 'energy'}
+    _STARTUP_SECTORS = {'startup', 'AI/startup'}
+    _MID_SECTORS = {'fintech', 'IT services', 'retail tech', 'entertainment'}
+    _GOV_SECTORS = {'government', 'finance/gov'}
+    company_type = {'multi': 0, 'startup': 0, 'mid': 0, 'gov': 0, 'unknown': 0}
+    for p in strong:
+        s = _eff_sector(p)
+        if s in _MULTI_SECTORS:
+            company_type['multi'] += 1
+        elif s in _STARTUP_SECTORS:
+            company_type['startup'] += 1
+        elif s in _MID_SECTORS:
+            company_type['mid'] += 1
+        elif s in _GOV_SECTORS:
+            company_type['gov'] += 1
+        else:
+            company_type['unknown'] += 1
     lines.append('**Cég típus:**')
-    lines.append(f'- Multinacionális / nagyvállalat: {multi_count} esemény')
-    lines.append(f'- Startup / KKV: {startup_count} esemény')
+    lines.append(f'- Multinacionális / nagyvállalat: {company_type["multi"]} esemény')
+    lines.append(f'- Közepes / vegyes: {company_type["mid"]} esemény')
+    lines.append(f'- Startup / KKV: {company_type["startup"]} esemény')
+    if company_type['gov'] > 0:
+        lines.append(f'- Állami: {company_type["gov"]} esemény')
+    lines.append(f'- Nem besorolható: {company_type["unknown"]} esemény')
     lines.append('')
 
     # === HIRING SIGNALS ===
@@ -394,16 +422,24 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('### Elemzési pipeline')
     lines.append('1. **Scraping** — Reddit JSON API-n keresztül, kommentekkel együtt')
     lines.append('2. **Kulcsszó-alapú elemzés** — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás')
-    lines.append('3. **LLM validáció** — minden relevancia >= 1 posztot LLM értékel (structured JSON output)')
-    lines.append('4. **Report generálás** — Markdown + interaktív HTML dashboard')
+    lines.append('3. **LLM batch triage** — posztcímek batch-szűrése LLM-mel, releváns posztok kiválasztása')
+    lines.append('4. **LLM full validáció** — részletes elemzés: kategória, cég, szektor, AI-szerep, technológiák, munkakörök (structured JSON output)')
+    lines.append('5. **Report generálás** — Markdown + interaktív HTML dashboard')
     lines.append('')
     lines.append('### LLM validáció')
-    lines.append('A relevancia >= 1 posztokat nyelvi modell validálja, amely eldönti:')
-    lines.append('- Ténylegesen IT leépítésről szól-e (is_actual_layoff)')
-    lines.append('- Melyik cég érintett (company)')
+    lines.append('A pipeline kétszintű LLM szűrést alkalmaz (konfigurálható backend: GitHub Models, Anthropic, Ollama):')
+    lines.append('')
+    lines.append('**1. Batch triage:** A posztcímeket batch-ekben (~50 cím/kérés) szűri az LLM, kiválasztva a releváns posztokat. Ez csökkenti a full validáció költségét.')
+    lines.append('')
+    lines.append('**2. Full validáció:** A releváns posztokat egyenként elemzi az LLM, amely meghatározza:')
+    lines.append('- Kategória (layoff / freeze / anxiety / other)')
+    lines.append('- Érintett cég és iparági szektor (zárt kategórialistából: fintech, automotive, telecom, big tech, IT services, stb.)')
+    lines.append('- AI/automatizáció szerepe (direct / factor / concern / none)')
     lines.append('- Confidence score (0.0-1.0)')
     lines.append('- 1 mondatos magyar összefoglaló')
     lines.append('- Érintett technológiák és munkakörök')
+    lines.append('')
+    lines.append('A szektort az LLM a teljes kontextusból határozza meg — nem csak cégnév alapján, hanem a poszt tartalmából is (pl. "banki IT leépítés" → fintech).')
     lines.append('')
     if llm_stats and llm_stats.get('validated', 0) > 0:
         lines.append(f'Jelen futásban **{llm_stats["validated"]} poszt** validálva **{llm_stats.get("elapsed_seconds", 0):.0f} másodperc** alatt.')
@@ -422,15 +458,26 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     if llm_stats and llm_stats.get('validated', 0) > 0:
         est_input = llm_stats.get('est_input_tokens', 0)
         est_output = llm_stats.get('est_output_tokens', 0)
-        est_cost = est_input / 1_000_000 * 0.15 + est_output / 1_000_000 * 0.60
         manual_hours = llm_stats.get('est_manual_hours', 0)
         elapsed = llm_stats.get('elapsed_seconds', 0)
+        backend_name = llm_stats.get('backend_name', 'unknown')
+
+        # Dynamic cost estimation based on backend
+        _COST_RATES = {
+            'anthropic': (0.80, 4.00, 'Anthropic Haiku'),
+            'github': (0.15, 0.60, 'gpt-4o-mini'),
+        }
+        input_rate, output_rate, rate_label = _COST_RATES.get(backend_name, (0.15, 0.60, backend_name))
+        est_cost = est_input / 1_000_000 * input_rate + est_output / 1_000_000 * output_rate
 
         lines.append('---')
         lines.append('')
         lines.append(f'**LLM validáció:** {llm_stats["validated"]} poszt validálva {elapsed:.0f} másodperc alatt')
         lines.append(f'**Tokenek:** ~{est_input:,} input + ~{est_output:,} output')
-        lines.append(f'**Becsült költség (gpt-4o-mini áron):** ${est_cost:.3f} | **Tényleges (GitHub Models):** $0.00')
+        if backend_name in ('ollama', 'openai'):
+            lines.append(f'**Költség:** $0.00 (lokális)')
+        else:
+            lines.append(f'**Becsült költség ({rate_label} áron):** ${est_cost:.3f}')
         lines.append(f'**Kézzel ez ~{manual_hours:.0f} óra munka lett volna**')
         lines.append('')
 

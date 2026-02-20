@@ -40,6 +40,13 @@ def _is_ai_attributed(post):
     return post.get('ai_attributed', False)
 
 
+def _eff_sector(post):
+    """Effective sector: llm_sector if validated, else analyzer company_sector, else 'ismeretlen'."""
+    if post.get('llm_validated') and 'llm_sector' in post and post['llm_sector']:
+        return post['llm_sector']
+    return post.get('company_sector') or 'ismeretlen'
+
+
 _GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett']
 
 
@@ -107,7 +114,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     # Sector data
     sector_counts = defaultdict(int)
     for p in strong:
-        s = p.get('company_sector') or 'ismeretlen'
+        s = _eff_sector(p)
         sector_counts[s] += 1
 
     # Hiring freeze timeline
@@ -173,7 +180,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     for p in relevant:
         src = p.get('source', 'reddit')
         sub = p.get('subreddit', '?')
-        label = f'r/{sub}' if src == 'reddit' else src
+        label = f'r/{sub}' if src == 'reddit' else p.get('news_source', src) if src == 'google-news' else src
         by_source[label] += 1
 
     # Build detailed table rows
@@ -190,7 +197,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
         llm_badge = ' &#10003;' if p.get('llm_validated') else ''
 
         src = p.get('source', 'reddit')
-        src_label = f'r/{p.get("subreddit", "?")}' if src == 'reddit' else src
+        src_label = f'r/{p.get("subreddit", "?")}' if src == 'reddit' else p.get('news_source', src) if src == 'google-news' else src
 
         detailed_rows += f'''<tr>
       <td>{p["date"]}</td>
@@ -412,7 +419,7 @@ details summary:hover {{ color: #fff; }}
       <td><a href="{p["url"]}" target="_blank">{p["title"][:60].replace("&", "&amp;").replace("<", "&lt;")}{"..." if len(p["title"]) > 60 else ""}</a></td>
       <td>{p.get("company") or p.get("llm_company") or "—"}</td>
       <td><span class="tag tag-{p.get("category", "other")}">{p.get("category", "other")}</span></td>
-      <td>{"r/" + p.get("subreddit", "?") if p.get("source", "reddit") == "reddit" else p.get("source", "?")}</td>
+      <td>{"r/" + p.get("subreddit", "?") if p.get("source", "reddit") == "reddit" else p.get("news_source", p.get("source", "?")) if p.get("source") == "google-news" else p.get("source", "?")}</td>
       <td>{p["score"]}</td>
       <td>{p["num_comments"]}</td>
       <td class="rel-{_eff_relevance(p)}">{"&#9733;" * _eff_relevance(p)}</td>
