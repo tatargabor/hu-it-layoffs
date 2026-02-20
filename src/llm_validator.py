@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import subprocess
 import time
 import urllib.request
@@ -15,18 +16,20 @@ ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
 TRIAGE_SYSTEM_PROMPT = """Te egy magyar IT munkaerőpiaci elemző vagy. A feladatod egy poszt-lista szűrése: jelöld meg melyik posztok RELEVÁNSAK az IT munkaerőpiac szempontjából.
 
 Releváns posztok (BŐVEN szűrj, inkább legyen több mint kevesebb):
-- Leépítés, elbocsátás, létszámcsökkentés (bármely szektorban, ha magyarországi)
-- Hiring freeze, felvételi stop, álláspiac-romlás
+- Leépítés, elbocsátás, létszámcsökkentés az IT/tech szektorban vagy IT pozíciókban
+- Leépítés más szektorban, DE IT/tech pozíciókat érint (pl. bank IT osztály, autógyár fejlesztőközpont)
+- Hiring freeze, felvételi stop, álláspiac-romlás az IT-ben
 - Nehéz elhelyezkedés, álláskeresési nehézségek az IT-ben
-- Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések
-- AI/automatizáció hatása a munkára, munkahelyek megszűnése
+- Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések IT-sektorra vonatkozóan
+- AI/automatizáció hatása az IT munkára, munkahelyek megszűnése
 - IT munkaerőpiaci kérdések (fizetés, piac helyzete, kereslet/kínálat)
-- Cégekről szóló hírek amik a munkaerőpiacot érintik
+- Tech cégekről szóló hírek amik a munkaerőpiacot érintik
 
 NEM releváns:
+- Nem-IT szektorok leépítései (katonai, oktatási, agrár, gyártási, közlekedési) — KIVÉVE ha kifejezetten IT/tech pozíciókat érintenek
 - Technikai kérdések (milyen monitort vegyek, kód hibakeresés)
 - Tanulási kérdések amik NEM kapcsolódnak a munkaerőpiachoz
-- Általános politika/gazdaság ami NEM érinti közvetlenül a munkaerőpiacot
+- Általános politika/gazdaság ami NEM érinti közvetlenül az IT munkaerőpiacot
 - Szórakozás, mém, offtopic
 
 Válaszolj JSON formátumban: {"relevant": [1, 5, 12, ...]}
@@ -51,12 +54,12 @@ Válaszolj JSON formátumban az alábbi sémával:
 }
 
 Mezők:
-- is_actual_layoff: true ha a poszt konkrét IT leépítésről/elbocsátásról szól
+- is_actual_layoff: true CSAK ha a poszt SZERVEZETI SZINTŰ IT/tech leépítésről szól (cég elbocsát N embert, IT pozíciókat érintő leépítés). False ha: egyéni szintű ("kirúgtak és tanácsot kérek"), nem-IT szektor, vagy nem leépítés.
 - category: a poszt kategóriája az alábbiak közül:
-  - "layoff": Konkrét elbocsátás, leépítés, létszámcsökkentés (pl. "200 embert kirúgtak")
-  - "freeze": Hiring freeze, álláspiac-romlás, nehéz elhelyezkedés, felvételi stop (pl. "egy éve nem találok munkát", "nem vesznek fel senkit")
+  - "layoff": Konkrét IT/tech szektorban történő elbocsátás, leépítés, létszámcsökkentés (pl. "200 fejlesztőt kirúgtak"). Ide tartozik: tech cégek, IT szolgáltatók, telco, valamint más szektorok IT/tech osztályai (pl. bank IT, autógyár fejlesztőközpont). NEM ide tartozik: katonai, oktatási (kivéve IT képzés), agrár, gyártási, közlekedési szektorok leépítései. Egyéni "kirúgtak és tanácsot kérek" típusú posztok NEM layoff — azok freeze vagy anxiety.
+  - "freeze": Hiring freeze, álláspiac-romlás, nehéz elhelyezkedés, felvételi stop (pl. "egy éve nem találok munkát", "nem vesznek fel senkit"). Ide tartoznak azok a posztok is ahol valakit egyénileg elbocsátottak és tanácsot kér (nem szervezeti leépítés).
   - "anxiety": Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések az IT szektorra vonatkozóan (pl. "megéri programozónak tanulni?", "AI elveszi a munkánkat?")
-  - "other": Nem kapcsolódik az IT munkaerőpiachoz (általános kérdés, hír, offtopic)
+  - "other": Nem kapcsolódik az IT munkaerőpiachoz — általános kérdés, hír, offtopic, VAGY nem-IT szektorban történő leépítés (katonai, oktatási, agrár, közlekedési stb.)
 - confidence: mennyire vagy biztos a category besorolásban (0.0-1.0)
 - company: az érintett cég neve ha azonosítható, egyébként null
 - headcount: becsült érintett létszám ha kiderül a posztból, egyébként null
@@ -87,6 +90,15 @@ Válasz: {"is_actual_layoff": false, "category": "anxiety", "confidence": 0.9, "
 Poszt: "Continental AI Center Budapest leépítés — a divízió áthelyezése az ok"
 Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Continental", "headcount": null, "summary": "A Continental budapesti AI Center-ben leépítés a divízió áthelyezése miatt.", "technologies": ["AI"], "roles": [], "ai_role": "none", "ai_context": null}
 
+Poszt: "Partizán interjú egy kirúgott katonával — a Magyar Honvédség átszervezése"
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Magyar Honvédség", "headcount": null, "summary": "Katonai átszervezés a Magyar Honvédségnél, nem IT szektor.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+
+Poszt: "Költségoptimalizálásra hivatkozva leépítik az idegennyelv-oktatást a Corvinuson"
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Corvinus Egyetem", "headcount": null, "summary": "Nyelvtanárok elbocsátása a Corvinuson, nem IT pozíciók.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
+
+Poszt: "Junior Frontend fejlesztőnek tanács? 2 év után leépítés volt a cégnél"
+Válasz: {"is_actual_layoff": false, "category": "freeze", "confidence": 0.85, "company": null, "headcount": null, "summary": "A szerző frontend fejlesztőként elvesztette állását leépítés miatt és tanácsot kér.", "technologies": ["frontend"], "roles": ["frontend fejlesztő"], "ai_role": "none", "ai_context": null}
+
 Poszt: "Milyen monitort ajánlotok home office-hoz?"
 Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": null, "headcount": null, "summary": "Monitor vásárlási tanács, nem kapcsolódik a munkaerőpiachoz.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null}
 
@@ -96,6 +108,17 @@ FONTOS: Csak JSON-t válaszolj, semmi mást!"""
 def _resolve_backend():
     """Resolve LLM backend config from env vars. Returns dict with url, headers, model, delay."""
     backend = os.environ.get('LLM_BACKEND', 'github').lower()
+
+    if backend == 'openai':
+        url = os.environ.get('LLM_API_URL', 'http://localhost:20128/v1/chat/completions')
+        model = os.environ.get('LLM_MODEL', 'claude-3-haiku-20240307')
+        return {
+            'name': 'openai',
+            'url': url,
+            'headers': {'Content-Type': 'application/json'},
+            'model': model,
+            'delay': 0,
+        }
 
     if backend == 'ollama':
         model = os.environ.get('LLM_MODEL', 'llama3.1')
@@ -170,6 +193,19 @@ def _check_ollama():
 
 def _check_backend(backend):
     """Check if the LLM backend is available. Returns True if usable."""
+    if backend['name'] == 'openai':
+        # Generic OpenAI-compatible endpoint — try a quick health check
+        try:
+            from urllib.parse import urlparse
+            parsed = urlparse(backend['url'])
+            base = f'{parsed.scheme}://{parsed.netloc}/v1/models'
+            req = urllib.request.Request(base)
+            urllib.request.urlopen(req, timeout=5)
+        except (urllib.error.URLError, urllib.error.HTTPError, OSError):
+            print(f'\nLLM: OpenAI-compatible endpoint not reachable at {backend["url"]}')
+            return False
+        print(f'\nUsing OpenAI-compatible backend ({backend["url"]}, model: {backend["model"]})')
+        return True
     if backend['name'] == 'ollama':
         if not _check_ollama():
             print('\nLLM: Ollama not reachable at localhost:11434')
@@ -213,11 +249,12 @@ def _call_llm(backend, system_prompt, prompt, max_retries=5):
                 {'role': 'user', 'content': prompt},
             ],
             'temperature': 0.1,
+            'stream': False,
         }
         # JSON mode: different param for Ollama vs OpenAI
         if backend['name'] == 'ollama':
             body_dict['format'] = 'json'
-        else:
+        elif backend['name'] != 'openai':
             body_dict['response_format'] = {'type': 'json_object'}
 
     body = json.dumps(body_dict).encode()
@@ -237,6 +274,9 @@ def _call_llm(backend, system_prompt, prompt, max_retries=5):
                 content = data['content'][0]['text']
             else:
                 content = data['choices'][0]['message']['content']
+            # Strip markdown code fences (```json ... ```) if present
+            content = re.sub(r'^```(?:json)?\s*\n?', '', content.strip())
+            content = re.sub(r'\n?```\s*$', '', content.strip())
             return json.loads(content)
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < max_retries - 1:
@@ -516,7 +556,7 @@ def validate_posts(posts, triage_results=None):
     print(f'  Skipped: {stats["skipped"]}')
     print(f'  Time: {stats["elapsed_seconds"]:.0f}s')
     print(f'  Est. tokens: ~{stats["est_input_tokens"]:,} input + ~{stats["est_output_tokens"]:,} output')
-    if backend['name'] == 'ollama':
+    if backend['name'] in ('ollama', 'openai'):
         print(f'  Cost: $0.00 (local)')
     elif backend['name'] == 'anthropic':
         print(f'  Est. cost (Haiku rates): ${est_total_cost:.3f}')
