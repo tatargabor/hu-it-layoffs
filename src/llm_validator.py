@@ -60,9 +60,9 @@ Válaszolj JSON formátumban az alábbi sémával:
 }
 
 Mezők:
-- is_actual_layoff: true CSAK ha a poszt SZERVEZETI SZINTŰ IT/tech leépítésről szól (cég elbocsát N embert, IT pozíciókat érintő leépítés). False ha: egyéni szintű ("kirúgtak és tanácsot kérek"), nem-IT szektor, vagy nem leépítés.
+- is_actual_layoff: true CSAK ha a poszt SZERVEZETI SZINTŰ leépítésről szól ÉS kifejezetten IT/tech/fejlesztő/programozó/informatikus pozíciókat érint. False ha: egyéni szintű ("kirúgtak és tanácsot kérek"), gyári/termelési/fizikai munkás leépítés, vagy nem leépítés. FONTOS: autógyári, gyártóüzemi leépítés (pl. Audi Győr gyári munkások, Suzuki termelés) NEM is_actual_layoff, KIVÉVE ha a cikk kifejezetten megemlíti, hogy IT/szoftverfejlesztő/mérnök pozíciókat érint (pl. "fejlesztőközpont bezárás", "szoftveres csapat leépítése").
 - category: a poszt kategóriája az alábbiak közül:
-  - "layoff": Konkrét IT/tech szektorban történő elbocsátás, leépítés, létszámcsökkentés (pl. "200 fejlesztőt kirúgtak"). Ide tartozik: tech cégek, IT szolgáltatók, telco, valamint más szektorok IT/tech osztályai (pl. bank IT, autógyár fejlesztőközpont). NEM ide tartozik: katonai, oktatási (kivéve IT képzés), agrár, gyártási, közlekedési szektorok leépítései. Egyéni "kirúgtak és tanácsot kérek" típusú posztok NEM layoff — azok freeze vagy anxiety.
+  - "layoff": Konkrét leépítés amely IT/tech/fejlesztő/programozó/informatikus pozíciókat érint. Ide tartozik: tech cégek, IT szolgáltatók, telco, valamint más szektorok IT/tech osztályai (pl. bank IT osztály, autógyár FEJLESZTŐKÖZPONT/szoftvermérnökök). NEM ide tartozik: gyári/termelési munkás leépítés (még ha tech cégnél is!), katonai, oktatási, agrár, gyártási, közlekedési szektorok leépítései. Ha egy cikk csak annyit mond hogy "leépítés az X cégnél" és NEM említ IT/fejlesztő/programozó pozíciókat, és a cég nem IT cég → category: "other". Egyéni "kirúgtak és tanácsot kérek" típusú posztok NEM layoff — azok freeze vagy anxiety.
   - "freeze": Hiring freeze, álláspiac-romlás, nehéz elhelyezkedés, felvételi stop (pl. "egy éve nem találok munkát", "nem vesznek fel senkit"). Ide tartoznak azok a posztok is ahol valakit egyénileg elbocsátottak és tanácsot kér (nem szervezeti leépítés).
   - "anxiety": Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések az IT szektorra vonatkozóan (pl. "megéri programozónak tanulni?", "AI elveszi a munkánkat?")
   - "other": Nem kapcsolódik az IT munkaerőpiachoz — általános kérdés, hír, offtopic, VAGY nem-IT szektorban történő leépítés (katonai, oktatási, agrár, közlekedési stb.)
@@ -108,7 +108,9 @@ FONTOS A NEM-IT SZEKTOROKRÓL:
 - Bolti eladó, áruházi dolgozó, gyári munkás, textilipari dolgozó, élelmiszeripari dolgozó leépítése = category: "other", sector: "other" — MÉG HA magyar vonatkozású is!
 - Heineken, Nestlé, Dacia gyári leépítés = category: "other" (hacsak nem IT pozíciókat érint)
 - Barkácsáruház, élelmiszerlánc leépítés = category: "other"
-- CSAK akkor "layoff" ha IT/tech pozíciók érintettek (fejlesztő, informatikus, DevOps, QA, stb.)
+- AUTÓGYÁRI leépítés (Audi, Suzuki, Mercedes, BMW gyári munkás/termelési pozíciók) = category: "other", sector: "automotive" — KIVÉVE ha a cikk kifejezetten IT/fejlesztő/szoftver pozíciókat említ!
+- CSAK akkor "layoff" ha IT/tech pozíciók érintettek (fejlesztő, programozó, informatikus, szoftvermérnök, DevOps, QA, data engineer, stb.)
+- Ha a cikk csak annyit mond "leépítés a cégnél" és NEM részletezi hogy milyen pozíciók, és a cég nem IT cég → category: "other"
 
 Példák:
 
@@ -153,6 +155,12 @@ Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "c
 
 Poszt: "6000 fős leépítés jöhet a Heinekennél"
 Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Heineken", "sector": "other", "headcount": 6000, "summary": "A Heineken gyári leépítése, nem IT szektor.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "none", "hungarian_context": null}
+
+Poszt: "Leépítés jön a győri Audinál: ezzel indokolják a vezetők a döntést"
+Válasz: {"is_actual_layoff": false, "category": "other", "confidence": 0.95, "company": "Audi", "sector": "automotive", "headcount": null, "summary": "Az Audi győri gyárában termelési leépítés, nem IT/fejlesztő pozíciókat érint.", "technologies": [], "roles": [], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar gyár, de gyári/termelési leépítés, nem IT pozíciók."}
+
+Poszt: "Az Audi fejlesztőközpontja Győrben bezár, szoftvermérnökök érintettek"
+Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Audi", "sector": "automotive", "headcount": null, "summary": "Az Audi győri fejlesztőközpontjában szoftvermérnökök leépítése.", "technologies": [], "roles": ["szoftvermérnök"], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar fejlesztőközpont IT pozíciók leépítése."}
 
 Poszt: "Magyar Posta elbocsát félszáz informatikust — túl sokat kerestek"
 Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Magyar Posta", "sector": "government", "headcount": 50, "summary": "A Magyar Posta 50 informatikust bocsát el magas bérköltsége miatt.", "technologies": [], "roles": ["informatikus"], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar állami intézmény IT pozíciókat érintő leépítése."}
