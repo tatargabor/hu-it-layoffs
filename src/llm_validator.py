@@ -109,7 +109,7 @@ def _resolve_backend():
 
     if backend == 'anthropic':
         api_key = os.environ.get('ANTHROPIC_API_KEY', '')
-        model = os.environ.get('LLM_MODEL', 'claude-haiku-4-5-20241022')
+        model = os.environ.get('LLM_MODEL', 'claude-3-haiku-20240307')
         return {
             'name': 'anthropic',
             'url': ANTHROPIC_API_URL,

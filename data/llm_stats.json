@@ -1,10 +1,10 @@
 {
-  "validated": 162,
+  "validated": 145,
   "errors": 1,
-  "skipped": 203,
+  "skipped": 220,
   "triage_used": true,
-  "est_input_tokens": 347849,
-  "est_output_tokens": 12577,
-  "est_manual_hours": 44.125,
-  "elapsed_seconds": 447.903600692749
+  "est_input_tokens": 309643,
+  "est_output_tokens": 13970,
+  "est_manual_hours": 43.9,
+  "elapsed_seconds": 371.2534463405609
 }
