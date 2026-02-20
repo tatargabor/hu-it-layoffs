@@ -137,19 +137,25 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     # All relevant posts for detailed table
     all_relevant = sorted(relevant, key=lambda x: x['created_utc'], reverse=True)
 
-    # Stats
-    total_min = sum((_eff_headcount(p)[0] or 0) for p in strong)
-    total_max = sum((_eff_headcount(p)[1] or 0) for p in strong)
+    # Stats — recent quarter for primary card
+    now = datetime.now()
+    q_now = (now.month - 1) // 3 + 1
+    cutoff_year = now.year - 1 if q_now <= 1 else now.year
+    cutoff_q = (q_now - 1) if q_now > 1 else 4
+    cutoff_date = f'{cutoff_year}-{(cutoff_q - 1) * 3 + 1:02d}-01'
+    recent_strong = [p for p in strong if p['date'] >= cutoff_date]
+    recent_quarter_label = f'{cutoff_date[:4]} Q{cutoff_q}'
     companies = set(p.get('company') or p.get('llm_company') for p in relevant if p.get('company') or p.get('llm_company'))
     ai_count = sum(1 for p in relevant if p.get('ai_attributed'))
     freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
 
-    # Date range for headcount label
-    if strong:
-        strong_dates = sorted(p['date'] for p in strong)
-        date_range_str = f'{strong_dates[0]} – {strong_dates[-1]}'
-    else:
-        date_range_str = '?'
+    # Source breakdown
+    by_source = defaultdict(int)
+    for p in relevant:
+        src = p.get('source', 'reddit')
+        sub = p.get('subreddit', '?')
+        label = f'r/{sub}' if src == 'reddit' else src
+        by_source[label] += 1
 
     # Build detailed table rows
     detailed_rows = ''
@@ -172,12 +178,16 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
             title_esc += '...'
         llm_badge = ' &#10003;' if p.get('llm_validated') else ''
 
+        src = p.get('source', 'reddit')
+        src_label = f'r/{p.get("subreddit", "?")}' if src == 'reddit' else src
+
         detailed_rows += f'''<tr>
       <td>{p["date"]}</td>
       <td><a href="{p["url"]}" target="_blank">{title_esc}</a></td>
       <td>{company}</td>
       <td>{hc_html}</td>
       <td><span class="tag tag-{cat}">{cat}</span></td>
+      <td>{src_label}</td>
       <td>{p["score"]}</td>
       <td>{p["num_comments"]}</td>
       <td class="rel-{rel}">{"&#9733;" * rel}{llm_badge}</td>
@@ -229,7 +239,7 @@ new Chart(document.getElementById('rolesChart'), {{
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>magyar.dev/layoffs — IT Leépítés Radar</title>
 <meta property="og:title" content="magyar.dev/layoffs — IT Leépítés Radar">
-<meta property="og:description" content="{len(companies)} cég, ~{total_min:,}–{total_max:,} érintett, {len(relevant)} poszt alapján">
+<meta property="og:description" content="{len(companies)} érintett cég, {len(recent_strong)} jelzés {recent_quarter_label} óta, {len(relevant)} poszt alapján">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="magyar.dev/layoffs — IT Leépítés Radar">
@@ -288,7 +298,7 @@ details summary:hover {{ color: #fff; }}
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
   <div class="sub">Reddit (r/programmingHungary, r/hungary) publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
-  <div class="tagline">1 óra tervezés, 2 óra generálás</div>
+  <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
     <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=" target="_blank">LinkedIn</a>
@@ -297,7 +307,7 @@ details summary:hover {{ color: #fff; }}
 </div>
 
 <div class="stats">
-  <div class="stat primary"><div class="num">~{total_min:,}–{total_max:,}</div><div class="label">Becsült érintett fő<br><span style="font-size:0.85em;color:#666">({date_range_str}, erős jelzések alapján)</span></div></div>
+  <div class="stat primary"><div class="num">{len(recent_strong)}</div><div class="label">Leépítési jelzés<br><span style="font-size:0.85em;color:#666">{recent_quarter_label} óta</span></div></div>
   <div class="stat"><div class="num">{len(direct)}</div><div class="label">Közvetlen leépítés</div></div>
   <div class="stat"><div class="num">{len(relevant)}</div><div class="label">Releváns poszt</div></div>
   <div class="stat"><div class="num">{len(companies)}</div><div class="label">Érintett cég</div></div>
@@ -351,18 +361,22 @@ details summary:hover {{ color: #fff; }}
       <th>Cím</th>
       <th>Cég</th>
       <th>Kategória</th>
+      <th>Forrás</th>
       <th>Score</th>
       <th>Kommentek</th>
       <th>Rel.</th>
+      <th>LLM</th>
     </tr>
     {"".join(f'''<tr>
       <td>{p["date"]}</td>
       <td><a href="{p["url"]}" target="_blank">{p["title"][:60].replace("&", "&amp;").replace("<", "&lt;")}{"..." if len(p["title"]) > 60 else ""}</a></td>
       <td>{p.get("company") or p.get("llm_company") or "—"}</td>
       <td><span class="tag tag-{p.get("category", "other")}">{p.get("category", "other")}</span></td>
+      <td>{"r/" + p.get("subreddit", "?") if p.get("source", "reddit") == "reddit" else p.get("source", "?")}</td>
       <td>{p["score"]}</td>
       <td>{p["num_comments"]}</td>
-      <td class="rel-{_eff_relevance(p)}">{"&#9733;" * _eff_relevance(p)}{" &#10003;" if p.get("llm_validated") else ""}</td>
+      <td class="rel-{_eff_relevance(p)}">{"&#9733;" * _eff_relevance(p)}</td>
+      <td>{"&#10003;" if p.get("llm_validated") else "—"}</td>
     </tr>''' for p in top_posts)}
   </table>
 </div>
@@ -376,6 +390,7 @@ details summary:hover {{ color: #fff; }}
       <th>Cég</th>
       <th>Létszám</th>
       <th>Kategória</th>
+      <th>Forrás</th>
       <th>Score</th>
       <th>Komment</th>
       <th>Rel.</th>
@@ -387,7 +402,7 @@ details summary:hover {{ color: #fff; }}
 </details>
 
 <div class="footer">
-  Forrás: Reddit publikus JSON API | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec &middot; Agentic
+  Források: {", ".join(f"{k} ({v})" for k, v in sorted(by_source.items(), key=lambda x: -x[1]))} | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec &middot; Agentic
   {"<br>" + f"{llm_stats['validated']} poszt LLM-validálva {llm_stats['elapsed_seconds']:.0f}s alatt | ~{llm_stats['est_input_tokens']:,}+{llm_stats['est_output_tokens']:,} token | Költség: $0.00 (GitHub Models) | Kézzel ez ~{llm_stats['est_manual_hours']:.0f} óra lett volna" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
 </div>
 

@@ -44,6 +44,14 @@ def _eff_headcount(post):
     return post.get('headcount_min'), post.get('headcount_max'), post.get('headcount_source')
 
 
+def _source_str(post):
+    """Format source as display string."""
+    source = post.get('source', 'reddit')
+    if source == 'reddit':
+        return f'r/{post.get("subreddit", "?")}'
+    return source
+
+
 def _headcount_str(post):
     """Format headcount as string."""
     hmin, hmax, src = _eff_headcount(post)
@@ -139,8 +147,8 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     # === COMPANY TABLE ===
     lines.append('## Érintett Cégek')
     lines.append('')
-    lines.append('| Cég | Dátum | Becsült fők | Szektor | AI-faktor | Forrás |')
-    lines.append('|-----|-------|-------------|---------|-----------|--------|')
+    lines.append('| Cég | Dátum | Becsült fők | Szektor | AI-faktor | Forrás | Link |')
+    lines.append('|-----|-------|-------------|---------|-----------|--------|------|')
 
     company_posts = [p for p in strong if p.get('company') or p.get('llm_company')]
     company_posts.sort(key=lambda x: x['date'], reverse=True)
@@ -151,7 +159,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         link = f'[link]({p["url"]})'
         lines.append(
             f'| {company} | {p["date"]} | {_headcount_str(p)} | '
-            f'{p.get("company_sector", "?")} | {ai_str} | {link} |'
+            f'{p.get("company_sector", "?")} | {ai_str} | {_source_str(p)} | {link} |'
         )
 
     # Posts without identified company
@@ -290,8 +298,8 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     # === DETAILED TABLE ===
     lines.append('## Részletes Táblázat')
     lines.append('')
-    lines.append('| Dátum | Cím | Cég | Létszám | Kategória | Score | Komment | Rel. | LLM Conf. | AI |')
-    lines.append('|-------|-----|-----|---------|-----------|-------|---------|------|-----------|----|')
+    lines.append('| Dátum | Cím | Cég | Létszám | Kategória | Forrás | Score | Komment | Rel. | LLM Conf. | AI |')
+    lines.append('|-------|-----|-----|---------|-----------|--------|-------|---------|------|-----------|----|')
 
     for p in sorted(relevant, key=lambda x: x['date'], reverse=True):
         company = p.get('company') or p.get('llm_company') or '—'
@@ -303,7 +311,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         title_short = p['title'][:50] + ('...' if len(p['title']) > 50 else '')
         lines.append(
             f'| {p["date"]} | [{title_short}]({p["url"]}) | {company} | {hc} | '
-            f'{cat} | {p["score"]} | {p["num_comments"]} | {rel} | {conf} | {ai_str} |'
+            f'{cat} | {_source_str(p)} | {p["score"]} | {p["num_comments"]} | {rel} | {conf} | {ai_str} |'
         )
 
     lines.append('')
@@ -311,7 +319,14 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     # === DATA SOURCES ===
     lines.append('## Források')
     lines.append('')
-    lines.append(f'Összesen {len(relevant)} releváns poszt két subredditről:')
+    # Source breakdown
+    by_source = {}
+    for p in relevant:
+        src_label = _source_str(p)
+        by_source[src_label] = by_source.get(src_label, 0) + 1
+
+    source_parts = ', '.join(f'{k}: {v}' for k, v in sorted(by_source.items(), key=lambda x: -x[1]))
+    lines.append(f'Összesen {len(relevant)} releváns poszt ({source_parts}):')
     lines.append('')
 
     for p in sorted(relevant, key=lambda x: x['date'], reverse=True):

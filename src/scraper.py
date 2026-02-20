@@ -1,11 +1,18 @@
-"""Reddit scraper for Hungarian IT layoff posts using old.reddit.com JSON API."""
+"""Multi-source scraper for Hungarian IT layoff posts.
+
+Sources: Reddit (old.reddit.com JSON API), HUP.hu (HTML scraping).
+"""
 
 import json
+import os
 import time
 import urllib.request
 import urllib.parse
 from datetime import datetime
+from html.parser import HTMLParser
 
+
+# === CONFIGURATION ===
 
 SUBREDDIT_QUERIES = {
     'programmingHungary': [
@@ -15,7 +22,7 @@ SUBREDDIT_QUERIES = {
         'bújtatott leépítés OR quiet firing',
         'AI elveszi OR AI munka OR AI munkahely',
         'álláskereső OR álláspiac',
-        'munkanélküli OR nincs munka',
+        'munkanélküli IT OR nincs munka programozó OR nincs munka fejlesztő',
         # Known affected companies
         'OTP leépítés OR Ericsson leépítés OR NNG leépítés',
         'Szállás Group OR Docler OR Byborg',
@@ -25,8 +32,24 @@ SUBREDDIT_QUERIES = {
         'IT leépítés OR programozó elbocsátás OR tech leépítés',
         'IT munkaerőpiac',
         'szoftver leépítés OR informatikus elbocsátás',
+        'álláskereső OR álláspiac',
+        'hiring freeze',
+        'Ericsson OR Continental OR OTP OR NNG OR Lensa OR Microsoft leépítés',
+    ],
+    'layoffs': [
+        'Hungary OR Hungarian OR Budapest',
+    ],
+    'cscareerquestions': [
+        'Hungary OR Hungarian OR Budapest',
     ],
 }
+
+HUP_QUERIES = [
+    'leépítés',
+    'elbocsátás',
+    'IT munkahely',
+    'hiring freeze',
+]
 
 USER_AGENT = 'hu-it-layoff-report/1.0 (research project)'
 REQUEST_DELAY = 2.0
@@ -34,6 +57,8 @@ RETRY_DELAY = 10
 MAX_PAGES_PER_QUERY = 5
 RESULTS_PER_PAGE = 100
 
+
+# === HTTP HELPERS ===
 
 def _fetch_json(url):
     """Fetch JSON from URL with rate limiting and retry on 429."""
@@ -48,7 +73,7 @@ def _fetch_json(url):
             try:
                 resp = urllib.request.urlopen(req, timeout=30)
                 return json.loads(resp.read())
-            except urllib.error.HTTPError as e2:
+            except urllib.error.HTTPError:
                 print(f'  Still 429 after retry, skipping: {url[:80]}')
                 return None
         else:
@@ -58,6 +83,19 @@ def _fetch_json(url):
         print(f'  Error fetching {url[:80]}: {e}')
         return None
 
+
+def _fetch_html(url):
+    """Fetch HTML from URL with rate limiting."""
+    req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+    try:
+        resp = urllib.request.urlopen(req, timeout=30)
+        return resp.read().decode('utf-8', errors='replace')
+    except Exception as e:
+        print(f'  Error fetching {url[:80]}: {e}')
+        return None
+
+
+# === REDDIT SCRAPER ===
 
 def search_subreddit(subreddit, query):
     """Search a subreddit with pagination. Returns list of post dicts."""
@@ -88,6 +126,7 @@ def search_subreddit(subreddit, query):
                 'id': d['id'],
                 'title': d.get('title', ''),
                 'subreddit': d.get('subreddit', subreddit),
+                'source': 'reddit',
                 'date': datetime.fromtimestamp(d['created_utc']).strftime('%Y-%m-%d'),
                 'created_utc': d['created_utc'],
                 'score': d.get('score', 0),
@@ -106,7 +145,10 @@ def search_subreddit(subreddit, query):
 
 
 def fetch_post_details(post):
-    """Fetch full selftext and top comments for a post."""
+    """Fetch full selftext and top comments for a Reddit post."""
+    if post.get('source') != 'reddit':
+        return post
+
     post_id = post['id']
     subreddit = post['subreddit']
     url = f'https://old.reddit.com/r/{subreddit}/comments/{post_id}.json?limit=20&sort=top'
@@ -117,14 +159,12 @@ def fetch_post_details(post):
         post['top_comments'] = []
         return post
 
-    # First element is the post itself
     post_data = data[0].get('data', {}).get('children', [])
     if post_data:
         full_selftext = post_data[0].get('data', {}).get('selftext', '')
         if full_selftext:
             post['selftext'] = full_selftext
 
-    # Second element is the comment listing
     comments = []
     comment_children = data[1].get('data', {}).get('children', [])
     for c in comment_children[:20]:
@@ -143,8 +183,8 @@ def fetch_post_details(post):
     return post
 
 
-def run_scraper():
-    """Main scraper function. Returns list of unique posts with details."""
+def run_reddit_scraper():
+    """Scrape all configured Reddit subreddits. Returns dict of {id: post}."""
     all_posts = {}
 
     for subreddit, queries in SUBREDDIT_QUERIES.items():
@@ -159,14 +199,247 @@ def run_scraper():
                     new_count += 1
             print(f'    Found {len(posts)}, {new_count} new (total: {len(all_posts)})')
 
-    print(f'\nTotal unique posts: {len(all_posts)}')
-    print('Fetching post details (comments)...')
+    return all_posts
 
-    posts_list = sorted(all_posts.values(), key=lambda x: x['created_utc'], reverse=True)
+
+# === HUP.HU SCRAPER ===
+
+class _HupSearchParser(HTMLParser):
+    """Parse HUP.hu search results page to extract topic links."""
+
+    def __init__(self):
+        super().__init__()
+        self.results = []  # list of (url, title)
+        self._in_result_link = False
+        self._current_href = None
+        self._current_title = ''
+
+    def handle_starttag(self, tag, attrs):
+        attrs_dict = dict(attrs)
+        if tag == 'a' and 'href' in attrs_dict:
+            href = attrs_dict['href']
+            if '/node/' in href and 'search' not in href:
+                self._in_result_link = True
+                self._current_href = href
+                self._current_title = ''
+
+    def handle_data(self, data):
+        if self._in_result_link:
+            self._current_title += data
+
+    def handle_endtag(self, tag):
+        if tag == 'a' and self._in_result_link:
+            self._in_result_link = False
+            if self._current_href and self._current_title.strip():
+                self.results.append((self._current_href, self._current_title.strip()))
+            self._current_href = None
+            self._current_title = ''
+
+
+class _HupTopicParser(HTMLParser):
+    """Parse a HUP.hu topic page to extract body text and metadata."""
+
+    def __init__(self):
+        super().__init__()
+        self.body_text = ''
+        self.date_str = ''
+        self.comment_count = 0
+        self._in_content = False
+        self._in_submitted = False
+        self._depth = 0
+
+    def handle_starttag(self, tag, attrs):
+        attrs_dict = dict(attrs)
+        cls = attrs_dict.get('class', '')
+        if 'content' in cls and tag == 'div':
+            self._in_content = True
+            self._depth = 0
+        if self._in_content and tag in ('div', 'p', 'span'):
+            self._depth += 1
+        if 'submitted' in cls:
+            self._in_submitted = True
+
+    def handle_data(self, data):
+        if self._in_content:
+            self.body_text += data
+        if self._in_submitted:
+            self.date_str += data
+
+    def handle_endtag(self, tag):
+        if self._in_content and tag in ('div', 'p', 'span'):
+            self._depth -= 1
+            if self._depth <= 0:
+                self._in_content = False
+        if self._in_submitted and tag in ('div', 'span', 'p'):
+            self._in_submitted = False
+
+
+def _parse_hup_date(date_text):
+    """Try to extract a date from HUP submitted text like '2024. január 15.'"""
+    import re
+    months = {
+        'január': 1, 'február': 2, 'március': 3, 'április': 4,
+        'május': 5, 'június': 6, 'július': 7, 'augusztus': 8,
+        'szeptember': 9, 'október': 10, 'november': 11, 'december': 12,
+    }
+    # Pattern: YYYY. hónap DD.
+    m = re.search(r'(\d{4})\.\s*(\w+)\s+(\d{1,2})\.?', date_text)
+    if m:
+        year = int(m.group(1))
+        month_name = m.group(2).lower()
+        day = int(m.group(3))
+        month = months.get(month_name, 1)
+        try:
+            return datetime(year, month, day).strftime('%Y-%m-%d')
+        except ValueError:
+            pass
+    return datetime.now().strftime('%Y-%m-%d')
+
+
+def _hup_node_id(url):
+    """Extract node ID from HUP URL like /node/12345."""
+    import re
+    m = re.search(r'/node/(\d+)', url)
+    return m.group(1) if m else url.split('/')[-1]
+
+
+def run_hup_scraper():
+    """Scrape HUP.hu forum for IT layoff related topics. Returns dict of {id: post}."""
+    all_posts = {}
+
+    print('\n=== hup.hu ===')
+
+    for query in HUP_QUERIES:
+        encoded_q = urllib.parse.quote(query)
+        search_url = f'https://hup.hu/search/node/{encoded_q}'
+        print(f'  Searching: "{query}"')
+
+        time.sleep(REQUEST_DELAY)
+        html = _fetch_html(search_url)
+        if not html:
+            print(f'    HUP.hu unreachable, skipping')
+            continue
+
+        parser = _HupSearchParser()
+        try:
+            parser.feed(html)
+        except Exception as e:
+            print(f'    Parse error: {e}, skipping')
+            continue
+
+        new_count = 0
+        for href, title in parser.results[:20]:  # limit per query
+            node_id = _hup_node_id(href)
+            post_id = f'hup-{node_id}'
+
+            if post_id in all_posts:
+                continue
+
+            # Fetch topic page
+            topic_url = href if href.startswith('http') else f'https://hup.hu{href}'
+            time.sleep(REQUEST_DELAY)
+            topic_html = _fetch_html(topic_url)
+
+            body = ''
+            date = datetime.now().strftime('%Y-%m-%d')
+            if topic_html:
+                tp = _HupTopicParser()
+                try:
+                    tp.feed(topic_html)
+                    body = tp.body_text.strip()[:2000]
+                    if tp.date_str:
+                        date = _parse_hup_date(tp.date_str)
+                except Exception:
+                    pass
+
+            all_posts[post_id] = {
+                'id': post_id,
+                'title': title,
+                'subreddit': 'hup.hu',
+                'source': 'hup.hu',
+                'date': date,
+                'created_utc': datetime.strptime(date, '%Y-%m-%d').timestamp(),
+                'score': 0,
+                'num_comments': 0,
+                'url': topic_url,
+                'selftext': body,
+                'top_comments': [],
+            }
+            new_count += 1
+
+        print(f'    Found {len(parser.results)} results, {new_count} new (total: {len(all_posts)})')
+
+    return all_posts
+
+
+# === MAIN ORCHESTRATION ===
+
+def _load_existing_posts(path='data/raw_posts.json'):
+    """Load existing raw_posts.json for incremental merge."""
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            posts = json.load(f)
+        return {p['id']: p for p in posts}
+    except Exception as e:
+        print(f'  Warning: could not load existing posts: {e}')
+        return {}
+
+
+def _merge_posts(existing, new_posts):
+    """Merge new posts into existing. Updates fields for known posts, adds new ones."""
+    added = 0
+    updated = 0
+    for pid, post in new_posts.items():
+        if pid in existing:
+            # Update mutable fields
+            existing[pid]['score'] = post.get('score', existing[pid].get('score', 0))
+            existing[pid]['num_comments'] = post.get('num_comments', existing[pid].get('num_comments', 0))
+            if post.get('selftext'):
+                existing[pid]['selftext'] = post['selftext']
+            if post.get('top_comments'):
+                existing[pid]['top_comments'] = post['top_comments']
+            # Ensure source field exists on old posts
+            if 'source' not in existing[pid]:
+                existing[pid]['source'] = post.get('source', 'reddit')
+            updated += 1
+        else:
+            existing[pid] = post
+            added += 1
+    return existing, added, updated
+
+
+def run_scraper():
+    """Main scraper: Reddit + HUP, with incremental merge."""
+    # Load existing data
+    existing = _load_existing_posts()
+    if existing:
+        print(f'Loaded {len(existing)} existing posts for incremental update')
+
+    # Scrape Reddit
+    reddit_posts = run_reddit_scraper()
+
+    # Scrape HUP.hu
+    hup_posts = run_hup_scraper()
+
+    # Merge all sources
+    all_new = {**reddit_posts, **hup_posts}
+    merged, added, updated = _merge_posts(existing, all_new)
+
+    print(f'\nMerge: {added} new, {updated} updated, {len(merged)} total')
+
+    # Fetch details for Reddit posts that need it
+    print('Fetching post details (comments)...')
+    posts_list = sorted(merged.values(), key=lambda x: x.get('created_utc', 0), reverse=True)
 
     for i, post in enumerate(posts_list):
-        print(f'  [{i+1}/{len(posts_list)}] {post["title"][:60]}...')
-        fetch_post_details(post)
+        if post.get('source') != 'reddit':
+            continue
+        # Only fetch details if we don't have comments yet or post is from this scrape
+        if post['id'] in reddit_posts:
+            print(f'  [{i+1}/{len(posts_list)}] {post["title"][:60]}...')
+            fetch_post_details(post)
 
     return posts_list
 

@@ -282,6 +282,7 @@ def analyze_posts(posts):
             'id': post['id'],
             'title': post['title'],
             'subreddit': post['subreddit'],
+            'source': post.get('source', 'reddit'),
             'date': post['date'],
             'created_utc': post['created_utc'],
             'score': post['score'],

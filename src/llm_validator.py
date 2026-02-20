@@ -115,7 +115,7 @@ def _map_relevance(llm_result):
 def _build_prompt(post):
     """Build user prompt from post data."""
     parts = [
-        f'Subreddit: r/{post["subreddit"]}',
+        f'Forrás: {post.get("source", "reddit")} / {post["subreddit"]}',
         f'Dátum: {post["date"]}',
         f'Cím: {post["title"]}',
     ]
