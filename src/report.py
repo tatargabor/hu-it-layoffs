@@ -43,6 +43,17 @@ def _is_ai_attributed(post):
     return post.get('ai_attributed', False)
 
 
+_GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett']
+
+
+def _is_named_company(name):
+    """Filter out generic/unnamed company references from stats."""
+    if not name:
+        return False
+    lower = name.lower()
+    return not any(p in lower for p in _GENERIC_COMPANY_PATTERNS)
+
+
 def _source_str(post):
     """Format source as display string."""
     source = post.get('source', 'reddit')
@@ -79,7 +90,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append(f'**Közvetlen leépítés riport (relevancia 3):** {len(direct)}')
     lines.append(f'**Erős jelzés (relevancia >= 2):** {len(strong)}')
 
-    companies = set(p.get('company') or p.get('llm_company') for p in relevant if p.get('company') or p.get('llm_company'))
+    companies = set(c for p in relevant for c in [p.get('company') or p.get('llm_company')] if _is_named_company(c))
     lines.append(f'**Érintett cégek száma:** {len(companies)}')
 
     ai_count = sum(1 for p in relevant if _is_ai_attributed(p))

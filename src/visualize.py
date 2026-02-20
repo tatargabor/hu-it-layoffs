@@ -33,6 +33,23 @@ def _eff_relevance(post):
     return post.get('relevance', 0)
 
 
+def _is_ai_attributed(post):
+    """Check if post is AI-attributed. Uses LLM ai_role if available, else keyword."""
+    if post.get('llm_validated') and 'llm_ai_role' in post:
+        return post['llm_ai_role'] in ('direct', 'factor', 'concern')
+    return post.get('ai_attributed', False)
+
+
+_GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett']
+
+
+def _is_named_company(name):
+    """Filter out generic/unnamed company references from stats."""
+    if not name:
+        return False
+    lower = name.lower()
+    return not any(p in lower for p in _GENERIC_COMPANY_PATTERNS)
+
 
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
     relevant = [p for p in posts if _eff_relevance(p) >= 1]
@@ -83,7 +100,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     for p in relevant:
         year = p['date'][:4]
         ai_by_year[year]['total'] += 1
-        if p.get('ai_attributed'):
+        if _is_ai_attributed(p):
             ai_by_year[year]['ai'] += 1
     ai_years = sorted(ai_by_year.keys())
 
@@ -133,8 +150,8 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     cutoff_date = f'{cutoff_year}-{(cutoff_q - 1) * 3 + 1:02d}-01'
     recent_strong = [p for p in strong if p['date'] >= cutoff_date]
     recent_quarter_label = f'{cutoff_date[:4]} Q{cutoff_q}'
-    companies = set(p.get('company') or p.get('llm_company') for p in relevant if p.get('company') or p.get('llm_company'))
-    ai_count = sum(1 for p in relevant if p.get('ai_attributed'))
+    companies = set(c for p in relevant for c in [p.get('company') or p.get('llm_company')] if _is_named_company(c))
+    ai_count = sum(1 for p in relevant if _is_ai_attributed(p))
     freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
 
     # Engagement data
@@ -166,7 +183,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
         cat = p.get('category', 'other')
         rel = _eff_relevance(p)
         conf = f'{p["llm_confidence"]:.0%}' if p.get('llm_validated') else '—'
-        ai_str = 'igen' if p.get('ai_attributed') else '—'
+        ai_str = 'igen' if _is_ai_attributed(p) else '—'
         title_esc = p['title'][:60].replace('&', '&amp;').replace('<', '&lt;')
         if len(p['title']) > 60:
             title_esc += '...'
