@@ -1,3 +1,6 @@
 .env
 src/__pycache__/
 __pycache__/
+.wt-tools/
+.claude/settings.json.bak
+data.json
