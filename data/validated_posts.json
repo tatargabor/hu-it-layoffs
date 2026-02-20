@@ -2091,8 +2091,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "none",
-    "llm_hungarian_context": null,
-    "llm_event_label": "Heineken 2026 Q1 leépítés"
+    "llm_hungarian_context": null
   },
   {
     "id": "1r1u7pe",
@@ -2171,8 +2170,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Heineken globális leépítése érintheti a magyarországi gyártást és munkahelyeket is.",
-    "llm_event_label": "Heineken 2026 Q1 leépítés"
+    "llm_hungarian_context": "A Heineken globális leépítése érintheti a magyarországi gyártást és munkahelyeket is."
   },
   {
     "id": "gnews-98459c0d79",
@@ -2211,8 +2209,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Heineken globális leépítése várhatóan a magyarországi gyárakat is érinti.",
-    "llm_event_label": "Heineken 2026 Q1 leépítés"
+    "llm_hungarian_context": "A Heineken globális leépítése várhatóan a magyarországi gyárakat is érinti."
   },
   {
     "id": "gnews-dc1adeb805",
@@ -2397,8 +2394,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A sajóbábonyi üzem csődje és leépítése Magyarországon történt.",
-    "llm_event_label": "Sajóbábony 2026 Q1 leépítés"
+    "llm_hungarian_context": "A sajóbábonyi üzem csődje és leépítése Magyarországon történt."
   },
   {
     "id": "1qw2c41",
@@ -4004,8 +4000,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, amely magyar és szlovák munkavállalókat is érint.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, amely magyar és szlovák munkavállalókat is érint."
   },
   {
     "id": "gnews-a4905aa16c",
@@ -4044,8 +4039,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "1qememo",
@@ -4126,8 +4120,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés."
   },
   {
     "id": "1qdd16f",
@@ -4239,8 +4232,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "1qcqj6m",
@@ -4372,8 +4364,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés."
   },
   {
     "id": "gnews-f9cb880426",
@@ -4412,8 +4403,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat."
   },
   {
     "id": "gnews-4944a0ffb9",
@@ -4452,8 +4442,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-5df18103b6",
@@ -4492,8 +4481,7 @@
     "llm_ai_role": "factor",
     "llm_ai_context": "Az Audi a termelékenység növelése és automatizáció miatt bocsát el dolgozókat.",
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-a6c254e543",
@@ -4532,8 +4520,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés."
   },
   {
     "id": "gnews-1c1ca01958",
@@ -4572,8 +4559,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat."
   },
   {
     "id": "gnews-e534ff0adf",
@@ -4612,8 +4598,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés."
   },
   {
     "id": "gnews-b726027477",
@@ -4652,8 +4637,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés."
   },
   {
     "id": "gnews-487e393c44",
@@ -4692,8 +4676,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat."
   },
   {
     "id": "gnews-12e79d02f4",
@@ -4732,8 +4715,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyárat érintő leépítések.",
-    "llm_event_label": "Audi Győr 2026 Q1 leépítés"
+    "llm_hungarian_context": "A győri Audi gyárat érintő leépítések."
   },
   {
     "id": "gnews-2c297a7cb0",
@@ -4920,8 +4902,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A globális autóipari leépítés Magyarországot is érinti.",
-    "llm_event_label": "Autóipar 2026 Q1 leépítés"
+    "llm_hungarian_context": "A globális autóipari leépítés Magyarországot is érinti."
   },
   {
     "id": "gnews-212ef9a28a",
@@ -5932,8 +5913,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A romániai autógyárak leépítései érinthetik a magyar munkaerőpiacot is.",
-    "llm_event_label": "Autógyárak Románia 2025 Q4 leépítés"
+    "llm_hungarian_context": "A romániai autógyárak leépítései érinthetik a magyar munkaerőpiacot is."
   },
   {
     "id": "gnews-f8395f0829",
@@ -6513,8 +6493,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárát érintő leépítés.",
-    "llm_event_label": "Audi Győr 2025 Q4 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárát érintő leépítés."
   },
   {
     "id": "gnews-288cabbb20",
@@ -6847,8 +6826,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Voith globális leépítése érintheti a magyarországi jelenlétét is.",
-    "llm_event_label": "Voith 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Voith globális leépítése érintheti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-7e5da96753",
@@ -6887,8 +6865,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Bosch erdélyi gyárában történő leépítés érinti a magyar munkaerőpiacot is.",
-    "llm_event_label": "Bosch Románia 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Bosch erdélyi gyárában történő leépítés érinti a magyar munkaerőpiacot is."
   },
   {
     "id": "gnews-19a45704f4",
@@ -7501,8 +7478,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Magyarországi autóipari üzem bezárása és leépítés.",
-    "llm_event_label": "Autóipari üzem Magyarország 2025 Q4 leépítés"
+    "llm_hungarian_context": "Magyarországi autóipari üzem bezárása és leépítés."
   },
   {
     "id": "1pd2r7f",
@@ -7713,8 +7689,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A cikk nem említi, de a német autóipari leépítés közvetett hatással lehet a magyarországi beszállítókra és gyárakra.",
-    "llm_event_label": "Németország egyik legnagyobb autóipari cége 2025 Q4 leépítés"
+    "llm_hungarian_context": "A cikk nem említi, de a német autóipari leépítés közvetett hatással lehet a magyarországi beszállítókra és gyárakra."
   },
   {
     "id": "gnews-593853059c",
@@ -7965,8 +7940,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Continental globális leépítése várhatóan a magyarországi leányvállalatokat is érinti.",
-    "llm_event_label": "Continental Magyarország 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Continental globális leépítése várhatóan a magyarországi leányvállalatokat is érinti."
   },
   {
     "id": "gnews-2ed35da736",
@@ -8097,8 +8071,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Dacia romániai gyárában történő leépítés, amely közvetett hatással lehet a magyar munkavállalókra is.",
-    "llm_event_label": "Dacia Románia 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Dacia romániai gyárában történő leépítés, amely közvetett hatással lehet a magyar munkavállalókra is."
   },
   {
     "id": "1p4x6to",
@@ -8823,8 +8796,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Kuka német gépgyártó cég leépítése, amely a magyar autóipari beszállítói láncot is érintheti.",
-    "llm_event_label": "Kuka Németország 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Kuka német gépgyártó cég leépítése, amely a magyar autóipari beszállítói láncot is érintheti."
   },
   {
     "id": "gnews-fac1ae5ee7",
@@ -9785,8 +9757,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyár jövője bizonytalan, a leépítés közvetlenül érinti a magyar munkavállalókat.",
-    "llm_event_label": "Audi Győr 2025 Q4 leépítés"
+    "llm_hungarian_context": "A győri Audi gyár jövője bizonytalan, a leépítés közvetlenül érinti a magyar munkavállalókat."
   },
   {
     "id": "gnews-e4d2ad7018",
@@ -10007,8 +9978,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Volkswagen globális leépítése, amely a magyarországi jelenlétét is érintheti.",
-    "llm_event_label": "Volkswagen 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Volkswagen globális leépítése, amely a magyarországi jelenlétét is érintheti."
   },
   {
     "id": "gnews-5f06adb3b9",
@@ -10734,8 +10704,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Continental makói gyárában történő leépítés.",
-    "llm_event_label": "Continental Makó 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Continental makói gyárában történő leépítés."
   },
   {
     "id": "1obqkal",
@@ -11095,8 +11064,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Nestlé globális leépítése érintheti a magyarországi jelenlétét is.",
-    "llm_event_label": "Nestlé 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Nestlé globális leépítése érintheti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-e275e5b221",
@@ -11135,8 +11103,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "none",
-    "llm_hungarian_context": null,
-    "llm_event_label": "Nestlé 2025 Q4 leépítés"
+    "llm_hungarian_context": null
   },
   {
     "id": "gnews-662f87f3aa",
@@ -11175,8 +11142,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Nestlé globális leépítése, de a cégnek van magyarországi jelenléte.",
-    "llm_event_label": "Nestlé 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Nestlé globális leépítése, de a cégnek van magyarországi jelenléte."
   },
   {
     "id": "1o75171",
@@ -11344,8 +11310,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Bosch globális leépítése érinti a magyarországi jelenlétét is.",
-    "llm_event_label": "Bosch Németország 2025 Q4 leépítés"
+    "llm_hungarian_context": "A Bosch globális leépítése érinti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-c96333be6d",
@@ -11804,8 +11769,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Az európai autóipar válsága Magyarországot is érinti.",
-    "llm_event_label": "Renault 2025 Q4 leépítés"
+    "llm_hungarian_context": "Az európai autóipar válsága Magyarországot is érinti."
   },
   {
     "id": "1nspwwb",
@@ -12054,8 +12018,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Bosch globális leépítése érinti a magyarországi jelenlétét is.",
-    "llm_event_label": "Bosch Németország 2025 Q3 leépítés"
+    "llm_hungarian_context": "A Bosch globális leépítése érinti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-b9abee7ccc",
@@ -12094,8 +12057,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Bosch németországi leépítése közvetett hatással lehet a magyarországi Bosch gyárakra is.",
-    "llm_event_label": "Bosch Németország 2025 Q3 leépítés"
+    "llm_hungarian_context": "A Bosch németországi leépítése közvetett hatással lehet a magyarországi Bosch gyárakra is."
   },
   {
     "id": "gnews-e43c8cc9b0",
@@ -12134,8 +12096,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Bosch, amely Magyarországon is jelen van, globális leépítést tervez, ami a magyar munkavállalókat is érintheti.",
-    "llm_event_label": "Bosch Magyarország 2025 Q3 leépítés"
+    "llm_hungarian_context": "A Bosch, amely Magyarországon is jelen van, globális leépítést tervez, ami a magyar munkavállalókat is érintheti."
   },
   {
     "id": "gnews-6657844e08",
@@ -12519,8 +12480,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés érinti a magyar munkavállalókat.",
-    "llm_event_label": "Audi Győr 2025 Q3 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés érinti a magyar munkavállalókat."
   },
   {
     "id": "gnews-227d52e25a",
@@ -12559,8 +12519,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2025 Q3 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "1nim26d",
@@ -12819,8 +12778,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2025 Q4 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "1nexgv5",
@@ -13227,8 +13185,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Bár a cikk nem említi konkrétan, az OMV-nek van magyarországi jelenléte, így a leépítés valószínűleg a magyar munkavállalókat is érintheti.",
-    "llm_event_label": "OMV Több ország 2025 Q3 leépítés"
+    "llm_hungarian_context": "Bár a cikk nem említi konkrétan, az OMV-nek van magyarországi jelenléte, így a leépítés valószínűleg a magyar munkavállalókat is érintheti."
   },
   {
     "id": "1n7psfw",
@@ -13392,8 +13349,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az iváncsai akkugyárban történt leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Iváncsai akkugyár 2025 Q3 leépítés"
+    "llm_hungarian_context": "Az iváncsai akkugyárban történt leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-9709bdcde1",
@@ -13432,8 +13388,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Magyarországi autóipari gyárban történő leépítés.",
-    "llm_event_label": "Gigagyár Magyarország 2025 Q3 leépítés"
+    "llm_hungarian_context": "Magyarországi autóipari gyárban történő leépítés."
   },
   {
     "id": "gnews-e132dcad62",
@@ -13704,8 +13659,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Az osztrák autóipari multi leépítése Magyarországot is érinti.",
-    "llm_event_label": "Ausztria autóipari multi 2025 Q3 leépítés"
+    "llm_hungarian_context": "Az osztrák autóipari multi leépítése Magyarországot is érinti."
   },
   {
     "id": "gnews-1a1a98aa97",
@@ -15941,8 +15895,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A debreceni CATL gyárban történő leépítésről szól a hír.",
-    "llm_event_label": "CATL Debrecen 2025 Q3 leépítés"
+    "llm_hungarian_context": "A debreceni CATL gyárban történő leépítésről szól a hír."
   },
   {
     "id": "gnews-4bd5da444d",
@@ -15981,8 +15934,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A debreceni CATL akkumulátorgyár magyarországi leépítése.",
-    "llm_event_label": "CATL Debrecen 2025 Q3 leépítés"
+    "llm_hungarian_context": "A debreceni CATL akkumulátorgyár magyarországi leépítése."
   },
   {
     "id": "gnews-93219dfade",
@@ -16101,8 +16053,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat.",
-    "llm_event_label": "Audi Győr 2025 Q3 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat."
   },
   {
     "id": "gnews-7625ed1ea3",
@@ -16141,8 +16092,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2025 Q3 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-9f6d762c5d",
@@ -16181,8 +16131,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat.",
-    "llm_event_label": "Audi Győr 2025 Q3 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában tervezett leépítés érinti a magyar munkavállalókat."
   },
   {
     "id": "gnews-d6ab789c20",
@@ -16287,8 +16236,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés, magyar munkavállalók érintettek.",
-    "llm_event_label": "Audi Győr 2025 Q2 leépítés"
+    "llm_hungarian_context": "A győri Audi gyárat érintő leépítés, magyar munkavállalók érintettek."
   },
   {
     "id": "1lktzdm",
@@ -16696,8 +16644,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2025 Q2 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-6ca5215a4c",
@@ -16762,8 +16709,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2025 Q2 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "1l7g6iu",
@@ -20571,8 +20517,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Bár a leépítés nem Magyarországon történik, az Audi-nak van magyarországi gyára, így a magyar munkavállalókat is érintheti.",
-    "llm_event_label": "Audi Németország 2025 Q1 leépítés"
+    "llm_hungarian_context": "Bár a leépítés nem Magyarországon történik, az Audi-nak van magyarországi gyára, így a magyar munkavállalókat is érintheti."
   },
   {
     "id": "1jeblic",
@@ -20725,8 +20670,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárát érintő leépítés.",
-    "llm_event_label": "Audi Győr 2025 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárát érintő leépítés."
   },
   {
     "id": "gnews-3d491980a7",
@@ -20765,8 +20709,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárát érintő intézkedések.",
-    "llm_event_label": "Audi Győr 2025 Q1 freeze"
+    "llm_hungarian_context": "Az Audi győri gyárát érintő intézkedések."
   },
   {
     "id": "gnews-3061b85b32",
@@ -20805,8 +20748,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Bár a leépítés nem Magyarországon történik, az Audi-nak van magyarországi gyára, így a magyar munkavállalókat is érintheti.",
-    "llm_event_label": "Audi Németország 2025 Q1 leépítés"
+    "llm_hungarian_context": "Bár a leépítés nem Magyarországon történik, az Audi-nak van magyarországi gyára, így a magyar munkavállalókat is érintheti."
   },
   {
     "id": "gnews-931285d794",
@@ -20925,8 +20867,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Bár a leépítés Németországban történik, az Audi-nak van magyarországi jelenléte, így a magyar munkavállalókat is érintheti.",
-    "llm_event_label": "Audi Németország 2029 Q4 leépítés"
+    "llm_hungarian_context": "Bár a leépítés Németországban történik, az Audi-nak van magyarországi jelenléte, így a magyar munkavállalókat is érintheti."
   },
   {
     "id": "gnews-73f1fcc9de",
@@ -20965,8 +20906,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Az Audi globális leépítése, de a magyarországi győri gyár dolgozói nem érintettek.",
-    "llm_event_label": "Audi Győr 2025 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi globális leépítése, de a magyarországi győri gyár dolgozói nem érintettek."
   },
   {
     "id": "gnews-c07536acae",
@@ -21005,8 +20945,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Az Audi globális leépítése érinti a magyarországi jelenlétét is.",
-    "llm_event_label": "Audi Győr 2025 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi globális leépítése érinti a magyarországi jelenlétét is."
   },
   {
     "id": "1jcnogp",
@@ -21282,8 +21221,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "none",
-    "llm_hungarian_context": null,
-    "llm_event_label": "Órásvállalat Németország 2025 Q1 leépítés"
+    "llm_hungarian_context": null
   },
   {
     "id": "1j3hkn3",
@@ -21451,8 +21389,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történt tömeges leépítés.",
-    "llm_event_label": "Audi Győr 2025 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történt tömeges leépítés."
   },
   {
     "id": "1j1y4bp",
@@ -21793,8 +21730,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Continental globális leépítése érinti a magyarországi irodát is, de magyar munkavállalókat nem bocsátanak el.",
-    "llm_event_label": "Continental Magyarország 2025 Q1 leépítés"
+    "llm_hungarian_context": "A Continental globális leépítése érinti a magyarországi irodát is, de magyar munkavállalókat nem bocsátanak el."
   },
   {
     "id": "1itef4l",
@@ -22647,8 +22583,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A ContiTech globális leépítése érintheti a magyarországi jelenlétét is.",
-    "llm_event_label": "ContiTech Németország 2025 Q1 leépítés"
+    "llm_hungarian_context": "A ContiTech globális leépítése érintheti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-6a83ae82fb",
@@ -23038,8 +22973,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Continental globális leépítése érintheti a magyarországi jelenlétét is.",
-    "llm_event_label": "Continental Németország 2025 Q1 leépítés"
+    "llm_hungarian_context": "A Continental globális leépítése érintheti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-f4eabfb452",
@@ -23337,8 +23271,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A BP globális leépítése várhatóan érinti a magyarországi jelenlétét is.",
-    "llm_event_label": "BP 2025 Q1 leépítés"
+    "llm_hungarian_context": "A BP globális leépítése várhatóan érinti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-dffee6c33c",
@@ -23377,8 +23310,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "none",
-    "llm_hungarian_context": null,
-    "llm_event_label": "Jack Daniel's 2025 Q1 leépítés"
+    "llm_hungarian_context": null
   },
   {
     "id": "1hznrgg",
@@ -23646,8 +23578,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Paks II. projekt keretében Magyarországon történt leépítés.",
-    "llm_event_label": "Paks II. 2025 Q1 leépítés"
+    "llm_hungarian_context": "A Paks II. projekt keretében Magyarországon történt leépítés."
   },
   {
     "id": "1hp31to",
@@ -25196,8 +25127,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Az Audi globális leépítése érintheti a magyarországi gyárat is.",
-    "llm_event_label": "Audi Győr 2024 Q4 leépítés"
+    "llm_hungarian_context": "Az Audi globális leépítése érintheti a magyarországi gyárat is."
   },
   {
     "id": "gnews-492b6f534a",
@@ -25517,8 +25447,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Volkswagen csoport, melynek része az Audi, globális válsága érintheti a magyarországi jelenlétüket is.",
-    "llm_event_label": "Audi Németország 2024 Q4 leépítés"
+    "llm_hungarian_context": "A Volkswagen csoport, melynek része az Audi, globális válsága érintheti a magyarországi jelenlétüket is."
   },
   {
     "id": "gnews-b8955794c2",
@@ -25557,8 +25486,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárát érintő leépítés.",
-    "llm_event_label": "Audi Győr 2024 Q4 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárát érintő leépítés."
   },
   {
     "id": "1gbwlg2",
@@ -27228,8 +27156,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "A Continental globális leépítése érinti a magyarországi jelenlétét is.",
-    "llm_event_label": "Continental Németország 2024 Q3 leépítés"
+    "llm_hungarian_context": "A Continental globális leépítése érinti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-b8750b028b",
@@ -27588,8 +27515,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Continental budapesti AI Center-jében történő leépítés.",
-    "llm_event_label": "Continental Budapest 2024 Q2 leépítés"
+    "llm_hungarian_context": "A Continental budapesti AI Center-jében történő leépítés."
   },
   {
     "id": "gnews-896ab2e5f9",
@@ -30871,8 +30797,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Continental budapesti Autonomous Mobility irodáját érintő leépítések.",
-    "llm_event_label": "Continental Budapest 2024 Q1 leépítés"
+    "llm_hungarian_context": "A Continental budapesti Autonomous Mobility irodáját érintő leépítések."
   },
   {
     "id": "1al88ys",
@@ -31509,8 +31434,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "none",
-    "llm_hungarian_context": null,
-    "llm_event_label": "Bosch Németország 2026 Q4 leépítés"
+    "llm_hungarian_context": null
   },
   {
     "id": "gnews-281b0da949",
@@ -32902,8 +32826,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Continental makói gyárában történő leépítés.",
-    "llm_event_label": "Continental Makó 2023 Q4 leépítés"
+    "llm_hungarian_context": "A Continental makói gyárában történő leépítés."
   },
   {
     "id": "gnews-4cdc69c862",
@@ -32942,8 +32865,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Continental makói gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Continental Makó 2023 Q4 leépítés"
+    "llm_hungarian_context": "A Continental makói gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-18051213b7",
@@ -33640,8 +33562,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az NNG magyarországi leépítéséről van szó, magyar munkavállalókat érint.",
-    "llm_event_label": "NNG 2023 Q3 leépítés"
+    "llm_hungarian_context": "Az NNG magyarországi leépítéséről van szó, magyar munkavállalókat érint."
   },
   {
     "id": "15nd183",
@@ -34737,8 +34658,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Magyar Agrár-és Élettudományi Egyetemen történő leépítés.",
-    "llm_event_label": "Magyar Agrár-és Élettudományi Egyetem 2023 Q1 leépítés"
+    "llm_hungarian_context": "A Magyar Agrár-és Élettudományi Egyetemen történő leépítés."
   },
   {
     "id": "gnews-6cec781490",
@@ -35585,8 +35505,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A poszt egy magyar junior fejlesztő álláskeresését tárgyalja a Continental magyarországi irodájánál.",
-    "llm_event_label": "Continental Veszprém 2022 Q3 bérigény"
+    "llm_hungarian_context": "A poszt egy magyar junior fejlesztő álláskeresését tárgyalja a Continental magyarországi irodájánál."
   },
   {
     "id": "w1rqwh",
@@ -37542,8 +37461,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Győrben, az Audi beszállítójánál történő leépítés.",
-    "llm_event_label": "Audi beszállító Győr 2020 Q2 leépítés"
+    "llm_hungarian_context": "Győrben, az Audi beszállítójánál történő leépítés."
   },
   {
     "id": "gnt2s9",
@@ -37693,8 +37611,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Continental nyíregyházi gyárában történő leépítés.",
-    "llm_event_label": "Continental Nyíregyháza 2020 Q2 leépítés"
+    "llm_hungarian_context": "A Continental nyíregyházi gyárában történő leépítés."
   },
   {
     "id": "g6ncuc",
@@ -37815,8 +37732,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "A Continental nyíregyházi gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Continental Nyíregyháza 2020 Q2 leépítés"
+    "llm_hungarian_context": "A Continental nyíregyházi gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-a21a99da43",
@@ -38046,8 +37962,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Bár a leépítés Németországban történik, az Audi-nak van magyarországi jelenléte, így a magyar munkavállalókat is érintheti.",
-    "llm_event_label": "Audi Németország 2019 Q4 leépítés"
+    "llm_hungarian_context": "Bár a leépítés Németországban történik, az Audi-nak van magyarországi jelenléte, így a magyar munkavállalókat is érintheti."
   },
   {
     "id": "dzunsa",
@@ -38206,8 +38121,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2019 Q4 leépítés"
+    "llm_hungarian_context": "Az Audi győri gyárában történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "gnews-6cf4fd629e",
@@ -38286,8 +38200,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "direct",
-    "llm_hungarian_context": "Az Audi győri üzemében történő leépítés, magyar munkavállalókat érint.",
-    "llm_event_label": "Audi Győr 2019 Q4 leépítés"
+    "llm_hungarian_context": "Az Audi győri üzemében történő leépítés, magyar munkavállalókat érint."
   },
   {
     "id": "dj2n09",
@@ -38423,8 +38336,7 @@
     "llm_ai_role": "none",
     "llm_ai_context": null,
     "llm_hungarian_relevance": "indirect",
-    "llm_hungarian_context": "Az Audi globális leépítése érintheti a magyarországi jelenlétét is.",
-    "llm_event_label": "Audi Németország 2019 Q1 leépítés"
+    "llm_hungarian_context": "Az Audi globális leépítése érintheti a magyarországi jelenlétét is."
   },
   {
     "id": "gnews-347c0d3c0d",
