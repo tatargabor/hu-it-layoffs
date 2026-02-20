@@ -2,7 +2,11 @@
 
 **[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)
 
-*Generálva: 2026-02-20 11:51 | Forrás: Reddit publikus adatok*
+*Generálva: 2026-02-20 11:54 | Forrás: Reddit publikus adatok*
+
+> **Jogi nyilatkozat:** Ez a kimutatás kizárólag publikusan elérhető Reddit posztok automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.
+>
+> **Disclaimer:** This report is an automated analysis of publicly available Reddit posts. It reflects opinions and information published by third parties, the accuracy of which has not been verified. This report is for informational and research purposes only and does not constitute factual claims about any organization. Content removal requests can be submitted via [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues).
 
 **Időszak:** 2023-08-14 – 2026-02-18
 **Összes releváns poszt:** 13

@@ -285,6 +285,14 @@ details summary:hover {{ color: #fff; }}
   </div>
 </div>
 
+<div style="max-width:1200px;margin:0 auto;padding:12px 24px">
+  <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:8px;padding:12px 16px;font-size:0.75em;color:#666;line-height:1.5">
+    <strong style="color:#888">Jogi nyilatkozat / Disclaimer:</strong> Ez a kimutatás publikusan elérhető Reddit posztok automatizált elemzése. A tartalom harmadik felek véleményeit tükrözi, pontossága nem ellenőrzött. Tájékoztató és kutatási célú, nem minősül tényállításnak. /
+    This report is an automated analysis of public Reddit posts reflecting third-party opinions. Accuracy is not verified. For informational purposes only.
+    <a href="https://github.com/tatargabor/hu-it-layoffs/issues" target="_blank" style="color:#4ecdc4">Eltávolítás kérése / Request removal</a>
+  </div>
+</div>
+
 <div class="stats">
   <div class="stat primary"><div class="num">{len(recent_strong)}</div><div class="label">Leépítési jelzés<br><span style="font-size:0.85em;color:#666">{recent_quarter_label} óta</span></div></div>
   <div class="stat"><div class="num">{len(direct)}</div><div class="label">Közvetlen leépítés</div></div>

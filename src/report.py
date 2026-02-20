@@ -59,6 +59,10 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('')
     lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")} | Forrás: Reddit publikus adatok*')
     lines.append('')
+    lines.append('> **Jogi nyilatkozat:** Ez a kimutatás kizárólag publikusan elérhető Reddit posztok automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.')
+    lines.append('>')
+    lines.append('> **Disclaimer:** This report is an automated analysis of publicly available Reddit posts. It reflects opinions and information published by third parties, the accuracy of which has not been verified. This report is for informational and research purposes only and does not constitute factual claims about any organization. Content removal requests can be submitted via [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues).')
+    lines.append('')
 
     # Date range
     if relevant:
