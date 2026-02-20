@@ -1,11 +1,11 @@
 {
-  "validated": 440,
+  "validated": 416,
   "errors": 2,
-  "skipped": 335,
+  "skipped": 367,
   "triage_used": true,
   "backend_name": "anthropic",
-  "est_input_tokens": 1294453,
-  "est_output_tokens": 39845,
-  "est_manual_hours": 57.6,
-  "elapsed_seconds": 1681.6376526355743
+  "est_input_tokens": 1950388,
+  "est_output_tokens": 49088,
+  "est_manual_hours": 57.86666666666667,
+  "elapsed_seconds": 2485.6524801254272
 }
