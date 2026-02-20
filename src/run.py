@@ -14,7 +14,7 @@ from src.report import generate_report
 from src.visualize import generate_html
 
 
-PAGES_URL = 'https://tatargabor.github.io/hu-it-layoffs/'
+PAGES_URL = 'https://tatargabor.github.io/hu-it-layoffs/report.html'
 
 
 def _generate_readme(report_path='data/report.md', output_path='README.md'):
@@ -25,7 +25,7 @@ def _generate_readme(report_path='data/report.md', output_path='README.md'):
     header = (
         f'> **[Interaktív dashboard megtekintése]({PAGES_URL})**\n'
         f'>\n'
-        f'> Ez a riport automatikusan frissül naponta 2x.\n\n'
+        f'> Ez a riport automatikusan frissül naponta.\n\n'
     )
 
     with open(output_path, 'w', encoding='utf-8') as f:

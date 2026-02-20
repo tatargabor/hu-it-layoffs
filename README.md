@@ -1,6 +1,6 @@
-> **[Interaktív dashboard megtekintése](https://tatargabor.github.io/hu-it-layoffs/)**
+> **[Interaktív dashboard megtekintése](https://tatargabor.github.io/hu-it-layoffs/report.html)**
 >
-> Ez a riport automatikusan frissül naponta 2x.
+> Ez a riport automatikusan frissül naponta.
 
 # Magyar IT Szektor Leépítések — Kimutatás
 
