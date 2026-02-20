@@ -1,9 +1,8 @@
 # Magyar IT Szektor Leépítések — Kimutatás
 
-*Generálva: 2026-02-20 11:46*
-*Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*
+**[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)
 
-> **Interaktív dashboard:** [tatargabor.github.io/hu-it-layoffs](https://tatargabor.github.io/hu-it-layoffs/report.html)
+*Generálva: 2026-02-20 11:51 | Forrás: Reddit publikus adatok*
 
 **Időszak:** 2023-08-14 – 2026-02-18
 **Összes releváns poszt:** 13

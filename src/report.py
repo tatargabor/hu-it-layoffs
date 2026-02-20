@@ -55,10 +55,9 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     # === SUMMARY ===
     lines.append('# Magyar IT Szektor Leépítések — Kimutatás')
     lines.append('')
-    lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}*')
-    lines.append(f'*Forrás: Reddit (r/programmingHungary, r/hungary) publikus adatok*')
+    lines.append('**[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)')
     lines.append('')
-    lines.append('> **Interaktív dashboard:** [tatargabor.github.io/hu-it-layoffs](https://tatargabor.github.io/hu-it-layoffs/report.html)')
+    lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")} | Forrás: Reddit publikus adatok*')
     lines.append('')
 
     # Date range
