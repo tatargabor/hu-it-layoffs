@@ -41,6 +41,38 @@ def _is_hungarian_relevant(post):
     return post.get('llm_hungarian_relevance', 'direct') != 'none'
 
 
+def _count_events(posts):
+    """Count unique events. Posts with same event_label count as 1. Posts without label count individually."""
+    labels = set()
+    count = 0
+    for p in posts:
+        label = p.get('llm_event_label')
+        if label:
+            if label not in labels:
+                labels.add(label)
+                count += 1
+        else:
+            count += 1
+    return count
+
+
+def _event_groups(posts):
+    """Group posts by event_label. Returns list of (label, [posts]) tuples.
+    Posts without label get their own group (label=None)."""
+    groups = {}
+    ungrouped = []
+    for p in posts:
+        label = p.get('llm_event_label')
+        if label:
+            groups.setdefault(label, []).append(p)
+        else:
+            ungrouped.append(p)
+    result = list(groups.items())
+    for p in ungrouped:
+        result.append((None, [p]))
+    return result
+
+
 def _is_ai_attributed(post):
     """Check if post is AI-attributed. Uses LLM ai_role if available, else keyword."""
     if post.get('llm_validated') and 'llm_ai_role' in post:
@@ -89,20 +121,21 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('')
     lines.append('**[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)')
     lines.append('')
-    lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")} | Forrás: Reddit publikus adatok*')
+    lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")} | Forrás: Reddit, Google News, HUP.hu publikus adatok*')
     lines.append('')
-    lines.append('> **Jogi nyilatkozat:** Ez a kimutatás kizárólag publikusan elérhető Reddit posztok automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.')
+    lines.append('> **Jogi nyilatkozat:** Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.')
     lines.append('>')
-    lines.append('> **Disclaimer:** This report is an automated analysis of publicly available Reddit posts. It reflects opinions and information published by third parties, the accuracy of which has not been verified. This report is for informational and research purposes only and does not constitute factual claims about any organization. Content removal requests can be submitted via [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues).')
+    lines.append('> **Disclaimer:** This report is an automated analysis of publicly available posts and news articles. It reflects opinions and information published by third parties, the accuracy of which has not been verified. This report is for informational and research purposes only and does not constitute factual claims about any organization. Content removal requests can be submitted via [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues).')
     lines.append('')
 
     # Date range
     if relevant:
         dates = sorted(p['date'] for p in relevant)
         lines.append(f'**Időszak:** {dates[0]} – {dates[-1]}')
-    lines.append(f'**Összes releváns poszt:** {len(relevant)}')
-    lines.append(f'**Közvetlen leépítés riport (relevancia 3):** {len(direct)}')
-    lines.append(f'**Erős jelzés (relevancia >= 2):** {len(strong)}')
+    event_count = _count_events(relevant)
+    lines.append(f'**Összes releváns poszt:** {len(relevant)} ({event_count} egyedi esemény)')
+    lines.append(f'**Közvetlen leépítés riport (relevancia 3):** {_count_events(direct)} esemény')
+    lines.append(f'**Erős jelzés (relevancia >= 2):** {_count_events(strong)} esemény')
 
     companies = set(c for p in relevant for c in [p.get('company') or p.get('llm_company')] if _is_named_company(c))
     lines.append(f'**Érintett cégek száma:** {len(companies)}')
@@ -167,7 +200,8 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     company_posts = [p for p in strong if p.get('company') or p.get('llm_company')]
     company_posts.sort(key=lambda x: x['date'], reverse=True)
 
-    for p in company_posts:
+    max_companies = 20
+    for p in company_posts[:max_companies]:
         company = p.get('company') or p.get('llm_company')
         ai_str = 'igen' if _is_ai_attributed(p) else '—'
         link = f'[link]({p["url"]})'
@@ -176,13 +210,10 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
             f'{_eff_sector(p)} | {ai_str} | {_source_str(p)} | {link} |'
         )
 
-    # Posts without identified company
-    unknown_posts = [p for p in strong if not p.get('company') and not p.get('llm_company')]
-    if unknown_posts:
+    remaining = len(company_posts) - max_companies
+    if remaining > 0:
         lines.append('')
-        lines.append('**Cég nélküli erős jelzések:**')
-        for p in unknown_posts:
-            lines.append(f'- [{p["date"]}] [{p["title"][:60]}]({p["url"]})')
+        lines.append(f'*További {remaining} cég → [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html#top-posts)*')
 
     lines.append('')
 
@@ -210,80 +241,14 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('')
 
     by_sector = {}
-    for p in strong:
-        sector = _eff_sector(p)
+    for label, group in _event_groups(strong):
+        sector = _eff_sector(group[0])
         by_sector[sector] = by_sector.get(sector, 0) + 1
 
     if by_sector:
-        lines.append('**Szektorok szerinti megoszlás (erős jelzések):**')
+        lines.append('**Szektorok szerinti megoszlás (erős jelzések, esemény szinten):**')
         for sector, count in sorted(by_sector.items(), key=lambda x: -x[1]):
-            lines.append(f'- {sector}: {count} poszt')
-        lines.append('')
-
-    # === ENGAGEMENT ===
-    lines.append('## Közösségi Engagement')
-    lines.append('')
-
-    cat_labels_eng = {
-        'layoff': 'Közvetlen leépítés',
-        'freeze': 'Hiring freeze / álláspiac',
-        'anxiety': 'Karrier aggodalom',
-        'other': 'Egyéb',
-    }
-    eng_cats = defaultdict(lambda: {'posts': 0, 'score': 0, 'comments': 0})
-    for p in relevant:
-        cat = p.get('llm_category', p.get('category', 'other'))
-        eng_cats[cat]['posts'] += 1
-        eng_cats[cat]['score'] += p.get('score', 0)
-        eng_cats[cat]['comments'] += p.get('num_comments', 0)
-
-    lines.append('| Kategória | Posztok | Össz score | Össz komment | Átl. score | Átl. komment |')
-    lines.append('|-----------|---------|------------|--------------|------------|--------------|')
-    for cat in ['layoff', 'freeze', 'anxiety']:
-        d = eng_cats[cat]
-        if d['posts'] > 0:
-            label = cat_labels_eng.get(cat, cat)
-            avg_s = d['score'] / d['posts']
-            avg_c = d['comments'] / d['posts']
-            lines.append(f'| {label} | {d["posts"]} | {d["score"]:,} | {d["comments"]:,} | {avg_s:.0f} | {avg_c:.0f} |')
-    lines.append('')
-
-    # Top 5 by score
-    top_score = sorted(relevant, key=lambda x: x.get('score', 0), reverse=True)[:5]
-    lines.append('**Legtöbb reakció (upvote):**')
-    for p in top_score:
-        lines.append(f'- {p["score"]} upvote — [{p["title"][:60]}]({p["url"]})')
-    lines.append('')
-
-    # Top 5 by comments
-    top_comments = sorted(relevant, key=lambda x: x.get('num_comments', 0), reverse=True)[:5]
-    lines.append('**Legtöbb komment:**')
-    for p in top_comments:
-        lines.append(f'- {p["num_comments"]} komment — [{p["title"][:60]}]({p["url"]})')
-    lines.append('')
-
-    # === TECHNOLOGIES & ROLES ===
-    tech_counts = defaultdict(int)
-    role_counts = defaultdict(int)
-    for p in relevant:
-        if p.get('llm_validated'):
-            for t in p.get('llm_technologies', []):
-                tech_counts[t] += 1
-            for r in p.get('llm_roles', []):
-                role_counts[r] += 1
-
-    if tech_counts:
-        lines.append('## Érintett Technológiák')
-        lines.append('')
-        for tech, count in sorted(tech_counts.items(), key=lambda x: -x[1])[:20]:
-            lines.append(f'- {tech}: {count} poszt')
-        lines.append('')
-
-    if role_counts:
-        lines.append('## Érintett Munkakörök')
-        lines.append('')
-        for role, count in sorted(role_counts.items(), key=lambda x: -x[1])[:15]:
-            lines.append(f'- {role}: {count} poszt')
+            lines.append(f'- {sector}: {count} esemény')
         lines.append('')
 
     # === TREND ANALYSIS ===
@@ -325,107 +290,23 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         lines.append(f'- {year}: {d["ai"]}/{d["total"]} poszt ({pct}%)')
     lines.append('')
 
-    _MULTI_SECTORS = {'big tech', 'telecom', 'automotive', 'energy'}
-    _STARTUP_SECTORS = {'startup', 'AI/startup'}
-    _MID_SECTORS = {'fintech', 'IT services', 'retail tech', 'entertainment'}
-    _GOV_SECTORS = {'government', 'finance/gov'}
-    company_type = {'multi': 0, 'startup': 0, 'mid': 0, 'gov': 0, 'unknown': 0}
-    for p in strong:
-        s = _eff_sector(p)
-        if s in _MULTI_SECTORS:
-            company_type['multi'] += 1
-        elif s in _STARTUP_SECTORS:
-            company_type['startup'] += 1
-        elif s in _MID_SECTORS:
-            company_type['mid'] += 1
-        elif s in _GOV_SECTORS:
-            company_type['gov'] += 1
-        else:
-            company_type['unknown'] += 1
-    lines.append('**Cég típus:**')
-    lines.append(f'- Multinacionális / nagyvállalat: {company_type["multi"]} esemény')
-    lines.append(f'- Közepes / vegyes: {company_type["mid"]} esemény')
-    lines.append(f'- Startup / KKV: {company_type["startup"]} esemény')
-    if company_type['gov'] > 0:
-        lines.append(f'- Állami: {company_type["gov"]} esemény')
-    lines.append(f'- Nem besorolható: {company_type["unknown"]} esemény')
     lines.append('')
-
-    # === HIRING SIGNALS ===
-    lines.append('## Hiring Freeze / Álláspiac Jelzések')
-    lines.append('')
-
-    freeze_posts = [p for p in relevant if p.get('hiring_freeze_signal')]
-    if freeze_posts:
-        for p in sorted(freeze_posts, key=lambda x: x['date'], reverse=True):
-            lines.append(f'### [{p["date"]}] {p["title"]}')
-            lines.append(f'*r/{p["subreddit"]}* — score: {p["score"]}, {p["num_comments"]} komment')
-            lines.append(f'[Link]({p["url"]})')
-            selftext = p.get('selftext', '')
-            if selftext:
-                preview = selftext[:200].replace('\n', ' ').strip()
-                lines.append(f'> {preview}...')
-            lines.append('')
-    else:
-        lines.append('Nem találtunk explicit hiring freeze jelzéseket.')
-        lines.append('')
-
-    # === DETAILED TABLE ===
-    lines.append('## Részletes Táblázat')
-    lines.append('')
-    lines.append('| Dátum | Cím | Cég | Kategória | Forrás | Score | Komment | Rel. | LLM Conf. | AI |')
-    lines.append('|-------|-----|-----|-----------|--------|-------|---------|------|-----------|----|')
-
-    for p in sorted(relevant, key=lambda x: x['date'], reverse=True):
-        company = p.get('company') or p.get('llm_company') or '—'
-        cat = p.get('category', 'other')
-        rel = _eff_relevance(p)
-        conf = f'{p["llm_confidence"]:.0%}' if p.get('llm_validated') else '—'
-        ai_str = 'igen' if _is_ai_attributed(p) else '—'
-        title_short = p['title'][:50] + ('...' if len(p['title']) > 50 else '')
-        lines.append(
-            f'| {p["date"]} | [{title_short}]({p["url"]}) | {company} | '
-            f'{cat} | {_source_str(p)} | {p["score"]} | {p["num_comments"]} | {rel} | {conf} | {ai_str} |'
-        )
-
-    lines.append('')
-
-    # === DATA SOURCES ===
-    lines.append('## Források')
-    lines.append('')
-    # Source breakdown
-    by_source = {}
-    for p in relevant:
-        src_label = _source_str(p)
-        by_source[src_label] = by_source.get(src_label, 0) + 1
-
-    source_parts = ', '.join(f'{k}: {v}' for k, v in sorted(by_source.items(), key=lambda x: -x[1]))
-    lines.append(f'Összesen {len(relevant)} releváns poszt ({source_parts}):')
-    lines.append('')
-
-    for p in sorted(relevant, key=lambda x: x['date'], reverse=True):
-        rel_marker = {3: '***', 2: '**', 1: '*'}.get(_eff_relevance(p), '')
-        lines.append(
-            f'- [{p["date"]}] [{p["title"][:70]}]({p["url"]}) '
-            f'(score: {p["score"]}, {p["num_comments"]} komment) {rel_marker}'
-        )
-
+    lines.append('*Részletes adatok (engagement, technológiák, munkakörök, hiring freeze): [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)*')
     lines.append('')
 
     # === METHODOLOGY ===
     lines.append('## Módszertan')
     lines.append('')
     lines.append('### Adatgyűjtés')
-    lines.append('A projekt automatizált scraper-rel gyűjt publikus Reddit posztokat az alábbi subredditekről:')
-    lines.append('- **r/programmingHungary** — magyar fejlesztői közösség')
-    lines.append('- **r/hungary** — általános magyar subreddit')
-    lines.append('- **r/Layoffs** — nemzetközi leépítési hírek')
-    lines.append('- **r/cscareerquestions** — IT karrierkérdések')
+    lines.append('A projekt automatizált scraper-rel gyűjt publikus adatokat több forrásból:')
+    lines.append('- **Reddit** — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions')
+    lines.append('- **Google News RSS** — magyar nyelvű IT leépítés hírek (`hl=hu&gl=HU` paraméterekkel)')
+    lines.append('- **HUP.hu** — magyar tech fórum keresés')
     lines.append('')
-    lines.append('Keresési lekérdezések magyar és angol nyelven: `elbocsátás`, `leépítés`, `layoff`, `hiring freeze`, `álláskereső`, valamint cégspecifikus keresések (Ericsson, Continental, OTP, NNG, Lensa, Microsoft, stb.).')
+    lines.append('Keresési lekérdezések magyar és angol nyelven: `elbocsátás`, `leépítés`, `layoff`, `hiring freeze`, `álláskereső`, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).')
     lines.append('')
     lines.append('### Elemzési pipeline')
-    lines.append('1. **Scraping** — Reddit JSON API-n keresztül, kommentekkel együtt')
+    lines.append('1. **Multi-source scraping** — Reddit JSON API, Google News RSS, HUP.hu HTML scraping')
     lines.append('2. **Kulcsszó-alapú elemzés** — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás')
     lines.append('3. **LLM batch triage** — posztcímek batch-szűrése LLM-mel, releváns posztok kiválasztása')
     lines.append('4. **LLM full validáció** — részletes elemzés: kategória, cég, szektor, AI-szerep, technológiák, munkakörök (structured JSON output)')
@@ -450,10 +331,10 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         lines.append(f'Jelen futásban **{llm_stats["validated"]} poszt** validálva **{llm_stats.get("elapsed_seconds", 0):.0f} másodperc** alatt.')
     lines.append('')
     lines.append('### Korlátok')
-    lines.append('- Csak publikus Reddit posztok — zárt csoportok, belső kommunikáció nem elérhető')
-    lines.append('- A Reddit keresés nem garantálja a teljességet')
+    lines.append('- Csak publikus források — zárt csoportok, belső kommunikáció nem elérhető')
+    lines.append('- A keresések nem garantálják a teljességet')
     lines.append('- LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot')
-    lines.append('- Angol nyelvű posztok Budapest/Hungary említéssel nem feltétlenül magyar IT szektorra vonatkoznak')
+    lines.append('- Google News magyar NYELVŰ cikkeket ad, nem feltétlenül magyar VONATKOZÁSÚAKAT — LLM szűrés kompenzál')
     lines.append('')
     lines.append('### Forráskód')
     lines.append('A teljes pipeline nyílt forráskódú: [github.com/tatargabor/hu-it-layoffs](https://github.com/tatargabor/hu-it-layoffs)')
@@ -487,7 +368,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         lines.append('')
 
     lines.append('---')
-    lines.append('*Relevancia jelölés: \\*\\*\\* = közvetlen leépítés, \\*\\* = erős jelzés, \\* = közvetett*')
+    lines.append(f'*Összes adat: [data/validated_posts.json](https://github.com/tatargabor/hu-it-layoffs/blob/main/data/validated_posts.json) | [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)*')
 
     report = '\n'.join(lines)
 

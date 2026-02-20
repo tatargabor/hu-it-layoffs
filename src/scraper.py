@@ -152,6 +152,7 @@ def search_subreddit(subreddit, query):
                 'source': 'reddit',
                 'date': datetime.fromtimestamp(d['created_utc']).strftime('%Y-%m-%d'),
                 'created_utc': d['created_utc'],
+                'edited': d.get('edited', False),
                 'score': d.get('score', 0),
                 'num_comments': d.get('num_comments', 0),
                 'url': f"https://reddit.com{d.get('permalink', '')}",
@@ -516,8 +517,15 @@ def _merge_posts(existing, new_posts):
     return existing, added, updated
 
 
-def run_scraper():
-    """Main scraper: Reddit + HUP, with incremental merge."""
+def run_scraper(frozen_ids=None):
+    """Main scraper: Reddit + HUP + Google News, with incremental merge.
+
+    Args:
+        frozen_ids: set of post IDs to skip in fetch_post_details (already frozen/validated).
+    """
+    if frozen_ids is None:
+        frozen_ids = set()
+
     # Load existing data
     existing = _load_existing_posts()
     if existing:
@@ -538,17 +546,24 @@ def run_scraper():
 
     print(f'\nMerge: {added} new, {updated} updated, {len(merged)} total')
 
-    # Fetch details for Reddit posts that need it
+    # Fetch details for Reddit posts that need it (skip frozen)
     print('Fetching post details (comments)...')
     posts_list = sorted(merged.values(), key=lambda x: x.get('created_utc', 0), reverse=True)
 
+    skipped_frozen = 0
     for i, post in enumerate(posts_list):
         if post.get('source') != 'reddit':
+            continue
+        if post['id'] in frozen_ids:
+            skipped_frozen += 1
             continue
         # Only fetch details if we don't have comments yet or post is from this scrape
         if post['id'] in reddit_posts:
             print(f'  [{i+1}/{len(posts_list)}] {post["title"][:60]}...')
             fetch_post_details(post)
+
+    if skipped_frozen > 0:
+        print(f'  Skipped {skipped_frozen} frozen posts')
 
     return posts_list
 

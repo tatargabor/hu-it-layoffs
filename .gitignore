@@ -4,3 +4,4 @@ __pycache__/
 .wt-tools/
 .claude/settings.json.bak
 data.json
+persisted_data/*.json

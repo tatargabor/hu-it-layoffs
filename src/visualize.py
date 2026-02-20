@@ -38,6 +38,37 @@ def _is_hungarian_relevant(post):
     return post.get('llm_hungarian_relevance', 'direct') != 'none'
 
 
+def _count_events(posts):
+    """Count unique events. Posts with same event_label count as 1."""
+    labels = set()
+    count = 0
+    for p in posts:
+        label = p.get('llm_event_label')
+        if label:
+            if label not in labels:
+                labels.add(label)
+                count += 1
+        else:
+            count += 1
+    return count
+
+
+def _event_groups(posts):
+    """Group posts by event_label. Returns list of (label, [posts])."""
+    groups = {}
+    ungrouped = []
+    for p in posts:
+        label = p.get('llm_event_label')
+        if label:
+            groups.setdefault(label, []).append(p)
+        else:
+            ungrouped.append(p)
+    result = list(groups.items())
+    for p in ungrouped:
+        result.append((None, [p]))
+    return result
+
+
 def _is_ai_attributed(post):
     """Check if post is AI-attributed. Uses LLM ai_role if available, else keyword."""
     if post.get('llm_validated') and 'llm_ai_role' in post:
@@ -93,10 +124,10 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
         else:
             q_keyword_only[q] += 1
 
-    # Company data
+    # Company data (event-level: same event_label = 1 count)
     company_counts = defaultdict(int)
-    for p in strong:
-        c = p.get('company') or p.get('llm_company')
+    for label, group in _event_groups(strong):
+        c = group[0].get('company') or group[0].get('llm_company')
         if c:
             company_counts[c] += 1
 
@@ -116,10 +147,10 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
             ai_by_year[year]['ai'] += 1
     ai_years = sorted(ai_by_year.keys())
 
-    # Sector data
+    # Sector data (event-level)
     sector_counts = defaultdict(int)
-    for p in strong:
-        s = _eff_sector(p)
+    for label, group in _event_groups(strong):
+        s = _eff_sector(group[0])
         sector_counts[s] += 1
 
     # Hiring freeze timeline
@@ -319,7 +350,7 @@ details summary:hover {{ color: #fff; }}
 <div class="header">
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
-  <div class="sub">Reddit (r/programmingHungary, r/hungary) publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
+  <div class="sub">Reddit, Google News, HUP.hu publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
   <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
@@ -330,8 +361,8 @@ details summary:hover {{ color: #fff; }}
 
 <div style="max-width:1200px;margin:0 auto;padding:12px 24px">
   <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:8px;padding:12px 16px;font-size:0.75em;color:#666;line-height:1.5">
-    <strong style="color:#888">Jogi nyilatkozat / Disclaimer:</strong> Ez a kimutatás publikusan elérhető Reddit posztok automatizált elemzése. A tartalom harmadik felek véleményeit tükrözi, pontossága nem ellenőrzött. Tájékoztató és kutatási célú, nem minősül tényállításnak. /
-    This report is an automated analysis of public Reddit posts reflecting third-party opinions. Accuracy is not verified. For informational purposes only.
+    <strong style="color:#888">Jogi nyilatkozat / Disclaimer:</strong> Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek véleményeit tükrözi, pontossága nem ellenőrzött. Tájékoztató és kutatási célú, nem minősül tényállításnak. /
+    This report is an automated analysis of publicly available posts and news articles reflecting third-party opinions. Accuracy is not verified. For informational purposes only.
     <a href="https://github.com/tatargabor/hu-it-layoffs/issues" target="_blank" style="color:#4ecdc4">Eltávolítás kérése / Request removal</a>
   </div>
 </div>
@@ -456,18 +487,17 @@ details summary:hover {{ color: #fff; }}
   <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
   <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
     <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
-    <p>Automatizált scraper gyűjt publikus Reddit posztokat az alábbi subredditekről:</p>
+    <p>Automatizált scraper gyűjt publikus adatokat több forrásból:</p>
     <ul style="margin:8px 0 16px 20px">
-      <li><strong>r/programmingHungary</strong> — magyar fejlesztői közösség</li>
-      <li><strong>r/hungary</strong> — általános magyar subreddit</li>
-      <li><strong>r/Layoffs</strong> — nemzetközi leépítési hírek</li>
-      <li><strong>r/cscareerquestions</strong> — IT karrierkérdések</li>
+      <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions</li>
+      <li><strong>Google News RSS</strong> — magyar nyelvű IT leépítés hírek (<code>hl=hu&amp;gl=HU</code>)</li>
+      <li><strong>HUP.hu</strong> — magyar tech fórum keresés</li>
     </ul>
-    <p>Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, NNG, Lensa, Microsoft, stb.).</p>
+    <p>Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
 
     <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
     <ol style="margin:8px 0 16px 20px">
-      <li><strong>Scraping</strong> — Reddit JSON API-n keresztül, kommentekkel együtt</li>
+      <li><strong>Multi-source scraping</strong> — Reddit JSON API, Google News RSS, HUP.hu HTML scraping</li>
       <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
       <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
       <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>
@@ -479,10 +509,10 @@ details summary:hover {{ color: #fff; }}
 
     <h3 style="color:#e94560;margin:16px 0 8px">Korlátok</h3>
     <ul style="margin:8px 0 16px 20px">
-      <li>Csak publikus Reddit posztok — zárt csoportok, belső kommunikáció nem elérhető</li>
-      <li>A Reddit keresés nem garantálja a teljességet</li>
+      <li>Csak publikus források — zárt csoportok, belső kommunikáció nem elérhető</li>
+      <li>A keresések nem garantálják a teljességet</li>
       <li>LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot</li>
-      <li>Angol nyelvű posztok Budapest/Hungary említéssel nem feltétlenül magyar IT szektorra vonatkoznak</li>
+      <li>Google News magyar NYELVŰ cikkeket ad, nem feltétlenül magyar VONATKOZÁSÚAKAT — LLM szűrés kompenzál</li>
     </ul>
 
     <p><strong>Forráskód:</strong> <a href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">github.com/tatargabor/hu-it-layoffs</a></p>

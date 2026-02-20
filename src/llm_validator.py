@@ -55,7 +55,8 @@ Válaszolj JSON formátumban az alábbi sémával:
   "ai_role": "direct|factor|concern|none",
   "ai_context": "1 mondatos magyarázat vagy null",
   "hungarian_relevance": "direct|indirect|none",
-  "hungarian_context": "1 mondatos magyarázat vagy null"
+  "hungarian_context": "1 mondatos magyarázat vagy null",
+  "event_label": "normalizált esemény azonosító vagy null"
 }
 
 Mezők:
@@ -96,6 +97,7 @@ Mezők:
   - "indirect": Globális cég leépítése ahol a cégnek ismert magyar jelenléte van, VAGY a cikk/poszt kifejezetten megemlíti a magyar hatást (pl. "Continental globális leépítés, Budapestet is érinti")
   - "none": Semmi magyar vonatkozás — külföldi cég külföldi leépítése, még ha magyar nyelven is írták (pl. "Amazon 14 ezer embert küld el az USA-ban", "Ubisoft torontói stúdió leépítés", "Dél-Korea AI munkahelyek")
 - hungarian_context: ha hungarian_relevance nem "none", 1 mondatos magyarázat a magyar vonatkozásról. Ha "none", legyen null.
+- event_label: normalizált esemény azonosító formátumban: "[Cég] [Helyszín opcionális] [Év QN] [típus]". Példák: "Audi Győr 2026 Q1 leépítés", "OTP Bank 2026 Q1 leépítés", "Bosch Németország 2025 Q3 leépítés". Ha a poszt nem konkrét eseményről szól (pl. általános aggodalom, álláspiac kérdés), legyen null. FONTOS: ugyanarról az eseményről szóló különböző cikkek/posztok UGYANAZT a labelt kapják!
 
 FONTOS A MAGYAR VONATKOZÁSRÓL:
 - Magyar NYELVŰ cikk NEM jelent magyar VONATKOZÁST! A Portfolio.hu, HVG, Index cikkei gyakran globális híreket tárgyalnak magyarul — ezek "none" ha nincs magyar szál.
@@ -430,12 +432,22 @@ def _estimate_manual_minutes(post):
     return minutes
 
 
-def batch_triage(posts, backend=None, batch_size=50):
+def batch_triage(posts, backend=None, batch_size=50, frozen_ids=None):
     """Batch triage: LLM calls to filter relevant posts by title.
 
     Splits posts into batches (default 50) to stay within LLM context limits.
     Returns dict {post_id: True/False} or None if all LLM calls fail.
+
+    Args:
+        frozen_ids: set of post IDs to skip (already frozen/validated).
     """
+    if frozen_ids is None:
+        frozen_ids = set()
+
+    # Filter out frozen posts before triage
+    posts_to_triage = [p for p in posts if p.get('id', '') not in frozen_ids]
+    skipped = len(posts) - len(posts_to_triage)
+
     if backend is None:
         backend = _resolve_backend()
 
@@ -443,7 +455,13 @@ def batch_triage(posts, backend=None, batch_size=50):
         print('  Batch triage SKIPPED — no LLM available')
         return None
 
-    print(f'\nBatch triage: {len(posts)} poszt címének szűrése ({batch_size}-es batch-ekben)...')
+    if skipped > 0:
+        print(f'\nBatch triage: {len(posts_to_triage)} poszt ({skipped} frozen skipped), {batch_size}-es batch-ekben...')
+    else:
+        print(f'\nBatch triage: {len(posts_to_triage)} poszt címének szűrése ({batch_size}-es batch-ekben)...')
+
+    # Use filtered list for triage
+    posts = posts_to_triage
 
     all_relevant_global_indices = set()
     total_batches = (len(posts) + batch_size - 1) // batch_size
@@ -500,7 +518,7 @@ def batch_triage(posts, backend=None, batch_size=50):
     return triage_results
 
 
-def validate_posts(posts, triage_results=None):
+def validate_posts(posts, triage_results=None, frozen_ids=None):
     """Validate analyzed posts with LLM. Returns enriched post list + stats dict.
 
     Args:
@@ -508,7 +526,17 @@ def validate_posts(posts, triage_results=None):
         triage_results: Optional dict {post_id: bool} from batch_triage().
                        If provided, only posts with True are validated.
                        If None, falls back to keyword-based relevance >= 1 filter.
+        frozen_ids: set of post IDs to skip (already frozen/validated).
     """
+    if frozen_ids is None:
+        frozen_ids = set()
+
+    # Remove frozen posts from processing
+    fresh_posts = [p for p in posts if p.get('id', '') not in frozen_ids]
+    frozen_skipped = len(posts) - len(fresh_posts)
+    if frozen_skipped > 0:
+        print(f'  Skipping {frozen_skipped} frozen posts')
+    posts = fresh_posts
     backend = _resolve_backend()
 
     stats = {
@@ -562,7 +590,7 @@ def validate_posts(posts, triage_results=None):
     start_time = time.time()
 
     for i, post in enumerate(to_validate):
-        if post.get('llm_validated') and 'llm_sector' in post and 'llm_hungarian_relevance' in post:
+        if post.get('llm_validated') and 'llm_sector' in post and 'llm_hungarian_relevance' in post and 'llm_event_label' in post:
             stats['validated'] += 1
             continue
 
@@ -603,6 +631,7 @@ def validate_posts(posts, triage_results=None):
         post['llm_ai_context'] = result.get('ai_context')
         post['llm_hungarian_relevance'] = result.get('hungarian_relevance', 'direct')
         post['llm_hungarian_context'] = result.get('hungarian_context')
+        post['llm_event_label'] = result.get('event_label')
         stats['validated'] += 1
 
     stats['elapsed_seconds'] = time.time() - start_time
