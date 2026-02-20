@@ -4,7 +4,7 @@
   "skipped": 227,
   "triage_used": true,
   "est_input_tokens": 377655,
-  "est_output_tokens": 13062,
+  "est_output_tokens": 12901,
   "est_manual_hours": 43.9,
-  "elapsed_seconds": 455.23470425605774
+  "elapsed_seconds": 465.23017144203186
 }

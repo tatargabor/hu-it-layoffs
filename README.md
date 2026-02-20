@@ -6,7 +6,7 @@
 
 **[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)
 
-*Generálva: 2026-02-20 17:21 | Forrás: Reddit publikus adatok*
+*Generálva: 2026-02-20 17:47 | Forrás: Reddit publikus adatok*
 
 > **Jogi nyilatkozat:** Ez a kimutatás kizárólag publikusan elérhető Reddit posztok automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.
 >
@@ -17,9 +17,9 @@
 **Közvetlen leépítés riport (relevancia 3):** 23
 **Erős jelzés (relevancia >= 2):** 80
 **Érintett cégek száma:** 22
-**AI-t említő posztok:** 15
+**AI-t említő posztok:** 16
 **Hiring freeze jelzések:** 16
-**Összes reakció:** 7,707 upvote, 5,277 komment
+**Összes reakció:** 7,682 upvote, 5,251 komment
 **LLM-validált posztok:** 107/108
 
 ## Negyedéves Timeline
@@ -30,15 +30,15 @@
 | 2023 Q2 | 3 | 29 | 54 | Continental | Continental Internship; Karrier USA távmunkát követően; Gyakornok a gyakorlatban |
 | 2023 Q3 | 2 | 81 | 67 | NNG | NNG leépítés, megint; Mobilos karrier: upgrade, de merre? hogy |
 | 2023 Q4 | 2 | 4 | 36 | ? | Mennyi lehet most reálisan a kezdőfizeté; Megéri váltani több pénzért, több munkáé |
-| 2024 Q1 | 4 | 116 | 107 | SAP | Clickbaitelés: az AI elveszi a munkát, j; Senior szint alatti fejlesztők problémái; Remote work 6 év "külföldi" tapasztalatt; +1 más |
-| 2024 Q2 | 6 | 106 | 264 | Continental, Lensa | Continental AI Center Budapest - layoff; Tippeket szeretnék kérni, hogy merre érd; Ericcson leépítés != közös megegyezés?; +3 más |
+| 2024 Q1 | 5 | 158 | 147 | SAP | Remote munka külföldre - mennyire más?; Clickbaitelés: az AI elveszi a munkát, j; Senior szint alatti fejlesztők problémái; +2 más |
+| 2024 Q2 | 5 | 67 | 217 | Continental, Lensa | Continental AI Center Budapest - layoff; Tippeket szeretnék kérni, hogy merre érd; Ericcson leépítés != közös megegyezés?; +2 más |
 | 2024 Q3 | 3 | 26 | 42 | OTP Bank | Vezetői álláspiac (vagy a hiánya); Három a magyar igazság; Első éles munkakeresés, CV és tech stack |
 | 2024 Q4 | 6 | 987 | 339 | PlayStation | I was former PlayStation employee in Tok; Osztrák piac rant; Melyek a jobb álláskereső oldalak?; +3 más |
-| 2025 Q1 | 5 | 2219 | 297 | magyar élelmiszerlánc | Junior Frontend fejlesztőnek tanács?; Hol vannak a junior állások, amikre fel ; C# .NET mellett Java backendet kitanulni; +2 más |
+| 2025 Q1 | 4 | 2219 | 291 | magyar élelmiszerlánc | Junior Frontend fejlesztőnek tanács?; Hol vannak a junior állások, amikre fel ; C# .NET mellett Java backendet kitanulni; +1 más |
 | 2025 Q2 | 7 | 286 | 450 | MNB, Microsoft | Pet project fejlesztési ötletek wannabe ; Akkumulátorgyárak: veszteség és leépítés; Ti váltanátok a helyemben ?; +4 más |
 | 2025 Q3 | 7 | 449 | 326 | Agoda, Audi, Ericsson, Magyar Agrár- és Élettudományi Egyetem (MATE) | Agoda confirms layoffs of Singapore, Sha; "Manapság diplomával is nehéz IT-ban elh; "Az idei év végére az Audi megdönti Győr; +4 más |
 | 2025 Q4 | 11 | 707 | 555 | 4iG, BorsodChem, Docler/Byborg, Rail Cargo Hungaria | Nagyon rossz interjú élmény startupnál; Lázárék megvonták a támogatást egy osztr; 4iG milyen manapság?; +8 más |
-| 2026 Q1 | 7 | 412 | 353 | Audi, OTP Bank, Szállás Group, Tungsram, Unisys | Fejlesztőből IT support?; Szállás Group leépítésről van belsős inf; OTP bank - leépítés IT területen; +4 más |
+| 2026 Q1 | 6 | 409 | 345 | Audi, OTP Bank, Szállás Group, Tungsram | Fejlesztőből IT support?; Szállás Group leépítésről van belsős inf; OTP bank - leépítés IT területen; +3 más |
 
 ## Érintett Cégek
 
@@ -46,14 +46,13 @@
 |-----|-------|---------|-----------|--------|------|
 | Szállás Group | 2026-02-18 | travel | igen | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r842vt/szállás_group_leépítésről_van_belsős_infótok/) |
 | OTP Bank | 2026-02-15 | fintech | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/) |
-| Unisys | 2026-02-13 | IT services | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/) |
 | Tungsram | 2026-02-11 | None | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1r1u7pe/szijjártó_péter_száznegyven_új_munkahelyet_teremt/) |
 | Audi | 2026-01-14 | None | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1qcj91f/leépítés_jön_a_győri_audinál_hiába_a_várható/) |
 | Rail Cargo Hungaria | 2025-12-08 | None | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1phglkk/lázárék_megvonták_a_támogatást_egy_osztrák_cégtől/) |
 | 4iG | 2025-12-03 | None | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1pd25uk/4ig_milyen_manapság/) |
 | Docler/Byborg | 2025-11-15 | entertainment | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1oxmnhc/docler_byborg_home_office_eltörlés/) |
 | BorsodChem | 2025-11-10 | None | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1osztuw/kilátástalanság_pályakezdőként/) |
-| Agoda | 2025-09-18 | None | — | r/Layoffs | [link](https://reddit.com/r/Layoffs/comments/1nju0sk/agoda_confirms_layoffs_of_singapore_shanghai_and/) |
+| Agoda | 2025-09-18 | None | igen | r/Layoffs | [link](https://reddit.com/r/Layoffs/comments/1nju0sk/agoda_confirms_layoffs_of_singapore_shanghai_and/) |
 | Audi | 2025-09-14 | automotive | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1ngqpd7/az_idei_év_végére_az_audi_megdönti_győrben_a/) |
 | Magyar Agrár- és Élettudományi Egyetem (MATE) | 2025-07-04 | None | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1lrkcwb/nem_elég_hogy_már_teljesen_kirabolták_és/) |
 | Ericsson | 2025-07-03 | telecom | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1lqo9u0/ericsson_leépítés/) |
@@ -91,7 +90,6 @@
 - [2025-03-25] [Junior Frontend fejlesztőnek tanács?](https://reddit.com/r/programmingHungary/comments/1jjrety/junior_frontend_fejlesztőnek_tanács/)
 - [2025-02-18] [Hol vannak a junior állások, amikre fel is vesznek?](https://reddit.com/r/programmingHungary/comments/1iskkso/hol_vannak_a_junior_állások_amikre_fel_is_vesznek/)
 - [2025-02-05] [C# .NET mellett Java backendet kitanulni ?](https://reddit.com/r/programmingHungary/comments/1ii9rbm/c_net_mellett_java_backendet_kitanulni/)
-- [2025-01-16] [API-k használata álláskereső oldalakról.](https://reddit.com/r/programmingHungary/comments/1i2wb2o/apik_használata_álláskereső_oldalakról/)
 - [2024-11-04] [Osztrák piac rant](https://reddit.com/r/programmingHungary/comments/1gjfpfw/osztrák_piac_rant/)
 - [2024-10-25] [Melyek a jobb álláskereső oldalak?](https://reddit.com/r/programmingHungary/comments/1gbwlg2/melyek_a_jobb_álláskereső_oldalak/)
 - [2024-10-20] [Junior álláskeresés perspektíva](https://reddit.com/r/programmingHungary/comments/1g7sii9/junior_álláskeresés_perspektíva/)
@@ -101,8 +99,8 @@
 - [2024-08-14] [Első éles munkakeresés, CV és tech stack](https://reddit.com/r/programmingHungary/comments/1es90n7/első_éles_munkakeresés_cv_és_tech_stack/)
 - [2024-06-12] [Tippeket szeretnék kérni, hogy merre érdemes menni](https://reddit.com/r/programmingHungary/comments/1de33nd/tippeket_szeretnék_kérni_hogy_merre_érdemes_menni/)
 - [2024-06-07] [Ericcson leépítés != közös megegyezés?](https://reddit.com/r/programmingHungary/comments/1dak4tn/ericcson_leépítés_közös_megegyezés/)
-- [2024-04-16] [Red flag, nem red flag?](https://reddit.com/r/programmingHungary/comments/1c5hmb9/red_flag_nem_red_flag/)
 - [2024-04-14] [Ha 8 év alatt 3x rúgtak ki (instabilabb szektorból), mi lehe](https://reddit.com/r/programmingHungary/comments/1c3olrp/ha_8_év_alatt_3x_rúgtak_ki_instabilabb_szektorból/)
+- [2024-02-22] [Remote munka külföldre - mennyire más?](https://reddit.com/r/programmingHungary/comments/1ax0ktn/remote_munka_külföldre_mennyire_más/)
 - [2024-01-11] [Senior szint alatti fejlesztők problémái multiknál](https://reddit.com/r/programmingHungary/comments/1944ht0/senior_szint_alatti_fejlesztők_problémái_multiknál/)
 - [2024-01-09] [Remote work 6 év "külföldi" tapasztalattal, avagy a hazai, e](https://reddit.com/r/programmingHungary/comments/192irac/remote_work_6_év_külföldi_tapasztalattal_avagy_a/)
 - [2024-01-08] [Codecool munka](https://reddit.com/r/programmingHungary/comments/191m2dp/codecool_munka/)
@@ -117,12 +115,14 @@
 - [2022-07-03] [Álláskereső portálok](https://reddit.com/r/hungary/comments/vq98fp/álláskereső_portálok/)
 - [2022-07-02] [Mit érdemes önképzésként tanulni álláskeresés során?](https://reddit.com/r/hungary/comments/vpn89r/mit_érdemes_önképzésként_tanulni_álláskeresés/)
 - [2021-12-27] [Segítség kérés tudásom beárazásában és álláskeresésben, hoss](https://reddit.com/r/programmingHungary/comments/rplo0c/segítség_kérés_tudásom_beárazásában_és/)
+- [2021-11-30] [Hol érdemes melót keresni?](https://reddit.com/r/hungary/comments/r5wkzu/hol_érdemes_melót_keresni/)
 - [2021-04-19] [Álláskeresés diploma és munkatapasztalat nélkül.](https://reddit.com/r/hungary/comments/mu13lb/álláskeresés_diploma_és_munkatapasztalat_nélkül/)
 - [2021-02-20] [Több körös állásinterjúk és megvárakoztatás](https://reddit.com/r/hungary/comments/lo9jiq/több_körös_állásinterjúk_és_megvárakoztatás/)
 - [2021-02-09] [Állások bérigénye](https://reddit.com/r/programmingHungary/comments/lg2n1g/állások_bérigénye/)
 - [2018-12-17] [Should I leave college, or even software development?](https://reddit.com/r/cscareerquestions/comments/a74r7n/should_i_leave_college_or_even_software/)
 - [2018-11-15] [Self taught programmer job search?](https://reddit.com/r/cscareerquestions/comments/9xe5d3/self_taught_programmer_job_search/)
 - [2018-06-09] [From HU to UK relocation, as a Front end dev](https://reddit.com/r/cscareerquestions/comments/8ptgc9/from_hu_to_uk_relocation_as_a_front_end_dev/)
+- [2018-05-07] [UK vs US which offer to accept?](https://reddit.com/r/cscareerquestions/comments/8hoik1/uk_vs_us_which_offer_to_accept/)
 - [2015-06-22] [I'll soon drop out from college with a huge student loan, wh](https://reddit.com/r/cscareerquestions/comments/3ankft/ill_soon_drop_out_from_college_with_a_huge/)
 - [2012-09-27] [Software companies in Budapest???](https://reddit.com/r/cscareerquestions/comments/10kbgb/software_companies_in_budapest/)
 - [2012-04-22] [In US. Need advice for careers abroad.](https://reddit.com/r/cscareerquestions/comments/smau1/in_us_need_advice_for_careers_abroad/)
@@ -131,18 +131,17 @@
 
 | Kategória | Posztok száma |
 |-----------|---------------|
-| Közvetlen leépítés | 41 |
+| Közvetlen leépítés | 40 |
 | Hiring freeze / álláspiac | 10 |
 | Karrier aggodalom | 12 |
-| Egyéb | 45 |
+| Egyéb | 46 |
 
 **Szektorok szerinti megoszlás (erős jelzések):**
-- ismeretlen: 65 poszt
+- ismeretlen: 66 poszt
 - automotive: 4 poszt
 - fintech: 2 poszt
 - big tech: 2 poszt
 - travel: 1 poszt
-- IT services: 1 poszt
 - entertainment: 1 poszt
 - telecom: 1 poszt
 - finance/gov: 1 poszt
@@ -154,8 +153,8 @@
 | Kategória | Posztok | Össz score | Össz komment | Átl. score | Átl. komment |
 |-----------|---------|------------|--------------|------------|--------------|
 | Közvetlen leépítés | 23 | 4,056 | 1,137 | 176 | 49 |
-| Hiring freeze / álláspiac | 57 | 1,710 | 2,150 | 30 | 38 |
-| Karrier aggodalom | 28 | 1,941 | 1,990 | 69 | 71 |
+| Hiring freeze / álláspiac | 57 | 1,724 | 2,156 | 30 | 38 |
+| Karrier aggodalom | 28 | 1,902 | 1,958 | 68 | 70 |
 
 **Legtöbb reakció (upvote):**
 - 2186 upvote — [Dr. Kulja András: Ma reggel kirúgták a feleségem édesanyját](https://reddit.com/r/hungary/comments/1id4zk7/dr_kulja_andrás_ma_reggel_kirúgták_a_feleségem/)
@@ -174,17 +173,17 @@
 ## Érintett Technológiák
 
 - Java: 11 poszt
-- AI: 8 poszt
+- AI: 9 poszt
 - React: 8 poszt
 - .NET: 6 poszt
 - C#: 5 poszt
-- Angular: 4 poszt
-- JavaScript: 4 poszt
-- TypeScript: 4 poszt
 - Python: 4 poszt
 - frontend: 3 poszt
 - PHP: 3 poszt
+- JavaScript: 3 poszt
 - PostgreSQL: 3 poszt
+- Angular: 3 poszt
+- TypeScript: 3 poszt
 - Go: 2 poszt
 - Azure: 2 poszt
 - Node.js: 2 poszt
@@ -196,21 +195,21 @@
 
 ## Érintett Munkakörök
 
-- frontend fejlesztő: 8 poszt
-- programozó: 8 poszt
-- fejlesztő: 7 poszt
+- frontend fejlesztő: 7 poszt
 - junior fejlesztő: 7 poszt
-- szoftverfejlesztő: 5 poszt
+- programozó: 7 poszt
+- szoftverfejlesztő: 6 poszt
+- fejlesztő: 5 poszt
 - senior fejlesztő: 4 poszt
 - medior fejlesztő: 4 poszt
 - backend fejlesztő: 4 poszt
 - rendszergazda: 3 poszt
-- tesztelő: 3 poszt
 - IT szakember: 2 poszt
 - webfejlesztő: 2 poszt
 - ügyfélszolgálat: 2 poszt
 - lead fejlesztő: 2 poszt
-- IT: 1 poszt
+- tesztelő: 2 poszt
+- IT support: 1 poszt
 
 ## Trend Elemzés
 
@@ -219,17 +218,17 @@
 **AI-attribúció évenként:**
 - 2012: 0/2 poszt (0%)
 - 2015: 0/2 poszt (0%)
-- 2018: 0/3 poszt (0%)
+- 2018: 0/4 poszt (0%)
 - 2019: 1/1 poszt (100%)
-- 2021: 0/5 poszt (0%)
-- 2022: 0/6 poszt (0%)
+- 2021: 0/6 poszt (0%)
+- 2022: 1/6 poszt (17%)
 - 2023: 0/11 poszt (0%)
-- 2024: 5/29 poszt (17%)
-- 2025: 6/38 poszt (16%)
+- 2024: 5/28 poszt (18%)
+- 2025: 6/37 poszt (16%)
 - 2026: 3/11 poszt (27%)
 
 **Cég típus:**
-- Multinacionális / nagyvállalat: 14 esemény
+- Multinacionális / nagyvállalat: 13 esemény
 - Startup / KKV: 1 esemény
 
 ## Hiring Freeze / Álláspiac Jelzések
@@ -321,7 +320,7 @@
 | 2026-02-19 | [Fejlesztőből IT support?](https://reddit.com/r/programmingHungary/comments/1r94yog/fejlesztőből_it_support/) | — | layoff | r/programmingHungary | 12 | 36 | 2 | 90% | igen |
 | 2026-02-18 | [Szállás Group leépítésről van belsős infótok?](https://reddit.com/r/programmingHungary/comments/1r842vt/szállás_group_leépítésről_van_belsős_infótok/) | Szállás Group | layoff | r/programmingHungary | 55 | 54 | 3 | 95% | igen |
 | 2026-02-15 | [OTP bank - leépítés IT területen](https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/) | OTP Bank | layoff | r/programmingHungary | 177 | 143 | 3 | 95% | — |
-| 2026-02-13 | [Unisys munkahelyről tud valaki valamit?](https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/) | Unisys | layoff | r/programmingHungary | 3 | 8 | 2 | 80% | — |
+| 2026-02-13 | [Unisys munkahelyről tud valaki valamit?](https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/) | Unisys | layoff | r/programmingHungary | 3 | 8 | 1 | 80% | — |
 | 2026-02-12 | [Remekül lehagonló manapság állást keresni.](https://reddit.com/r/programmingHungary/comments/1r363xx/remekül_lehagonló_manapság_állást_keresni/) | — | other | r/programmingHungary | 311 | 117 | 1 | 90% | — |
 | 2026-02-11 | [Szijjártó Péter: száznegyven új munkahelyet teremt...](https://reddit.com/r/hungary/comments/1r1u7pe/szijjártó_péter_száznegyven_új_munkahelyet_teremt/) | Tungsram | layoff | r/hungary | 46 | 35 | 3 | 95% | — |
 | 2026-01-30 | [Ki mire váltana IT-ról vagy nyugisabb IT részre?](https://reddit.com/r/programmingHungary/comments/1qr8jn7/ki_mire_váltana_itról_vagy_nyugisabb_it_részre/) | — | anxiety | r/programmingHungary | 48 | 116 | 1 | 90% | — |
@@ -338,13 +337,13 @@
 | 2025-11-12 | [[Frontend] Továbblépés a süllyedő hajóról, ventill...](https://reddit.com/r/programmingHungary/comments/1ovbmbo/frontend_továbblépés_a_süllyedő_hajóról/) | — | anxiety | r/programmingHungary | 13 | 22 | 1 | 90% | — |
 | 2025-11-11 | [Ilyen a munka egy outsourcing cégnél? - kiégés](https://reddit.com/r/programmingHungary/comments/1oulh1c/ilyen_a_munka_egy_outsourcing_cégnél_kiégés/) | — | anxiety | r/programmingHungary | 46 | 40 | 1 | 90% | — |
 | 2025-11-10 | [Kilátástalanság pályakezdőként](https://reddit.com/r/programmingHungary/comments/1osztuw/kilátástalanság_pályakezdőként/) | BorsodChem | freeze | r/programmingHungary | 94 | 76 | 2 | 90% | — |
-| 2025-11-04 | [Szakirányú továbbképzések(certek) mennyit érnek ál...](https://reddit.com/r/programmingHungary/comments/1oog118/szakirányú_továbbképzésekcertek_mennyit_érnek/) | — | other | r/programmingHungary | 9 | 10 | 2 | 90% | igen |
+| 2025-11-04 | [Szakirányú továbbképzések(certek) mennyit érnek ál...](https://reddit.com/r/programmingHungary/comments/1oog118/szakirányú_továbbképzésekcertek_mennyit_érnek/) | — | other | r/programmingHungary | 9 | 10 | 2 | 90% | — |
 | 2025-10-30 | [álláspiac, FE webfejlesztőként](https://reddit.com/r/programmingHungary/comments/1ok1x41/álláspiac_fe_webfejlesztőként/) | — | layoff | r/programmingHungary | 78 | 26 | 2 | 90% | — |
 | 2025-10-22 | [Munkaváltás React/Next.js stackkel – hogy áll most...](https://reddit.com/r/programmingHungary/comments/1od4xq4/munkaváltás_reactnextjs_stackkel_hogy_áll_most_a/) | — | other | r/programmingHungary | 1 | 13 | 2 | 90% | igen |
 | 2025-10-15 | [10 év KKV után multiba mennék, segítsetek!](https://reddit.com/r/programmingHungary/comments/1o75171/10_év_kkv_után_multiba_mennék_segítsetek/) | — | freeze | r/programmingHungary | 22 | 42 | 2 | 80% | — |
 | 2025-09-28 | [Elbizonytalanodtam egyetemmel kapcsolatban](https://reddit.com/r/programmingHungary/comments/1nspwwb/elbizonytalanodtam_egyetemmel_kapcsolatban/) | — | anxiety | r/programmingHungary | 47 | 68 | 1 | 90% | — |
-| 2025-09-18 | [Agoda confirms layoffs of Singapore, Shanghai and ...](https://reddit.com/r/Layoffs/comments/1nju0sk/agoda_confirms_layoffs_of_singapore_shanghai_and/) | Agoda | layoff | r/Layoffs | 34 | 5 | 3 | 95% | — |
-| 2025-09-16 | ["Manapság diplomával is nehéz IT-ban elhelyezkedni...](https://reddit.com/r/programmingHungary/comments/1nim26d/manapság_diplomával_is_nehéz_itban_elhelyezkedni/) | — | other | r/programmingHungary | 63 | 189 | 2 | 90% | — |
+| 2025-09-18 | [Agoda confirms layoffs of Singapore, Shanghai and ...](https://reddit.com/r/Layoffs/comments/1nju0sk/agoda_confirms_layoffs_of_singapore_shanghai_and/) | Agoda | layoff | r/Layoffs | 34 | 5 | 3 | 95% | igen |
+| 2025-09-16 | ["Manapság diplomával is nehéz IT-ban elhelyezkedni...](https://reddit.com/r/programmingHungary/comments/1nim26d/manapság_diplomával_is_nehéz_itban_elhelyezkedni/) | — | other | r/programmingHungary | 63 | 189 | 2 | 80% | — |
 | 2025-09-14 | ["Az idei év végére az Audi megdönti Győrben a fogl...](https://reddit.com/r/hungary/comments/1ngqpd7/az_idei_év_végére_az_audi_megdönti_győrben_a/) | Audi | layoff | r/hungary | 59 | 39 | 3 | 90% | — |
 | 2025-09-12 | [Ki mit gondol erről a jelentkezési kérdőívről? Men...](https://reddit.com/r/programmingHungary/comments/1nexgv5/ki_mit_gondol_erről_a_jelentkezési_kérdőívről/) | Ozeki | other | r/programmingHungary | 5 | 39 | 1 | 90% | igen |
 | 2025-08-04 | [Melyek ma Magyarországon a legjobban fizető cégek,...](https://reddit.com/r/programmingHungary/comments/1mh7haf/melyek_ma_magyarországon_a_legjobban_fizető_cégek/) | Tesco Technology | anxiety | r/programmingHungary | 56 | 111 | 1 | 90% | — |
@@ -366,7 +365,6 @@
 | 2025-02-18 | [Hol vannak a junior állások, amikre fel is vesznek...](https://reddit.com/r/programmingHungary/comments/1iskkso/hol_vannak_a_junior_állások_amikre_fel_is_vesznek/) | — | other | r/programmingHungary | 26 | 32 | 2 | 90% | — |
 | 2025-02-05 | [C# .NET mellett Java backendet kitanulni ?](https://reddit.com/r/programmingHungary/comments/1ii9rbm/c_net_mellett_java_backendet_kitanulni/) | — | other | r/programmingHungary | 3 | 16 | 2 | 90% | — |
 | 2025-01-29 | [Dr. Kulja András: Ma reggel kirúgták a feleségem é...](https://reddit.com/r/hungary/comments/1id4zk7/dr_kulja_andrás_ma_reggel_kirúgták_a_feleségem/) | magyar élelmiszerlánc | layoff | r/hungary | 2186 | 238 | 3 | 95% | — |
-| 2025-01-16 | [API-k használata álláskereső oldalakról.](https://reddit.com/r/programmingHungary/comments/1i2wb2o/apik_használata_álláskereső_oldalakról/) | — | other | r/programmingHungary | 0 | 6 | 2 | 90% | — |
 | 2024-12-19 | [Váltás IT karrierre munka mellett. Szerintetek mel...](https://reddit.com/r/programmingHungary/comments/1hhovmo/váltás_it_karrierre_munka_mellett_szerintetek/) | — | other | r/programmingHungary | 0 | 67 | 1 | 90% | igen |
 | 2024-11-30 | [I was former PlayStation employee in Tokyo and got...](https://reddit.com/r/Layoffs/comments/1h2yjk9/i_was_former_playstation_employee_in_tokyo_and/) | PlayStation | layoff | r/Layoffs | 608 | 61 | 3 | 95% | — |
 | 2024-11-27 | [Kiégés, pályaváltás](https://reddit.com/r/programmingHungary/comments/1h11u02/kiégés_pályaváltás/) | — | anxiety | r/programmingHungary | 40 | 54 | 1 | 90% | — |
@@ -386,11 +384,10 @@
 | 2024-06-12 | [Tippeket szeretnék kérni, hogy merre érdemes menni](https://reddit.com/r/programmingHungary/comments/1de33nd/tippeket_szeretnék_kérni_hogy_merre_érdemes_menni/) | — | freeze | r/programmingHungary | 13 | 52 | 2 | 90% | — |
 | 2024-06-07 | [Ericcson leépítés != közös megegyezés?](https://reddit.com/r/programmingHungary/comments/1dak4tn/ericcson_leépítés_közös_megegyezés/) | — | layoff | r/programmingHungary | 19 | 14 | 3 | — | — |
 | 2024-04-22 | [Leépítések a Lensa-nál. Mi vezetett idáig?](https://reddit.com/r/programmingHungary/comments/1cakzeo/leépítések_a_lensanál_mi_vezetett_idáig/) | Lensa | layoff | r/programmingHungary | 31 | 23 | 3 | 90% | igen |
-| 2024-04-16 | [Red flag, nem red flag?](https://reddit.com/r/programmingHungary/comments/1c5hmb9/red_flag_nem_red_flag/) | — | layoff | r/programmingHungary | 39 | 47 | 2 | 80% | — |
 | 2024-04-14 | [Ha 8 év alatt 3x rúgtak ki (instabilabb szektorból...](https://reddit.com/r/programmingHungary/comments/1c3olrp/ha_8_év_alatt_3x_rúgtak_ki_instabilabb_szektorból/) | — | layoff | r/programmingHungary | 1 | 123 | 2 | 80% | — |
 | 2024-04-12 | [Home office hátrafelé sült el: hogyan tovább csalá...](https://reddit.com/r/programmingHungary/comments/1c2dn33/home_office_hátrafelé_sült_el_hogyan_tovább/) | — | layoff | r/programmingHungary | 157 | 286 | 1 | 90% | — |
 | 2024-02-27 | [Befellegzett a programozóknak, nem lesz szükség rá...](https://reddit.com/r/programmingHungary/comments/1b1al1j/befellegzett_a_programozóknak_nem_lesz_szükség/) | Nvidia | other | r/programmingHungary | 105 | 108 | 1 | 90% | igen |
-| 2024-02-22 | [Remote munka külföldre - mennyire más?](https://reddit.com/r/programmingHungary/comments/1ax0ktn/remote_munka_külföldre_mennyire_más/) | — | anxiety | r/programmingHungary | 42 | 40 | 1 | 90% | — |
+| 2024-02-22 | [Remote munka külföldre - mennyire más?](https://reddit.com/r/programmingHungary/comments/1ax0ktn/remote_munka_külföldre_mennyire_más/) | — | anxiety | r/programmingHungary | 42 | 40 | 2 | 90% | — |
 | 2024-01-25 | [Clickbaitelés: az AI elveszi a munkát, ja mégse](https://reddit.com/r/programmingHungary/comments/19f6vru/clickbaitelés_az_ai_elveszi_a_munkát_ja_mégse/) | SAP | layoff | r/programmingHungary | 59 | 54 | 3 | 90% | igen |
 | 2024-01-12 | [Ismerős minta a munkaerőpiacon (avagy soha nem tan...](https://reddit.com/r/programmingHungary/comments/194jlp2/ismerős_minta_a_munkaerőpiacon_avagy_soha_nem/) | — | other | r/programmingHungary | 88 | 50 | 1 | 90% | — |
 | 2024-01-11 | [Senior szint alatti fejlesztők problémái multiknál](https://reddit.com/r/programmingHungary/comments/1944ht0/senior_szint_alatti_fejlesztők_problémái_multiknál/) | — | other | r/programmingHungary | 31 | 13 | 2 | 90% | — |
@@ -403,7 +400,7 @@
 | 2023-07-31 | [Körkép: pénzügyi hangulat](https://reddit.com/r/programmingHungary/comments/15ep4ko/körkép_pénzügyi_hangulat/) | OTP Bank | layoff | r/programmingHungary | 19 | 24 | 1 | 90% | — |
 | 2023-05-23 | [Continental Internship](https://reddit.com/r/programmingHungary/comments/13pkbt5/continental_internship/) | Continental | other | r/programmingHungary | 4 | 8 | 2 | 90% | — |
 | 2023-05-12 | [Karrier USA távmunkát követően](https://reddit.com/r/programmingHungary/comments/13fqal8/karrier_usa_távmunkát_követően/) | — | other | r/programmingHungary | 24 | 37 | 2 | 90% | — |
-| 2023-05-04 | [Gyakornok a gyakorlatban](https://reddit.com/r/programmingHungary/comments/137fpyb/gyakornok_a_gyakorlatban/) | — | freeze | r/programmingHungary | 1 | 9 | 2 | 90% | — |
+| 2023-05-04 | [Gyakornok a gyakorlatban](https://reddit.com/r/programmingHungary/comments/137fpyb/gyakornok_a_gyakorlatban/) | — | freeze | r/programmingHungary | 1 | 9 | 2 | 80% | — |
 | 2023-03-09 | [Álláskeresés LinkedInen vagy máshol?](https://reddit.com/r/programmingHungary/comments/11n05j4/álláskeresés_linkedinen_vagy_máshol/) | — | other | r/programmingHungary | 17 | 35 | 2 | 90% | — |
 | 2023-03-04 | [tanács kérése](https://reddit.com/r/programmingHungary/comments/11hz162/tanács_kérése/) | — | layoff | r/programmingHungary | 7 | 20 | 3 | 90% | — |
 | 2023-02-03 | [Hiring freeze ?!](https://reddit.com/r/programmingHungary/comments/10semr8/hiring_freeze/) | — | freeze | r/programmingHungary | 47 | 82 | 2 | 90% | — |
@@ -411,9 +408,10 @@
 | 2022-07-03 | [Álláskereső portálok](https://reddit.com/r/hungary/comments/vq98fp/álláskereső_portálok/) | — | other | r/hungary | 17 | 21 | 2 | 90% | — |
 | 2022-07-02 | [Mit érdemes önképzésként tanulni álláskeresés sorá...](https://reddit.com/r/hungary/comments/vpn89r/mit_érdemes_önképzésként_tanulni_álláskeresés/) | — | other | r/hungary | 10 | 23 | 2 | 90% | — |
 | 2022-05-16 | [Nem bírom tovább.](https://reddit.com/r/hungary/comments/ur4nlj/nem_bírom_tovább/) | — | layoff | r/hungary | 32 | 40 | 1 | 90% | — |
-| 2022-03-05 | [Quitting job during times like these in Eastern Eu...](https://reddit.com/r/cscareerquestions/comments/t6xd5r/quitting_job_during_times_like_these_in_eastern/) | — | layoff | r/cscareerquestions | 1 | 1 | 1 | 90% | — |
+| 2022-03-05 | [Quitting job during times like these in Eastern Eu...](https://reddit.com/r/cscareerquestions/comments/t6xd5r/quitting_job_during_times_like_these_in_eastern/) | — | layoff | r/cscareerquestions | 1 | 1 | 1 | 90% | igen |
 | 2022-01-08 | [Kezdő álláskereső vagyok, önéletrajz tippek?](https://reddit.com/r/hungary/comments/ryymmq/kezdő_álláskereső_vagyok_önéletrajz_tippek/) | Microsoft | other | r/hungary | 50 | 48 | 2 | 90% | — |
 | 2021-12-27 | [Segítség kérés tudásom beárazásában és álláskeresé...](https://reddit.com/r/programmingHungary/comments/rplo0c/segítség_kérés_tudásom_beárazásában_és/) | — | other | r/programmingHungary | 9 | 3 | 2 | 90% | — |
+| 2021-11-30 | [Hol érdemes melót keresni?](https://reddit.com/r/hungary/comments/r5wkzu/hol_érdemes_melót_keresni/) | — | other | r/hungary | 13 | 21 | 2 | 80% | — |
 | 2021-11-15 | [Kemény kijózanodás - Diétás Magyar Múzsa](https://reddit.com/r/hungary/comments/qu91yx/kemény_kijózanodás_diétás_magyar_múzsa/) | Szállás Group | layoff | r/hungary | 85 | 26 | 1 | 90% | — |
 | 2021-04-19 | [Álláskeresés diploma és munkatapasztalat nélkül.](https://reddit.com/r/hungary/comments/mu13lb/álláskeresés_diploma_és_munkatapasztalat_nélkül/) | — | other | r/hungary | 16 | 37 | 2 | 90% | — |
 | 2021-02-20 | [Több körös állásinterjúk és megvárakoztatás](https://reddit.com/r/hungary/comments/lo9jiq/több_körös_állásinterjúk_és_megvárakoztatás/) | — | other | r/hungary | 61 | 60 | 2 | 90% | — |
@@ -422,6 +420,7 @@
 | 2018-12-17 | [Should I leave college, or even software developme...](https://reddit.com/r/cscareerquestions/comments/a74r7n/should_i_leave_college_or_even_software/) | — | other | r/cscareerquestions | 0 | 4 | 2 | 90% | — |
 | 2018-11-15 | [Self taught programmer job search?](https://reddit.com/r/cscareerquestions/comments/9xe5d3/self_taught_programmer_job_search/) | — | other | r/cscareerquestions | 11 | 1 | 2 | 80% | — |
 | 2018-06-09 | [From HU to UK relocation, as a Front end dev](https://reddit.com/r/cscareerquestions/comments/8ptgc9/from_hu_to_uk_relocation_as_a_front_end_dev/) | — | other | r/cscareerquestions | 2 | 3 | 2 | 80% | — |
+| 2018-05-07 | [UK vs US which offer to accept?](https://reddit.com/r/cscareerquestions/comments/8hoik1/uk_vs_us_which_offer_to_accept/) | — | other | r/cscareerquestions | 1 | 6 | 2 | 90% | — |
 | 2015-06-22 | [Keep niche job and maybe move to an amazing city, ...](https://reddit.com/r/cscareerquestions/comments/3aqdjo/keep_niche_job_and_maybe_move_to_an_amazing_city/) | — | other | r/cscareerquestions | 1 | 2 | 1 | 90% | — |
 | 2015-06-22 | [I'll soon drop out from college with a huge studen...](https://reddit.com/r/cscareerquestions/comments/3ankft/ill_soon_drop_out_from_college_with_a_huge/) | — | other | r/cscareerquestions | 9 | 3 | 2 | 80% | — |
 | 2012-09-27 | [Software companies in Budapest???](https://reddit.com/r/cscareerquestions/comments/10kbgb/software_companies_in_budapest/) | — | other | r/cscareerquestions | 3 | 4 | 2 | 90% | — |
@@ -429,12 +428,12 @@
 
 ## Források
 
-Összesen 108 releváns poszt (r/programmingHungary: 81, r/hungary: 16, r/cscareerquestions: 9, r/Layoffs: 2):
+Összesen 108 releváns poszt (r/programmingHungary: 79, r/hungary: 17, r/cscareerquestions: 10, r/Layoffs: 2):
 
 - [2026-02-19] [Fejlesztőből IT support?](https://reddit.com/r/programmingHungary/comments/1r94yog/fejlesztőből_it_support/) (score: 12, 36 komment) **
 - [2026-02-18] [Szállás Group leépítésről van belsős infótok?](https://reddit.com/r/programmingHungary/comments/1r842vt/szállás_group_leépítésről_van_belsős_infótok/) (score: 55, 54 komment) ***
 - [2026-02-15] [OTP bank - leépítés IT területen](https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/) (score: 177, 143 komment) ***
-- [2026-02-13] [Unisys munkahelyről tud valaki valamit?](https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/) (score: 3, 8 komment) **
+- [2026-02-13] [Unisys munkahelyről tud valaki valamit?](https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/) (score: 3, 8 komment) *
 - [2026-02-12] [Remekül lehagonló manapság állást keresni.](https://reddit.com/r/programmingHungary/comments/1r363xx/remekül_lehagonló_manapság_állást_keresni/) (score: 311, 117 komment) *
 - [2026-02-11] [Szijjártó Péter: száznegyven új munkahelyet teremt az olasz Meth-csopo](https://reddit.com/r/hungary/comments/1r1u7pe/szijjártó_péter_száznegyven_új_munkahelyet_teremt/) (score: 46, 35 komment) ***
 - [2026-01-30] [Ki mire váltana IT-ról vagy nyugisabb IT részre?](https://reddit.com/r/programmingHungary/comments/1qr8jn7/ki_mire_váltana_itról_vagy_nyugisabb_it_részre/) (score: 48, 116 komment) *
@@ -479,7 +478,6 @@
 - [2025-02-18] [Hol vannak a junior állások, amikre fel is vesznek?](https://reddit.com/r/programmingHungary/comments/1iskkso/hol_vannak_a_junior_állások_amikre_fel_is_vesznek/) (score: 26, 32 komment) **
 - [2025-02-05] [C# .NET mellett Java backendet kitanulni ?](https://reddit.com/r/programmingHungary/comments/1ii9rbm/c_net_mellett_java_backendet_kitanulni/) (score: 3, 16 komment) **
 - [2025-01-29] [Dr. Kulja András: Ma reggel kirúgták a feleségem édesanyját](https://reddit.com/r/hungary/comments/1id4zk7/dr_kulja_andrás_ma_reggel_kirúgták_a_feleségem/) (score: 2186, 238 komment) ***
-- [2025-01-16] [API-k használata álláskereső oldalakról.](https://reddit.com/r/programmingHungary/comments/1i2wb2o/apik_használata_álláskereső_oldalakról/) (score: 0, 6 komment) **
 - [2024-12-19] [Váltás IT karrierre munka mellett. Szerintetek melyik utat válasszam?](https://reddit.com/r/programmingHungary/comments/1hhovmo/váltás_it_karrierre_munka_mellett_szerintetek/) (score: 0, 67 komment) *
 - [2024-11-30] [I was former PlayStation employee in Tokyo and got laid off.](https://reddit.com/r/Layoffs/comments/1h2yjk9/i_was_former_playstation_employee_in_tokyo_and/) (score: 608, 61 komment) ***
 - [2024-11-27] [Kiégés, pályaváltás](https://reddit.com/r/programmingHungary/comments/1h11u02/kiégés_pályaváltás/) (score: 40, 54 komment) *
@@ -499,11 +497,10 @@
 - [2024-06-12] [Tippeket szeretnék kérni, hogy merre érdemes menni](https://reddit.com/r/programmingHungary/comments/1de33nd/tippeket_szeretnék_kérni_hogy_merre_érdemes_menni/) (score: 13, 52 komment) **
 - [2024-06-07] [Ericcson leépítés != közös megegyezés?](https://reddit.com/r/programmingHungary/comments/1dak4tn/ericcson_leépítés_közös_megegyezés/) (score: 19, 14 komment) ***
 - [2024-04-22] [Leépítések a Lensa-nál. Mi vezetett idáig?](https://reddit.com/r/programmingHungary/comments/1cakzeo/leépítések_a_lensanál_mi_vezetett_idáig/) (score: 31, 23 komment) ***
-- [2024-04-16] [Red flag, nem red flag?](https://reddit.com/r/programmingHungary/comments/1c5hmb9/red_flag_nem_red_flag/) (score: 39, 47 komment) **
 - [2024-04-14] [Ha 8 év alatt 3x rúgtak ki (instabilabb szektorból), mi lehetne a köve](https://reddit.com/r/programmingHungary/comments/1c3olrp/ha_8_év_alatt_3x_rúgtak_ki_instabilabb_szektorból/) (score: 1, 123 komment) **
 - [2024-04-12] [Home office hátrafelé sült el: hogyan tovább családdal?](https://reddit.com/r/programmingHungary/comments/1c2dn33/home_office_hátrafelé_sült_el_hogyan_tovább/) (score: 157, 286 komment) *
 - [2024-02-27] [Befellegzett a programozóknak, nem lesz szükség rájuk - mondja az Nvid](https://reddit.com/r/programmingHungary/comments/1b1al1j/befellegzett_a_programozóknak_nem_lesz_szükség/) (score: 105, 108 komment) *
-- [2024-02-22] [Remote munka külföldre - mennyire más?](https://reddit.com/r/programmingHungary/comments/1ax0ktn/remote_munka_külföldre_mennyire_más/) (score: 42, 40 komment) *
+- [2024-02-22] [Remote munka külföldre - mennyire más?](https://reddit.com/r/programmingHungary/comments/1ax0ktn/remote_munka_külföldre_mennyire_más/) (score: 42, 40 komment) **
 - [2024-01-25] [Clickbaitelés: az AI elveszi a munkát, ja mégse](https://reddit.com/r/programmingHungary/comments/19f6vru/clickbaitelés_az_ai_elveszi_a_munkát_ja_mégse/) (score: 59, 54 komment) ***
 - [2024-01-12] [Ismerős minta a munkaerőpiacon (avagy soha nem tanulunk?)](https://reddit.com/r/programmingHungary/comments/194jlp2/ismerős_minta_a_munkaerőpiacon_avagy_soha_nem/) (score: 88, 50 komment) *
 - [2024-01-11] [Senior szint alatti fejlesztők problémái multiknál](https://reddit.com/r/programmingHungary/comments/1944ht0/senior_szint_alatti_fejlesztők_problémái_multiknál/) (score: 31, 13 komment) **
@@ -527,6 +524,7 @@
 - [2022-03-05] [Quitting job during times like these in Eastern Europe?](https://reddit.com/r/cscareerquestions/comments/t6xd5r/quitting_job_during_times_like_these_in_eastern/) (score: 1, 1 komment) *
 - [2022-01-08] [Kezdő álláskereső vagyok, önéletrajz tippek?](https://reddit.com/r/hungary/comments/ryymmq/kezdő_álláskereső_vagyok_önéletrajz_tippek/) (score: 50, 48 komment) **
 - [2021-12-27] [Segítség kérés tudásom beárazásában és álláskeresésben, hosszan kifejt](https://reddit.com/r/programmingHungary/comments/rplo0c/segítség_kérés_tudásom_beárazásában_és/) (score: 9, 3 komment) **
+- [2021-11-30] [Hol érdemes melót keresni?](https://reddit.com/r/hungary/comments/r5wkzu/hol_érdemes_melót_keresni/) (score: 13, 21 komment) **
 - [2021-11-15] [Kemény kijózanodás - Diétás Magyar Múzsa](https://reddit.com/r/hungary/comments/qu91yx/kemény_kijózanodás_diétás_magyar_múzsa/) (score: 85, 26 komment) *
 - [2021-04-19] [Álláskeresés diploma és munkatapasztalat nélkül.](https://reddit.com/r/hungary/comments/mu13lb/álláskeresés_diploma_és_munkatapasztalat_nélkül/) (score: 16, 37 komment) **
 - [2021-02-20] [Több körös állásinterjúk és megvárakoztatás](https://reddit.com/r/hungary/comments/lo9jiq/több_körös_állásinterjúk_és_megvárakoztatás/) (score: 61, 60 komment) **
@@ -535,6 +533,7 @@
 - [2018-12-17] [Should I leave college, or even software development?](https://reddit.com/r/cscareerquestions/comments/a74r7n/should_i_leave_college_or_even_software/) (score: 0, 4 komment) **
 - [2018-11-15] [Self taught programmer job search?](https://reddit.com/r/cscareerquestions/comments/9xe5d3/self_taught_programmer_job_search/) (score: 11, 1 komment) **
 - [2018-06-09] [From HU to UK relocation, as a Front end dev](https://reddit.com/r/cscareerquestions/comments/8ptgc9/from_hu_to_uk_relocation_as_a_front_end_dev/) (score: 2, 3 komment) **
+- [2018-05-07] [UK vs US which offer to accept?](https://reddit.com/r/cscareerquestions/comments/8hoik1/uk_vs_us_which_offer_to_accept/) (score: 1, 6 komment) **
 - [2015-06-22] [Keep niche job and maybe move to an amazing city, or get a job you act](https://reddit.com/r/cscareerquestions/comments/3aqdjo/keep_niche_job_and_maybe_move_to_an_amazing_city/) (score: 1, 2 komment) *
 - [2015-06-22] [I'll soon drop out from college with a huge student loan, what to do?](https://reddit.com/r/cscareerquestions/comments/3ankft/ill_soon_drop_out_from_college_with_a_huge/) (score: 9, 3 komment) **
 - [2012-09-27] [Software companies in Budapest???](https://reddit.com/r/cscareerquestions/comments/10kbgb/software_companies_in_budapest/) (score: 3, 4 komment) **
@@ -565,7 +564,7 @@ A relevancia >= 1 posztokat nyelvi modell validálja, amely eldönti:
 - 1 mondatos magyar összefoglaló
 - Érintett technológiák és munkakörök
 
-Jelen futásban **138 poszt** validálva **455 másodperc** alatt.
+Jelen futásban **138 poszt** validálva **465 másodperc** alatt.
 
 ### Korlátok
 - Csak publikus Reddit posztok — zárt csoportok, belső kommunikáció nem elérhető
@@ -578,8 +577,8 @@ A teljes pipeline nyílt forráskódú: [github.com/tatargabor/hu-it-layoffs](ht
 
 ---
 
-**LLM validáció:** 138 poszt validálva 455 másodperc alatt
-**Tokenek:** ~377,655 input + ~13,062 output
+**LLM validáció:** 138 poszt validálva 465 másodperc alatt
+**Tokenek:** ~377,655 input + ~12,901 output
 **Becsült költség (gpt-4o-mini áron):** $0.064 | **Tényleges (GitHub Models):** $0.00
 **Kézzel ez ~44 óra munka lett volna**
 
