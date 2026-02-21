@@ -367,7 +367,7 @@ details summary:hover {{ color: #fff; }}
 <div class="header">
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
-  <div class="sub">Reddit, Google News, HUP.hu publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
+  <div class="sub">Reddit publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
   <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
@@ -504,17 +504,17 @@ details summary:hover {{ color: #fff; }}
   <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
   <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
     <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
-    <p>Automatizált scraper gyűjt publikus adatokat több forrásból:</p>
+    <p>Automatizált scraper gyűjt publikus adatokat a Redditről:</p>
     <ul style="margin:8px 0 16px 20px">
       <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions</li>
-      <li><strong>Google News RSS</strong> — magyar nyelvű IT leépítés hírek (<code>hl=hu&amp;gl=HU</code>)</li>
-      <li><strong>HUP.hu</strong> — magyar tech fórum keresés</li>
     </ul>
-    <p>Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
+    <p>A Reddit posztok teljes szöveggel (selftext) és top kommentekkel kerülnek elemzésre, így a cím mellett a részletes kontextus is rendelkezésre áll.</p>
+    <p style="margin-top:8px;color:#666;font-size:0.9em"><em>Megjegyzés: korábbi futásokból historikus Google News adatok is szerepelhetnek az adatbázisban.</em></p>
+    <p style="margin-top:8px">Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
 
     <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
     <ol style="margin:8px 0 16px 20px">
-      <li><strong>Multi-source scraping</strong> — Reddit JSON API, Google News RSS, HUP.hu HTML scraping</li>
+      <li><strong>Reddit scraping</strong> — Reddit JSON API (poszt szöveg + top 20 komment)</li>
       <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
       <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
       <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>
@@ -529,7 +529,6 @@ details summary:hover {{ color: #fff; }}
       <li>Csak publikus források — zárt csoportok, belső kommunikáció nem elérhető</li>
       <li>A keresések nem garantálják a teljességet</li>
       <li>LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot</li>
-      <li>Google News magyar NYELVŰ cikkeket ad, nem feltétlenül magyar VONATKOZÁSÚAKAT — LLM szűrés kompenzál</li>
     </ul>
 
     <p><strong>Forráskód:</strong> <a href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">github.com/tatargabor/hu-it-layoffs</a></p>

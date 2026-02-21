@@ -1,6 +1,7 @@
 """Multi-source scraper for Hungarian IT layoff posts.
 
-Sources: Reddit (old.reddit.com JSON API), HUP.hu (HTML scraping), Google News (RSS).
+Supported sources: Reddit (old.reddit.com JSON API), HUP.hu (HTML scraping), Google News (RSS).
+Active sources controlled by ENABLED_SOURCES config (default: Reddit only).
 """
 
 import hashlib
@@ -73,6 +74,9 @@ GNEWS_QUERIES = [
     'Continental leépítés',
     'OTP leépítés',
 ]
+
+# Which sources to scrape. Valid values: 'reddit', 'google-news', 'hup'
+ENABLED_SOURCES = ['reddit']
 
 USER_AGENT = 'hu-it-layoff-report/1.0 (research project)'
 REQUEST_DELAY = 2.0
@@ -518,7 +522,7 @@ def _merge_posts(existing, new_posts):
 
 
 def run_scraper(frozen_ids=None):
-    """Main scraper: Reddit + HUP + Google News, with incremental merge.
+    """Main scraper: runs enabled sources (controlled by ENABLED_SOURCES), with incremental merge.
 
     Args:
         frozen_ids: set of post IDs to skip in fetch_post_details (already frozen/validated).
@@ -526,19 +530,26 @@ def run_scraper(frozen_ids=None):
     if frozen_ids is None:
         frozen_ids = set()
 
+    # Log enabled/skipped sources
+    all_sources = ['reddit', 'google-news', 'hup']
+    enabled = [s for s in all_sources if s in ENABLED_SOURCES]
+    skipped = [s for s in all_sources if s not in ENABLED_SOURCES]
+    print(f'Sources: {", ".join(s + " (enabled)" for s in enabled)}'
+          f'{", " + ", ".join(s + " (skipped)" for s in skipped) if skipped else ""}')
+
     # Load existing data
     existing = _load_existing_posts()
     if existing:
         print(f'Loaded {len(existing)} existing posts for incremental update')
 
     # Scrape Reddit
-    reddit_posts = run_reddit_scraper()
+    reddit_posts = run_reddit_scraper() if 'reddit' in ENABLED_SOURCES else {}
 
     # Scrape HUP.hu
-    hup_posts = run_hup_scraper()
+    hup_posts = run_hup_scraper() if 'hup' in ENABLED_SOURCES else {}
 
     # Scrape Google News
-    gnews_posts = run_google_news_scraper()
+    gnews_posts = run_google_news_scraper() if 'google-news' in ENABLED_SOURCES else {}
 
     # Merge all sources
     all_new = {**reddit_posts, **hup_posts, **gnews_posts}
