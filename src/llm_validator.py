@@ -31,6 +31,8 @@ NEM releváns:
 - Globális tech leépítések magyar vonatkozás nélkül (Amazon USA, Ubisoft Torontó, Google globális, HP, Nestlé) — még ha magyar nyelven is írták!
 - Nem-IT szektorok leépítései (bolti eladó, gyári munkás, textil, élelmiszer, katonai, oktatási, agrár, közlekedési) — KIVÉVE ha kifejezetten IT/tech pozíciókat érintenek
 - Külföldi leépítések magyar vonatkozás nélkül (Dél-Korea, Szlovákia, Románia — kivéve ha magyar hatást említ)
+- Karriertanács, álláskereső posztok: "merre menjek?", "CV tippek", "milyen skilleket tanuljak?", "megéri váltani?" — ezek NEM munkaerőpiaci események
+- Generikus AI/automatizáció cikkek konkrét cég/esemény nélkül: "300 millió munkahely szűnik meg", "AI elveszi a munkát" — ezek NEM specifikus leépítések
 - Technikai kérdések, tanulási kérdések, általános politika/gazdaság
 - Szórakozás, mém, offtopic
 
@@ -164,6 +166,16 @@ Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "co
 
 Poszt: "Magyar Posta elbocsát félszáz informatikust — túl sokat kerestek"
 Válasz: {"is_actual_layoff": true, "category": "layoff", "confidence": 0.9, "company": "Magyar Posta", "sector": "government", "headcount": 50, "summary": "A Magyar Posta 50 informatikust bocsát el magas bérköltsége miatt.", "technologies": [], "roles": ["informatikus"], "ai_role": "none", "ai_context": null, "hungarian_relevance": "direct", "hungarian_context": "Magyar állami intézmény IT pozíciókat érintő leépítése."}
+
+FONTOS A KARRIERTANÁCS/ÁLLÁSKERESŐ POSZTOKRÓL:
+- Karriertanács, CV-tipp, "merre menjek", "megéri-e váltani", "hogyan keressek állást" típusú posztok NEM leépítési események → category: "other"
+- Egyéni "kirúgtak és tanácsot kérek" poszt → category: "freeze" (ez rendben van, de NEM "layoff")
+- "Junior álláskeresés perspektíva", "Milyen skilleket tanuljak?" → category: "other" (karriertanács, nem munkaerőpiaci esemény)
+
+FONTOS A GENERIKUS AI/AUTOMATIZÁCIÓ CIKKEKRŐL:
+- Ha egy cikk általánosságban beszél az AI munkaerőpiaci hatásáról (pl. "300 millió munkahely szűnik meg", "AI elveszi a munkát") de NEM nevez meg konkrét céget vagy eseményt → category: "other"
+- CSAK akkor "layoff" vagy "anxiety" ha konkrét céget, helyszínt, vagy magyar IT munkaerőpiaci hatást említ
+- Példák amik "other": "Goldman Sachs: 300 millió munkahely szűnhet meg az AI miatt", "Az automatizáció átalakítja a munkaerőpiacot"
 
 FONTOS: Csak JSON-t válaszolj, semmi mást!"""
 

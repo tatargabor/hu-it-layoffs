@@ -1,6 +1,7 @@
 """Report generator — markdown report from analyzed/validated posts."""
 
 import json
+import re
 from datetime import datetime
 from collections import defaultdict
 
@@ -41,23 +42,35 @@ def _is_hungarian_relevant(post):
     return post.get('llm_hungarian_relevance', 'direct') != 'none'
 
 
-# Sectors where layoffs count as IT-relevant only if IT roles/tech mentioned
-_NON_IT_SECTORS = {'automotive', 'other', 'energy', 'retail', 'manufacturing'}
+# IT-relevant sectors (whitelist) — sectors NOT in this set require IT roles/tech to pass
+_IT_SECTORS = {'fintech', 'big tech', 'IT services', 'telecom', 'startup', 'general IT', 'retail tech',
+               'gaming tech', 'travel tech'}
 _IT_ROLE_KEYWORDS = {'fejlesztő', 'programozó', 'informatikus', 'szoftver', 'devops', 'qa',
-                     'developer', 'engineer', 'software', 'IT', 'data', 'backend', 'frontend'}
+                     'developer', 'engineer', 'software', 'backend', 'frontend',
+                     'machine learning', 'mesterséges intelligencia'}
+# Short keywords that need word-boundary matching to avoid false positives (e.g. "ai" in "leállításai")
+_IT_ROLE_KEYWORDS_WB = re.compile(r'\b(?:ai|ml|IT|data)\b', re.IGNORECASE)
+
+
+def _eff_category(post):
+    """Effective category: llm_category if validated, else category field, else 'other'."""
+    if post.get('llm_validated') and post.get('llm_category'):
+        return post['llm_category']
+    return post.get('category', 'other')
 
 
 def _is_it_relevant(post):
     """Filter out non-IT sector layoffs unless IT roles/technologies are mentioned."""
     sector = _eff_sector(post)
-    if sector not in _NON_IT_SECTORS:
+    if sector in _IT_SECTORS:
         return True
     # Non-IT sector: check if IT roles or technologies mentioned
     roles = post.get('llm_roles', [])
     techs = post.get('llm_technologies', [])
     summary = post.get('llm_summary', '')
     text = ' '.join(roles + techs) + ' ' + summary
-    return any(kw in text.lower() for kw in _IT_ROLE_KEYWORDS)
+    lower = text.lower()
+    return any(kw in lower for kw in _IT_ROLE_KEYWORDS) or bool(_IT_ROLE_KEYWORDS_WB.search(text))
 
 
 def _count_events(posts):
@@ -166,7 +179,7 @@ def _group_by_event(posts):
 def generate_report(posts, output_path='data/report.md', llm_stats=None):
     """Generate full markdown report."""
     relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
-    strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
+    strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p) and _eff_category(p) != 'other']
     direct = [p for p in posts if _eff_relevance(p) >= 3 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
 
     lines = []

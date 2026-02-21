@@ -1,6 +1,7 @@
 """Generate interactive HTML report with Chart.js visualizations."""
 
 import json
+import re
 from datetime import datetime
 from collections import defaultdict
 
@@ -38,21 +39,32 @@ def _is_hungarian_relevant(post):
     return post.get('llm_hungarian_relevance', 'direct') != 'none'
 
 
-_NON_IT_SECTORS = {'automotive', 'other', 'energy', 'retail', 'manufacturing'}
+_IT_SECTORS = {'fintech', 'big tech', 'IT services', 'telecom', 'startup', 'general IT', 'retail tech',
+               'gaming tech', 'travel tech'}
 _IT_ROLE_KEYWORDS = {'fejlesztő', 'programozó', 'informatikus', 'szoftver', 'devops', 'qa',
-                     'developer', 'engineer', 'software', 'IT', 'data', 'backend', 'frontend'}
+                     'developer', 'engineer', 'software', 'backend', 'frontend',
+                     'machine learning', 'mesterséges intelligencia'}
+_IT_ROLE_KEYWORDS_WB = re.compile(r'\b(?:ai|ml|IT|data)\b', re.IGNORECASE)
+
+
+def _eff_category(post):
+    """Effective category: llm_category if validated, else category field, else 'other'."""
+    if post.get('llm_validated') and post.get('llm_category'):
+        return post['llm_category']
+    return post.get('category', 'other')
 
 
 def _is_it_relevant(post):
     """Filter out non-IT sector layoffs unless IT roles/technologies are mentioned."""
     sector = _eff_sector(post)
-    if sector not in _NON_IT_SECTORS:
+    if sector in _IT_SECTORS:
         return True
     roles = post.get('llm_roles', [])
     techs = post.get('llm_technologies', [])
     summary = post.get('llm_summary', '')
     text = ' '.join(roles + techs) + ' ' + summary
-    return any(kw in text.lower() for kw in _IT_ROLE_KEYWORDS)
+    lower = text.lower()
+    return any(kw in lower for kw in _IT_ROLE_KEYWORDS) or bool(_IT_ROLE_KEYWORDS_WB.search(text))
 
 
 def _count_events(posts):
@@ -151,7 +163,7 @@ def _group_by_event(posts):
 
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
     relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
-    strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
+    strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p) and _eff_category(p) != 'other']
     direct = [p for p in posts if _eff_relevance(p) >= 3 and _is_hungarian_relevant(p)]
 
     quarters = _all_quarters()
@@ -230,9 +242,9 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     top_roles = sorted(role_counts.items(), key=lambda x: -x[1])[:10]
     has_llm_data = any(p.get('llm_validated') for p in relevant)
 
-    # Top posts for table
+    # Top posts for table (exclude category='other' — career advice, offtopic)
     top_posts = sorted(
-        [p for p in relevant if _eff_relevance(p) >= 2],
+        [p for p in relevant if _eff_relevance(p) >= 2 and _eff_category(p) != 'other'],
         key=lambda x: x['created_utc'],
         reverse=True
     )[:30]
@@ -343,7 +355,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     </tr>'''
 
     # Group top posts too
-    top_posts_strong = [p for p in relevant if _eff_relevance(p) >= 2]
+    top_posts_strong = [p for p in relevant if _eff_relevance(p) >= 2 and _eff_category(p) != 'other']
     grouped_top = _group_by_event(top_posts_strong)[:30]
 
     top_posts_rows = ''
