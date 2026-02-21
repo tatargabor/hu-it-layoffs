@@ -98,6 +98,20 @@ def _event_groups(posts):
     return result
 
 
+def _est_cost(llm_stats):
+    """Estimate LLM cost from token counts and backend name."""
+    inp = llm_stats.get('est_input_tokens', 0)
+    out = llm_stats.get('est_output_tokens', 0)
+    backend = llm_stats.get('backend_name', '')
+    if 'anthropic' in backend:
+        # Claude 3 Haiku pricing: $0.25/MTok input, $1.25/MTok output
+        return inp * 0.25 / 1_000_000 + out * 1.25 / 1_000_000
+    if 'github' in backend:
+        return 0.0  # free tier
+    # Default: rough estimate
+    return inp * 0.15 / 1_000_000 + out * 0.60 / 1_000_000
+
+
 def _is_ai_attributed(post):
     """Check if post is AI-attributed. Uses LLM ai_role if available, else keyword."""
     if post.get('llm_validated') and 'llm_ai_role' in post:
@@ -727,8 +741,8 @@ details summary:hover {{ color: #fff; }}
 </details>
 
 <div class="footer">
-  Források: {", ".join(f"{k} ({v})" for k, v in sorted(by_source.items(), key=lambda x: -x[1]))} | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec &middot; Agentic
-  {"<br>" + f"{llm_stats['validated']} poszt LLM-validálva {llm_stats['elapsed_seconds']:.0f}s alatt | ~{llm_stats['est_input_tokens']:,}+{llm_stats['est_output_tokens']:,} token | Költség: $0.00 (GitHub Models) | Kézzel ez ~{llm_stats['est_manual_hours']:.0f} óra lett volna" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
+  Források: {", ".join(f"{k} ({v})" for k, v in sorted(by_source.items(), key=lambda x: -x[1]))} | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec
+  {"<br>" + f"{llm_stats['validated']} poszt LLM-validálva {llm_stats['elapsed_seconds']:.0f}s alatt | ~{llm_stats['est_input_tokens']:,}+{llm_stats['est_output_tokens']:,} token | Becsült költség: ~${_est_cost(llm_stats):.2f} ({llm_stats.get('backend_name', '?')}) | Kézzel ez ~{llm_stats['est_manual_hours']:.0f} óra lett volna" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
 </div>
 
 <script>
