@@ -71,6 +71,8 @@ details summary:hover { color: #fff; }
 .expand-row:not(.hidden) { background: #0f0f1f; }
 .hidden { display: none; }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.engagement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
+.engagement-grid table { min-width: auto; }
 .reddit-ref { display: inline-block; background: #ff450033; color: #ff4500; padding: 1px 5px; border-radius: 3px; font-size: 0.65em; font-weight: 600; margin-left: 4px; vertical-align: middle; text-decoration: none; }
 .reddit-ref:hover { background: #ff450055; text-decoration: none; }
 @media (max-width: 768px) {
@@ -84,11 +86,12 @@ details summary:hover { color: #fff; }
   .stat.primary .num { font-size: 2em; }
   .hbar-chart > div { max-height: 450px; overflow-y: auto; overflow-x: hidden; }
   .table-section { padding: 12px; }
-  .table-section > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+  .engagement-grid { grid-template-columns: 1fr; }
   details { padding: 0 12px 12px; }
   .header { padding: 24px 12px; }
   .header h1 { font-size: 1.5em; }
   .footer { padding: 24px 12px; }
+  .disclaimer-wrap { padding: 8px 12px; }
 }
 </style>
 </head>
@@ -97,7 +100,7 @@ details summary:hover { color: #fff; }
 <div class="header">
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
-  <div class="sub">Reddit + Google News publikus adatok | Generálva: 2026-02-21 21:04</div>
+  <div class="sub">Reddit + Google News publikus adatok | Generálva: 2026-02-21 21:13</div>
   <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
@@ -106,7 +109,7 @@ details summary:hover { color: #fff; }
   </div>
 </div>
 
-<div style="max-width:1200px;margin:0 auto;padding:12px 24px">
+<div class="disclaimer-wrap" style="max-width:1200px;margin:0 auto;padding:12px 24px">
   <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:8px;padding:12px 16px;font-size:0.75em;color:#666;line-height:1.5">
     <strong style="color:#888">Jogi nyilatkozat / Disclaimer:</strong> Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek véleményeit tükrözi, pontossága nem ellenőrzött. Tájékoztató és kutatási célú, nem minősül tényállításnak. /
     This report is an automated analysis of publicly available posts and news articles reflecting third-party opinions. Accuracy is not verified. For informational purposes only.
@@ -217,20 +220,20 @@ details summary:hover { color: #fff; }
     <tr><td><span class="tag tag-layoff">layoff</span></td><td>108</td><td>799</td><td>675</td><td>7</td><td>6</td></tr><tr><td><span class="tag tag-freeze">freeze</span></td><td>72</td><td>3,044</td><td>3,392</td><td>42</td><td>47</td></tr><tr><td><span class="tag tag-anxiety">anxiety</span></td><td>44</td><td>834</td><td>1,041</td><td>18</td><td>23</td></tr>
   </table></div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px">
+  <div class="engagement-grid">
     <div>
       <h3 style="color:#ccc;font-size:0.95em;margin-bottom:8px">Legtöbb upvote</h3>
-      <table>
+      <div class="table-scroll"><table>
         <tr><th>Score</th><th>Poszt</th></tr>
         <tr><td style="color:#e94560;font-weight:700">664</td><td><a href="https://reddit.com/r/cscareerquestions/comments/dfgucr/is_this_a_red_flag_or_i_am_just_overreacting/" target="_blank">Is this a red flag, or I am just overreacting?</a></td></tr><tr><td style="color:#e94560;font-weight:700">311</td><td><a href="https://reddit.com/r/programmingHungary/comments/1r363xx/remekül_lehagonló_manapság_állást_keresni/" target="_blank">Remekül lehagonló manapság állást keresni.</a></td></tr><tr><td style="color:#e94560;font-weight:700">253</td><td><a href="https://reddit.com/r/programmingHungary/comments/1gjfpfw/osztrák_piac_rant/" target="_blank">Osztrák piac rant</a></td></tr><tr><td style="color:#e94560;font-weight:700">231</td><td><a href="https://reddit.com/r/programmingHungary/comments/1potvh2/nagyon_rossz_interjú_élmény_startupnál/" target="_blank">Nagyon rossz interjú élmény startupnál</a></td></tr><tr><td style="color:#e94560;font-weight:700">224</td><td><a href="https://reddit.com/r/programmingHungary/comments/1lzoqc5/miért_a_fejlesztést_baszogatjuk_aival/" target="_blank">Miért a fejlesztést baszogatjuk AI-val?</a></td></tr>
-      </table>
+      </table></div>
     </div>
     <div>
       <h3 style="color:#ccc;font-size:0.95em;margin-bottom:8px">Legtöbb komment</h3>
-      <table>
+      <div class="table-scroll"><table>
         <tr><th>Komment</th><th>Poszt</th></tr>
         <tr><td style="color:#4ecdc4;font-weight:700">288</td><td><a href="https://reddit.com/r/programmingHungary/comments/1kv7glj/hol_van_a_rengeteg_álláskereső_aki_nem_talál/" target="_blank">Hol van a rengeteg álláskereső aki nem talál munkát</a></td></tr><tr><td style="color:#4ecdc4;font-weight:700">286</td><td><a href="https://reddit.com/r/programmingHungary/comments/1c2dn33/home_office_hátrafelé_sült_el_hogyan_tovább/" target="_blank">Home office hátrafelé sült el: hogyan tovább családdal?</a></td></tr><tr><td style="color:#4ecdc4;font-weight:700">220</td><td><a href="https://reddit.com/r/cscareerquestions/comments/dfgucr/is_this_a_red_flag_or_i_am_just_overreacting/" target="_blank">Is this a red flag, or I am just overreacting?</a></td></tr><tr><td style="color:#4ecdc4;font-weight:700">189</td><td><a href="https://reddit.com/r/programmingHungary/comments/1nim26d/manapság_diplomával_is_nehéz_itban_elhelyezkedni/" target="_blank">"Manapság diplomával is nehéz IT-ban elhelyezkedni" - e...</a></td></tr><tr><td style="color:#4ecdc4;font-weight:700">187</td><td><a href="https://reddit.com/r/programmingHungary/comments/1kuxyp3/mi_az_exit_terved/" target="_blank">Mi az exit terved?</a></td></tr>
-      </table>
+      </table></div>
     </div>
   </div>
 </div>

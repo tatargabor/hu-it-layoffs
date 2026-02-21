@@ -567,6 +567,8 @@ details summary:hover {{ color: #fff; }}
 .expand-row:not(.hidden) {{ background: #0f0f1f; }}
 .hidden {{ display: none; }}
 .table-scroll {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+.engagement-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }}
+.engagement-grid table {{ min-width: auto; }}
 .reddit-ref {{ display: inline-block; background: #ff450033; color: #ff4500; padding: 1px 5px; border-radius: 3px; font-size: 0.65em; font-weight: 600; margin-left: 4px; vertical-align: middle; text-decoration: none; }}
 .reddit-ref:hover {{ background: #ff450055; text-decoration: none; }}
 @media (max-width: 768px) {{
@@ -580,11 +582,12 @@ details summary:hover {{ color: #fff; }}
   .stat.primary .num {{ font-size: 2em; }}
   .hbar-chart > div {{ max-height: 450px; overflow-y: auto; overflow-x: hidden; }}
   .table-section {{ padding: 12px; }}
-  .table-section > div[style*="grid-template-columns"] {{ grid-template-columns: 1fr !important; }}
+  .engagement-grid {{ grid-template-columns: 1fr; }}
   details {{ padding: 0 12px 12px; }}
   .header {{ padding: 24px 12px; }}
   .header h1 {{ font-size: 1.5em; }}
   .footer {{ padding: 24px 12px; }}
+  .disclaimer-wrap {{ padding: 8px 12px; }}
 }}
 </style>
 </head>
@@ -602,7 +605,7 @@ details summary:hover {{ color: #fff; }}
   </div>
 </div>
 
-<div style="max-width:1200px;margin:0 auto;padding:12px 24px">
+<div class="disclaimer-wrap" style="max-width:1200px;margin:0 auto;padding:12px 24px">
   <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:8px;padding:12px 16px;font-size:0.75em;color:#666;line-height:1.5">
     <strong style="color:#888">Jogi nyilatkozat / Disclaimer:</strong> Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek véleményeit tükrözi, pontossága nem ellenőrzött. Tájékoztató és kutatási célú, nem minősül tényállításnak. /
     This report is an automated analysis of publicly available posts and news articles reflecting third-party opinions. Accuracy is not verified. For informational purposes only.
@@ -703,20 +706,20 @@ details summary:hover {{ color: #fff; }}
     {"".join(f'<tr><td><span class="tag tag-{cat}">{cat}</span></td><td>{eng_cats[cat]["posts"]}</td><td>{eng_cats[cat]["score"]:,}</td><td>{eng_cats[cat]["comments"]:,}</td><td>{eng_cats[cat]["score"]//max(eng_cats[cat]["posts"],1)}</td><td>{eng_cats[cat]["comments"]//max(eng_cats[cat]["posts"],1)}</td></tr>' for cat in ['layoff', 'freeze', 'anxiety'] if eng_cats[cat]['posts'] > 0)}
   </table></div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px">
+  <div class="engagement-grid">
     <div>
       <h3 style="color:#ccc;font-size:0.95em;margin-bottom:8px">Legtöbb upvote</h3>
-      <table>
+      <div class="table-scroll"><table>
         <tr><th>Score</th><th>Poszt</th></tr>
         {"".join(f'<tr><td style="color:#e94560;font-weight:700">{p["score"]}</td><td><a href="{p["url"]}" target="_blank">{p["title"][:55].replace("&","&amp;").replace("<","&lt;")}{"..." if len(p["title"])>55 else ""}</a></td></tr>' for p in top_by_score)}
-      </table>
+      </table></div>
     </div>
     <div>
       <h3 style="color:#ccc;font-size:0.95em;margin-bottom:8px">Legtöbb komment</h3>
-      <table>
+      <div class="table-scroll"><table>
         <tr><th>Komment</th><th>Poszt</th></tr>
         {"".join(f'<tr><td style="color:#4ecdc4;font-weight:700">{p["num_comments"]}</td><td><a href="{p["url"]}" target="_blank">{p["title"][:55].replace("&","&amp;").replace("<","&lt;")}{"..." if len(p["title"])>55 else ""}</a></td></tr>' for p in top_by_comments)}
-      </table>
+      </table></div>
     </div>
   </div>
 </div>
