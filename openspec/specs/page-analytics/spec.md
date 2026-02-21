@@ -1,3 +1,5 @@
+## ADDED Requirements
+
 ### Requirement: GoatCounter script in generated HTML
 The generated `report.html` SHALL include a GoatCounter analytics script tag before the closing `</body>` tag.
 
