@@ -2,7 +2,7 @@
 
 **[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)
 
-*Generálva: 2026-02-21 06:55 | Forrás: Reddit + Google News publikus adatok*
+*Generálva: 2026-02-21 08:45 | Forrás: Reddit + Google News publikus adatok*
 
 > **Jogi nyilatkozat:** Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.
 >
@@ -49,17 +49,17 @@
 | Tungsram | 2026-02-11 | general IT | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1r1u7pe/szijjártó_péter_száznegyven_új_munkahelyet_teremt/) |
 | Pénzcentrum | 2026-01-28 | retail tech | — | unknown | [link](https://www.penzcentrum.hu/karrier/20260128/brutalis-leepites-a-csomagkuldonel-30-ezer-allas-szunik-meg-a-nagy-szakitas-miatt-1192685) |
 | Aldi | 2026-01-23 | retail tech | — | unknown | [link](https://www.portfolio.hu/gazdasag/20260123/beismerte-a-magyar-aldi-anyacege-hogy-komoly-leepites-jon-nemetorszagban-812912) |
-| népszerű áruházlánc | 2025-12-16 | retail tech | — | unknown | [link](https://news.google.com/rss/articles/CBMi7wFBVV95cUxPczZRTGFzeGl5UGNxaGY3bkl3MnNyV3hMa1hCbk5xOEUzSHIyOHprMWpsN2xBVVJScldydXEyTzF0YVpnU2NKaGhfQTZIYnMyYzJsNFZuQnpCRjBHTFNyZUZkUExnZlNlM0RZUUhHZG5yR1ItSUFkQjBwZ2VpTnVMV3ozUGJydEYwX2tBYTRTU1ZVaDljWi1yYlV1QVFaUm9FYkZZTlNDWkoyc0pCamtVTG8zQ2xweDdzM2t4dEtPNmlITGNjdExuUUFPeGxwM3J0SXhjWnVSZC16MXl6Q0c2RWttektQckJCYkliOHktONIB9AFBVV95cUxQUklWVnQxUm1peTFZWVV4ZGNkdWhaR2FlUll2cFpaaU1OS2dBMDVNOHc1M1REWXY2a19vcXZKdG05LWlxbWhoaTE3a004VGlvanhzdjhDZDNEamV6U2QzM2d5MEFJYms5N1hseEFHb2tlaGZxWURabTIzc1kzMUF0TVp5MzJCWlhsRjdaenZNTTBmbGktWHRUWTNCSnVpM3NUZGd4eE1TVktPckFZOEQwN2JlUE0wbDB2WmROQy1ydzRIM0dhRFQ4TkRINVpRNzZEU2VUUHc2dGxjV0pENzcwYmtOU2p6VFZUWHN6WkRwc0VrRVNr?oc=5) |
-| Economx | 2025-12-11 | IT services | — | unknown | [link](https://news.google.com/rss/articles/CBMidEFVX3lxTE1ucWxBSklSdWp0bUlnUVRYa05KWEFBaXk4RXp6SjBMU28yaUZTMXo5dmY2XzVfMy1NcUlncC1MZm81a1I5YUtVOHFQS2YxNlRkYi1yNlN5RFpJX1RrX1BMcUVfYkNBNEs4b2kzakxRT05vYnow?oc=5) |
-| Rail Cargo Hungaria | 2025-12-09 | transportation | — | unknown | [link](https://news.google.com/rss/articles/CBMilwFBVV95cUxNcGNZQnJMNU1ORkF1MUFZNjVkQ2NFcjR4TTJ0Yk9ZbGt4Z1hhUmlVMGRJd0ROZzQ2TzlUeUxRenZUc3ZDeHJLVGVGMHV1by1jSU9TYVFKSnBCOWlXUTIzMWF2LVdjYWsxOThIR2V3NU5fb3JkRnRJTVVQNjFPS242UVFnV0VERmVHVU9hWFFFZWplNG42R0VR?oc=5) |
+| népszerű áruházlánc | 2025-12-16 | retail tech | — | unknown | [link](https://www.portfolio.hu/gazdasag/20251216/ev-vegi-bonusz-helyett-semmibol-jott-leepites-tobb-mint-100-embert-tett-lapatra-itthon-a-nepszeru-aruhazlanc-806398) |
+| Economx | 2025-12-11 | IT services | — | unknown | [link](https://www.economx.hu/gazdasag/romania-bosch-leepites.820755.html) |
+| Rail Cargo Hungaria | 2025-12-09 | transportation | — | unknown | [link](https://autopro.hu/szolgaltatok/leepites-es-dijemeles-johet-a-rail-cargo-hungarianal/1516254) |
 | Rail Cargo Hungary (+2 forrás) | 2025-12-08 | transportation | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1phglkk/lázárék_megvonták_a_támogatást_egy_osztrák_cégtől/) |
-| MÁV Cargo | 2025-12-08 | transportation | — | unknown | [link](https://news.google.com/rss/articles/CBMirAFBVV95cUxOSEhVYmZhdHlPUU1DWkRmUmV6dE1WODZ5dE1hOEhnN1F3cE5mU1JGLXpaR3BTZjZLQXZDZlczMVQ1S3Qtd25SWWdNcDJ3Y1RmWlBYeHVialAwQ09OOThMYmlnMS1GQVpqWVo4R3RfZmVhZGpNZkstMjY1MjdNU0lENnVJU1U5eWZ5bVNGMzU4ZUFCV2xwNHNsWXFaVHc1cGdwajVhWTJJVmZCVDh1?oc=5) |
-| Docler/Byborg (+1 forrás) | 2025-12-04 | IT services | — | unknown | [link](https://news.google.com/rss/articles/CBMiekFVX3lxTE9GNXhIOG1RME1KV3FUUVhrWGZGSTh5cVJjV1h5RGotaHpDWnZKM0xPZW0xMXEzWnhuTGM2VjNuekNENDZWdjF3MkIzUUdkakEwdEZJQnU5X1VRSFRYdjlNelpEOER0a1c4N0ROLURQRzJnaU1sbXJRSWxR?oc=5) |
-| Gattyán György cége | 2025-12-04 | startup | — | unknown | [link](https://news.google.com/rss/articles/CBMijAFBVV95cUxOMXgxOTk1UmxkdU5zNzRidHlLU29OZHU5NFFJWjhTRHIyZk9xcmhqRWNXR0hNdFF5azloSmxibFl1ekFXYks0alJrNGNwMUFTRDhweW8zWjIwYk5YeldaakVxSF9sVXg0R0VjVjZXQXNNS3pDME9ySjJabWkxd2J6TTZPbGFZZ3FtS2NCLQ?oc=5) |
-| Docler/Byborg | 2025-12-04 | startup | — | unknown | [link](https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0JzM0FzZUtZVGJmM1l6SG1CMGFRWWtMT3IxUXNjU09jRmFaQTZnd2UzUFAxVTBNVkJxT190UWVXRXEtb0FqWjFadlVxc0F4SHp5a19TczFjTU9fNGZydHRnS0VnVE8xSHN3NGhaWVNIdDdVTUJhSnVJcEFqTzFrcU5QMEhURVJ4MGhQQTVYdGRydW9nOFE?oc=5) |
-| Digi | 2025-12-04 | telecom | — | unknown | [link](https://news.google.com/rss/articles/CBMirgFBVV95cUxPNUhJSWZLNHVLNHJNS1VLRjRMNHg5ZUpOa2Fyb3N4bmNuQ05OcktoOVVSRHBfbzdQNmVxbGIzNG9TX2JsQzFuLTFmVE5Sdm1BaFFSTldlOC02N0RHbGZwSjhpMjlscWs3aE96VzBMdzVaRF9DcVNWRjdHcUVjSXZmbWNqYnduM2h6bjhlZFFTRmprT1dkTXZZZGZrY2V0NTk1LXNRcUs0MGdHOVZwdUE?oc=5) |
+| MÁV Cargo | 2025-12-08 | transportation | — | unknown | [link](https://index.hu/gazdasag/2025/12/08/rail-cargo-hungaria-vasuti-arufuvarozas-dijemeles-leepites-forrashiany/) |
+| Docler/Byborg (+1 forrás) | 2025-12-04 | IT services | — | unknown | [link](https://www.forbes.hu/uzlet/gattyan-docler-kirugas-munkahely-leepites/) |
+| Gattyán György cége | 2025-12-04 | startup | — | unknown | [link](https://24.hu/belfold/2025/12/04/gattyan-gyorgy-leepites-docler-holding-home-office/) |
+| Docler/Byborg | 2025-12-04 | startup | — | unknown | [link](https://telex.hu/gazdasag/2025/12/04/docler-holding-tomeges-leepites-elbocsatas-home-office) |
+| Digi | 2025-12-04 | telecom | — | unknown | [link](https://www.vg.hu/vilaggazdasag-magyar-gazdasag/2025/12/gattyan-gyorgy-docler-elbocsatas-home-office-eltorles) |
 | 4iG | 2025-12-03 | IT services | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1pd25uk/4ig_milyen_manapság/) |
-| RTL | 2025-12-03 | entertainment | — | unknown | [link](https://news.google.com/rss/articles/CBMigwFBVV95cUxPSTlJUWdULTctWUJNRnV4ak0xcUJ4dTNDclJMV1h3emREMG80Uy1wVUdaWWJORW1kMUZ1elVsTmo3dmpINXcxN2JScGNOVldJdGgwMFViMG1PYmc0U1ZIalhNMUZFQ0J2SGN6UWdJVV9oSDNsaWRtVGh1M21rVGtFeDhvSQ?oc=5) |
+| RTL | 2025-12-03 | entertainment | — | unknown | [link](https://media1.hu/2025/12/03/valsagban-az-rtl-tobb-szaz-fos-elbocsatas-indul/) |
 
 *További 42 esemény → [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html#top-posts)*
 

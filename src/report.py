@@ -102,7 +102,10 @@ def _is_ai_attributed(post):
 def _eff_sector(post):
     """Effective sector: llm_sector if validated, else analyzer company_sector, else 'ismeretlen'."""
     if post.get('llm_validated') and 'llm_sector' in post and post['llm_sector']:
-        return post['llm_sector']
+        sector = post['llm_sector']
+        if isinstance(sector, list):
+            return sector[0] if sector else 'ismeretlen'
+        return sector
     return post.get('company_sector') or 'ismeretlen'
 
 
