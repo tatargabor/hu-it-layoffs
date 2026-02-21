@@ -110,6 +110,10 @@ def _is_named_company(name):
     """Filter out generic/unnamed company references from stats."""
     if not name:
         return False
+    if isinstance(name, list):
+        name = name[0] if name else ''
+    if not name:
+        return False
     lower = name.lower()
     return not any(p in lower for p in _GENERIC_COMPANY_PATTERNS)
 

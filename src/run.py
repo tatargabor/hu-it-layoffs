@@ -109,6 +109,16 @@ def main():
     # Merge: frozen + fresh validated
     frozen_list = list(frozen.values())
     all_validated = frozen_list + validated
+
+    # Normalize LLM fields that may be lists instead of strings
+    _STRING_FIELDS = ('llm_company', 'llm_sector', 'llm_summary', 'llm_category',
+                      'llm_ai_role', 'llm_event_label', 'llm_hungarian_relevance')
+    for p in all_validated:
+        for field in _STRING_FIELDS:
+            val = p.get(field)
+            if isinstance(val, list):
+                p[field] = val[0] if val else ''
+
     save_validated_posts(all_validated, 'data/validated_posts.json')
     print(f'  Merged: {len(frozen_list)} frozen + {len(validated)} fresh = {len(all_validated)} total')
 
