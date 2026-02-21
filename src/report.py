@@ -122,7 +122,7 @@ def _eff_sector(post):
     return post.get('company_sector') or 'ismeretlen'
 
 
-_GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett']
+_GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett', 'ismeretlen']
 
 
 def _is_named_company(name):
@@ -205,13 +205,13 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append(f'**Közvetlen leépítés riport (relevancia 3):** {_count_events(direct)} esemény')
     lines.append(f'**Erős jelzés (relevancia >= 2):** {_count_events(strong)} esemény')
 
-    companies = set(c for p in relevant for c in [p.get('company') or p.get('llm_company')] if _is_named_company(c))
+    companies = set(c for p in strong for c in [p.get('company') or p.get('llm_company')] if _is_named_company(c))
     lines.append(f'**Érintett cégek száma:** {len(companies)}')
 
     ai_count = sum(1 for p in relevant if _is_ai_attributed(p))
     lines.append(f'**AI-t említő posztok:** {ai_count}')
 
-    freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
+    freeze_count = sum(1 for p in relevant if _eff_category(p) == 'freeze')
     lines.append(f'**Hiring freeze jelzések:** {freeze_count}')
 
     total_score = sum(p.get('score', 0) for p in relevant)
@@ -292,7 +292,9 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
 
     by_cat = {}
     for p in relevant:
-        cat = p.get('category', 'other')
+        cat = _eff_category(p)
+        if cat == 'other':
+            continue
         by_cat[cat] = by_cat.get(cat, 0) + 1
 
     lines.append('| Kategória | Posztok száma |')
@@ -301,9 +303,8 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
         'layoff': 'Közvetlen leépítés',
         'freeze': 'Hiring freeze / álláspiac',
         'anxiety': 'Karrier aggodalom',
-        'other': 'Egyéb',
     }
-    for cat in ['layoff', 'freeze', 'anxiety', 'other']:
+    for cat in ['layoff', 'freeze', 'anxiety']:
         label = cat_labels.get(cat, cat)
         lines.append(f'| {label} | {by_cat.get(cat, 0)} |')
 

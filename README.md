@@ -6,7 +6,7 @@
 
 **[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)
 
-*Generálva: 2026-02-21 16:34 | Forrás: Reddit + Google News publikus adatok*
+*Generálva: 2026-02-21 18:27 | Forrás: Reddit + Google News publikus adatok*
 
 > **Jogi nyilatkozat:** Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.
 >
@@ -16,9 +16,9 @@
 **Összes releváns poszt:** 224 (193 egyedi esemény)
 **Közvetlen leépítés riport (relevancia 3):** 49 esemény
 **Erős jelzés (relevancia >= 2):** 149 esemény
-**Érintett cégek száma:** 41
+**Érintett cégek száma:** 37
 **AI-t említő posztok:** 80
-**Hiring freeze jelzések:** 20
+**Hiring freeze jelzések:** 72
 **Összes reakció:** 4,677 upvote, 5,108 komment
 **LLM-validált posztok:** 224/224
 
@@ -71,10 +71,9 @@
 
 | Kategória | Posztok száma |
 |-----------|---------------|
-| Közvetlen leépítés | 126 |
-| Hiring freeze / álláspiac | 10 |
-| Karrier aggodalom | 14 |
-| Egyéb | 74 |
+| Közvetlen leépítés | 108 |
+| Hiring freeze / álláspiac | 72 |
+| Karrier aggodalom | 44 |
 
 **Szektorok szerinti megoszlás (erős jelzések, esemény szinten):**
 - general IT: 79 esemény

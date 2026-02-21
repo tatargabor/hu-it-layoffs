@@ -115,7 +115,7 @@ def _eff_sector(post):
     return post.get('company_sector') or 'ismeretlen'
 
 
-_GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett']
+_GENERIC_COMPANY_PATTERNS = ['nagyobb', 'kisebb', 'egy cég', 'élelmiszerlánc', 'nem nevezett', 'ismeretlen']
 
 
 def _is_named_company(name):
@@ -164,7 +164,7 @@ def _group_by_event(posts):
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
     relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
     strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p) and _eff_category(p) != 'other']
-    direct = [p for p in posts if _eff_relevance(p) >= 3 and _is_hungarian_relevant(p)]
+    direct = [p for p in posts if _eff_relevance(p) >= 3 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
 
     quarters = _all_quarters()
 
@@ -191,19 +191,45 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
         else:
             q_keyword_only[q] += 1
 
+    # Current quarter projection
+    now = datetime.now()
+    current_q = f'{now.year} Q{(now.month - 1) // 3 + 1}'
+    q_start_month = ((now.month - 1) // 3) * 3 + 1
+    q_start = datetime(now.year, q_start_month, 1)
+    q_end_month = q_start_month + 3
+    q_end_year = now.year
+    if q_end_month > 12:
+        q_end_month = 1
+        q_end_year += 1
+    q_end = datetime(q_end_year, q_end_month, 1)
+    q_elapsed = (now - q_start).total_seconds() / (q_end - q_start).total_seconds()
+    q_elapsed = max(q_elapsed, 0.01)  # avoid division by zero
+
+    # Projected values for current quarter (actual / elapsed_fraction)
+    q_proj_total = {}
+    for q in quarters:
+        if q == current_q and q_elapsed < 0.95:
+            actual = q_direct.get(q, 0) + q_strong.get(q, 0) + q_indirect.get(q, 0)
+            projected = round(actual / q_elapsed)
+            q_proj_total[q] = max(projected - actual, 0)  # the "remaining" projected portion
+        else:
+            q_proj_total[q] = 0
+
     # Company data (event-level: same event_label = 1 count)
     company_counts = defaultdict(int)
     for label, group in _event_groups(strong):
         c = group[0].get('company') or group[0].get('llm_company')
-        if c:
+        if _is_named_company(c):
             company_counts[c] += 1
 
     top_companies = sorted(company_counts.items(), key=lambda x: -x[1])
 
-    # Category data
+    # Category data (exclude 'other' — career advice, offtopic)
     cat_counts = defaultdict(int)
     for p in relevant:
-        cat_counts[p.get('category', 'other')] += 1
+        cat = _eff_category(p)
+        if cat != 'other':
+            cat_counts[cat] += 1
 
     # AI trend by year
     ai_by_year = defaultdict(lambda: {'total': 0, 'ai': 0})
@@ -214,16 +240,30 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
             ai_by_year[year]['ai'] += 1
     ai_years = sorted(ai_by_year.keys())
 
+    # Current year projection for AI chart
+    current_year = str(now.year)
+    year_elapsed = (now - datetime(now.year, 1, 1)).total_seconds() / (datetime(now.year + 1, 1, 1) - datetime(now.year, 1, 1)).total_seconds()
+    year_elapsed = max(year_elapsed, 0.01)
+    ai_proj = {}
+    for y in ai_years:
+        if y == current_year and year_elapsed < 0.95:
+            ai_proj[y] = {
+                'total': max(round(ai_by_year[y]['total'] / year_elapsed) - ai_by_year[y]['total'], 0),
+                'ai': max(round(ai_by_year[y]['ai'] / year_elapsed) - ai_by_year[y]['ai'], 0),
+            }
+        else:
+            ai_proj[y] = {'total': 0, 'ai': 0}
+
     # Sector data (event-level)
     sector_counts = defaultdict(int)
     for label, group in _event_groups(strong):
         s = _eff_sector(group[0])
         sector_counts[s] += 1
 
-    # Hiring freeze timeline
+    # Hiring freeze timeline (LLM category-based)
     freeze_by_q = defaultdict(int)
     for p in relevant:
-        if p.get('hiring_freeze_signal'):
+        if _eff_category(p) == 'freeze':
             q = _quarter(p['date'])
             if q in quarters:
                 freeze_by_q[q] += 1
@@ -260,9 +300,9 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     cutoff_date = f'{cutoff_year}-{(cutoff_q - 1) * 3 + 1:02d}-01'
     recent_strong = [p for p in strong if p['date'] >= cutoff_date]
     recent_quarter_label = f'{cutoff_date[:4]} Q{cutoff_q}'
-    companies = set(c for p in relevant for c in [p.get('company') or p.get('llm_company')] if _is_named_company(c))
+    companies = set(c for p in strong for c in [p.get('company') or p.get('llm_company')] if _is_named_company(c))
     ai_count = sum(1 for p in relevant if _is_ai_attributed(p))
-    freeze_count = sum(1 for p in relevant if p.get('hiring_freeze_signal'))
+    freeze_count = sum(1 for p in relevant if _eff_category(p) == 'freeze')
 
     # Engagement data
     total_score = sum(p.get('score', 0) for p in relevant)
@@ -270,7 +310,9 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
 
     eng_cats = defaultdict(lambda: {'posts': 0, 'score': 0, 'comments': 0})
     for p in relevant:
-        cat = p.get('llm_category', p.get('category', 'other'))
+        cat = _eff_category(p)
+        if cat == 'other':
+            continue
         eng_cats[cat]['posts'] += 1
         eng_cats[cat]['score'] += p.get('score', 0)
         eng_cats[cat]['comments'] += p.get('num_comments', 0)
@@ -343,7 +385,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
                 sub_items += f'<div class="sub-row">{o["date"]} — <a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</div>'
 
             detailed_rows += f'''<tr class="event-group"><td>{rep["date"]}</td>
-      <td><a href="{rep["url"]}" target="_blank">{title_esc}</a> <span class="toggle-btn" onclick="this.closest('tr').nextElementSibling.classList.toggle('hidden')">{badge}</span>{reddit_ref}</td>
+      <td><a href="{rep["url"]}" target="_blank">{title_esc}</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')">{badge}</span>{reddit_ref}</td>
       <td>{company}</td>
       <td><span class="tag tag-{cat}">{cat}</span></td>
       <td>{_src_label(rep)}</td>
@@ -380,15 +422,15 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
       <td>{"&#10003;" if rep.get("llm_validated") else "—"}</td>
     </tr>'''
         else:
-            sub_html = ''
+            sub_items = ''
             for o in others:
                 o_title = o['title'][:55].replace('&', '&amp;').replace('<', '&lt;')
                 if len(o['title']) > 55:
                     o_title += '...'
-                sub_html += f'<div class="sub-row">{o["date"]} — <a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</div>'
+                sub_items += f'<div class="sub-row">{o["date"]} — <a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</div>'
 
             top_posts_rows += f'''<tr class="event-group"><td>{rep["date"]}</td>
-      <td><details><summary><a href="{rep["url"]}" target="_blank">{title_esc}</a>{badge}{reddit_ref}</summary>{sub_html}</details></td>
+      <td><a href="{rep["url"]}" target="_blank">{title_esc}</a> <span class="toggle-btn" onclick="this.classList.toggle(\'open\');this.closest(\'tr\').nextElementSibling.classList.toggle(\'hidden\')">{badge}</span>{reddit_ref}</td>
       <td>{rep.get("company") or rep.get("llm_company") or "—"}</td>
       <td><span class="tag tag-{rep.get("category", "other")}">{rep.get("category", "other")}</span></td>
       <td>{_src_label(rep)}</td>
@@ -396,7 +438,8 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
       <td>{rep["num_comments"]}</td>
       <td class="rel-{_eff_relevance(rep)}">{"&#9733;" * _eff_relevance(rep)}</td>
       <td>{"&#10003;" if rep.get("llm_validated") else "—"}</td>
-    </tr>'''
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="8">{sub_items}</td></tr>'''
 
     # Tech/roles chart sections
     tech_chart_html = ''
@@ -405,6 +448,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
         tech_chart_html = '''
 <div class="chart-box">
   <h2>Érintett Technológiák (top 15)</h2>
+  <div class="method">LLM által kinyert technológiák a posztok szövegéből</div>
   <canvas id="techChart"></canvas>
 </div>'''
         tech_chart_js = f'''
@@ -423,6 +467,7 @@ new Chart(document.getElementById('techChart'), {{
         roles_chart_html = '''
 <div class="chart-box">
   <h2>Érintett Munkakörök (top 10)</h2>
+  <div class="method">LLM által kinyert munkakörök a posztok szövegéből</div>
   <canvas id="rolesChart"></canvas>
 </div>'''
         roles_chart_js = f'''
@@ -459,10 +504,12 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, s
 .stat.primary {{ border-color: #e94560; }}
 .stat.primary .num {{ font-size: 2.5em; }}
 .stat .label {{ font-size: 0.85em; color: #888; margin-top: 4px; }}
+.stat .method-hint {{ font-size: 0.7em; color: #555; margin-top: 2px; font-style: italic; }}
 .charts {{ max-width: 1200px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }}
 .chart-box {{ background: #1a1a2e; border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a; }}
 .chart-box.full {{ grid-column: 1 / -1; }}
-.chart-box h2 {{ font-size: 1.1em; color: #ccc; margin-bottom: 12px; }}
+.chart-box h2 {{ font-size: 1.1em; color: #ccc; margin-bottom: 4px; }}
+.chart-box .method {{ font-size: 0.75em; color: #666; margin-bottom: 10px; font-style: italic; }}
 canvas {{ max-height: 350px; }}
 .table-section {{ max-width: 1200px; margin: 0 auto; padding: 24px; }}
 .table-section h2 {{ font-size: 1.2em; color: #ccc; margin-bottom: 12px; }}
@@ -492,12 +539,18 @@ details summary:hover {{ color: #fff; }}
 .section-anchor {{ color: #555; text-decoration: none; font-size: 0.8em; margin-left: 6px; opacity: 0; transition: opacity 0.2s; }}
 .chart-box:hover .section-anchor, .table-section:hover .section-anchor, details:hover .section-anchor {{ opacity: 1; }}
 .section-anchor:hover {{ color: #e94560; }}
-.event-group summary {{ cursor: pointer; list-style: none; }}
-.event-group summary::-webkit-details-marker {{ display: none; }}
-.event-group .badge {{ display: inline-block; background: #2a2a4a; color: #4ecdc4; padding: 1px 6px; border-radius: 3px; font-size: 0.7em; margin-left: 6px; vertical-align: middle; }}
-.event-group .sub-row {{ padding: 4px 0 4px 24px; color: #888; font-size: 0.8em; border-bottom: 1px solid #1a1a2e; }}
-.event-group .sub-row:hover {{ background: #12122a; }}
-.event-group .sub-row a {{ color: #6c8fbf; }}
+.toggle-btn {{ cursor: pointer; user-select: none; }}
+.toggle-btn .badge {{ display: inline-block; background: #1a3a3a; color: #4ecdc4; padding: 4px 10px; border-radius: 5px; font-size: 0.8em; font-weight: 600; margin-left: 8px; vertical-align: middle; border: 1px solid #4ecdc4; transition: all 0.15s; }}
+.toggle-btn .badge::before {{ content: '\\25B6\\FE0E '; font-size: 0.75em; }}
+.toggle-btn:hover .badge {{ background: #4ecdc4; color: #0f0f0f; }}
+.toggle-btn.open .badge {{ background: #4ecdc433; }}
+.toggle-btn.open .badge::before {{ content: '\\25BC\\FE0E '; }}
+.expand-row td {{ padding: 0 8px 8px 8px; }}
+.expand-row .sub-row {{ padding: 6px 0 6px 20px; color: #999; font-size: 0.8em; border-bottom: 1px solid #1a1a2e; }}
+.expand-row .sub-row:hover {{ background: #12122a; }}
+.expand-row .sub-row a {{ color: #6c8fbf; }}
+.expand-row:not(.hidden) {{ background: #0f0f1f; }}
+.hidden {{ display: none; }}
 .reddit-ref {{ display: inline-block; background: #ff450033; color: #ff4500; padding: 1px 5px; border-radius: 3px; font-size: 0.65em; font-weight: 600; margin-left: 4px; vertical-align: middle; text-decoration: none; }}
 .reddit-ref:hover {{ background: #ff450055; text-decoration: none; }}
 @media (max-width: 768px) {{ .charts {{ grid-template-columns: 1fr; }} }}
@@ -525,41 +578,83 @@ details summary:hover {{ color: #fff; }}
   </div>
 </div>
 
+<details id="methodology" style="max-width:1200px;margin:8px auto 0;padding:0 24px">
+  <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
+  <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
+    <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
+    <p>Automatizált scraper gyűjt publikus adatokat két forrásból:</p>
+    <ul style="margin:8px 0 16px 20px">
+      <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions (poszt szöveg + top 20 komment)</li>
+      <li><strong>Google News RSS</strong> — magyar nyelvű IT leépítés hírek, teljes cikk szöveggel (URL dekódolás + tartalom kinyerés)</li>
+    </ul>
+    <p style="margin-top:8px">Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
+    <ol style="margin:8px 0 16px 20px">
+      <li><strong>Multi-source scraping</strong> — Reddit JSON API + Google News RSS (cikk tartalom kinyeréssel)</li>
+      <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
+      <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
+      <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>
+    </ol>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">LLM validáció</h3>
+    <p>A relevancia &ge; 1 posztokat nyelvi modell validálja: ténylegesen IT leépítésről szól-e, melyik cég érintett, confidence score (0.0-1.0), magyar összefoglaló, érintett technológiák és munkakörök.</p>
+    {"<p style='margin-top:8px'><strong>" + str(llm_stats['validated']) + " poszt</strong> validálva <strong>" + f"{llm_stats.get('elapsed_seconds', 0):.0f}" + " másodperc</strong> alatt.</p>" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
+
+    <h3 style="color:#e94560;margin:16px 0 8px">IT szektor szűrés</h3>
+    <p>A dashboard elsődlegesen IT szektorra fókuszál, de nem kizárólag IT-natív cégeket mutat. Nem-IT szektorok (autóipar, kormányzat, szórakoztatóipar stb.) leépítései is megjelennek, ha IT munkakört érintenek (fejlesztő, informatikus, data engineer stb.) — mivel ezek szintén az IT munkaerőpiacot érintik.</p>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">Korlátok</h3>
+    <ul style="margin:8px 0 16px 20px">
+      <li>Csak publikus források — zárt csoportok, belső kommunikáció nem elérhető</li>
+      <li>A keresések nem garantálják a teljességet</li>
+      <li>LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot</li>
+    </ul>
+
+    <p><strong>Forráskód:</strong> <a href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">github.com/tatargabor/hu-it-layoffs</a></p>
+  </div>
+</details>
+
 <div class="stats">
-  <div class="stat primary"><div class="num">{len(recent_strong)}</div><div class="label">Leépítési jelzés<br><span style="font-size:0.85em;color:#666">{recent_quarter_label} óta</span></div></div>
-  <div class="stat"><div class="num">{len(direct)}</div><div class="label">Közvetlen leépítés</div></div>
-  <div class="stat"><div class="num">{len(relevant)}</div><div class="label">Releváns poszt</div></div>
-  <div class="stat"><div class="num">{len(companies)}</div><div class="label">Érintett cég</div></div>
-  <div class="stat"><div class="num">{total_score:,}</div><div class="label">Upvote</div></div>
-  <div class="stat"><div class="num">{total_comments:,}</div><div class="label">Komment</div></div>
-  <div class="stat"><div class="num">{ai_count}</div><div class="label">AI-t említő poszt</div></div>
-  <div class="stat"><div class="num">{freeze_count}</div><div class="label">Hiring freeze jelzés</div></div>
+  <div class="stat primary"><div class="num">{len(recent_strong)}</div><div class="label">Leépítési jelzés<br><span style="font-size:0.85em;color:#666">{recent_quarter_label} óta</span></div><div class="method-hint">erős jelzések (rel. &ge;2)</div></div>
+  <div class="stat"><div class="num">{len(direct)}</div><div class="label">Közvetlen leépítés</div><div class="method-hint">relevancia 3, IT szektorra szűrve</div></div>
+  <div class="stat"><div class="num">{len(strong)}</div><div class="label">Erős jelzés</div><div class="method-hint">rel. &ge;2, IT, magyar, nem karriertanács</div></div>
+  <div class="stat"><div class="num">{len(companies)}</div><div class="label">Érintett cég</div><div class="method-hint">nevesített cégek, erős jelzésekből</div></div>
+  <div class="stat"><div class="num">{total_score:,}</div><div class="label">Upvote</div><div class="method-hint">összes IT-releváns poszt</div></div>
+  <div class="stat"><div class="num">{total_comments:,}</div><div class="label">Komment</div><div class="method-hint">összes IT-releváns poszt</div></div>
+  <div class="stat"><div class="num">{ai_count}</div><div class="label">AI-t említő poszt</div><div class="method-hint">AI ok vagy tényező (LLM elemzés)</div></div>
+  <div class="stat"><div class="num">{freeze_count}</div><div class="label">Álláspiac szűkülés</div><div class="method-hint">freeze kategória (LLM elemzés)</div></div>
 </div>
 
 <div class="charts">
 
 <div class="chart-box full" id="timeline">
   <h2>Negyedéves Timeline — Posztok száma <a class="section-anchor" href="#timeline" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#timeline')">&#128279;</a></h2>
+  <div class="method">IT-releváns posztok (relevancia 1-3) negyedévenként | Csíkozott sáv: aktuális negyedév időarányos projekciója</div>
   <canvas id="timelineChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>Érintett Cégek</h2>
+  <div class="method">Erős jelzések (relevancia &ge;2) alapján, esemény szinten csoportosítva</div>
   <canvas id="companyChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>Szektorok</h2>
+  <div class="method">LLM által meghatározott iparági besorolás, erős jelzések esemény szinten</div>
   <canvas id="sectorChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>Kategóriák</h2>
+  <div class="method">LLM kategorizálás: layoff (konkrét leépítés), freeze (álláspiac szűkülés), anxiety (aggodalom)</div>
   <canvas id="categoryChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>AI Attribúció Trendje</h2>
+  <div class="method">Posztok aránya ahol AI/automatizáció a leépítés okaként vagy tényezőként szerepel</div>
   <canvas id="aiChart"></canvas>
 </div>
 
@@ -631,40 +726,6 @@ details summary:hover {{ color: #fff; }}
   </table>
 </details>
 
-<details id="methodology" style="margin-top:8px">
-  <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
-  <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
-    <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
-    <p>Automatizált scraper gyűjt publikus adatokat két forrásból:</p>
-    <ul style="margin:8px 0 16px 20px">
-      <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions (poszt szöveg + top 20 komment)</li>
-      <li><strong>Google News RSS</strong> — magyar nyelvű IT leépítés hírek, teljes cikk szöveggel (URL dekódolás + tartalom kinyerés)</li>
-    </ul>
-    <p style="margin-top:8px">Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
-
-    <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
-    <ol style="margin:8px 0 16px 20px">
-      <li><strong>Multi-source scraping</strong> — Reddit JSON API + Google News RSS (cikk tartalom kinyeréssel)</li>
-      <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
-      <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
-      <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>
-    </ol>
-
-    <h3 style="color:#e94560;margin:16px 0 8px">LLM validáció</h3>
-    <p>A relevancia &ge; 1 posztokat nyelvi modell validálja: ténylegesen IT leépítésről szól-e, melyik cég érintett, confidence score (0.0-1.0), magyar összefoglaló, érintett technológiák és munkakörök.</p>
-    {"<p style='margin-top:8px'><strong>" + str(llm_stats['validated']) + " poszt</strong> validálva <strong>" + f"{llm_stats.get('elapsed_seconds', 0):.0f}" + " másodperc</strong> alatt.</p>" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
-
-    <h3 style="color:#e94560;margin:16px 0 8px">Korlátok</h3>
-    <ul style="margin:8px 0 16px 20px">
-      <li>Csak publikus források — zárt csoportok, belső kommunikáció nem elérhető</li>
-      <li>A keresések nem garantálják a teljességet</li>
-      <li>LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot</li>
-    </ul>
-
-    <p><strong>Forráskód:</strong> <a href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">github.com/tatargabor/hu-it-layoffs</a></p>
-  </div>
-</details>
-
 <div class="footer">
   Források: {", ".join(f"{k} ({v})" for k, v in sorted(by_source.items(), key=lambda x: -x[1]))} | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec &middot; Agentic
   {"<br>" + f"{llm_stats['validated']} poszt LLM-validálva {llm_stats['elapsed_seconds']:.0f}s alatt | ~{llm_stats['est_input_tokens']:,}+{llm_stats['est_output_tokens']:,} token | Költség: $0.00 (GitHub Models) | Kézzel ez ~{llm_stats['est_manual_hours']:.0f} óra lett volna" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
@@ -678,12 +739,30 @@ const qIndirect = {json.dumps([q_indirect.get(q, 0) for q in quarters])};
 const qFreeze = {json.dumps([freeze_by_q.get(q, 0) for q in quarters])};
 const qLlmValidated = {json.dumps([q_llm_validated.get(q, 0) for q in quarters])};
 const qKeywordOnly = {json.dumps([q_keyword_only.get(q, 0) for q in quarters])};
+const qProjected = {json.dumps([q_proj_total.get(q, 0) for q in quarters])};
 
 Chart.defaults.color = '#888';
 Chart.defaults.borderColor = '#2a2a4a';
 
-// Timeline stacked bar with LLM opacity
-new Chart(document.getElementById('timelineChart'), {{
+// Striped pattern for projected bar
+function createStripePattern(color) {{
+  const canvas = document.createElement('canvas');
+  canvas.width = 10; canvas.height = 10;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = color + '33';
+  ctx.fillRect(0, 0, 10, 10);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(0, 10); ctx.lineTo(10, 0);
+  ctx.stroke();
+  return ctx.createPattern(canvas, 'repeat');
+}}
+
+// Timeline stacked bar with projection
+const timelineCtx = document.getElementById('timelineChart');
+const projPattern = createStripePattern('#888');
+new Chart(timelineCtx, {{
   type: 'bar',
   data: {{
     labels: quarters,
@@ -691,7 +770,8 @@ new Chart(document.getElementById('timelineChart'), {{
       {{ label: 'Közvetlen leépítés (3)', data: qDirect, backgroundColor: '#e94560' }},
       {{ label: 'Erős jelzés (2)', data: qStrong, backgroundColor: '#f9a826' }},
       {{ label: 'Közvetett (1)', data: qIndirect, backgroundColor: '#4ecdc4' }},
-      {{ label: 'Hiring freeze', data: qFreeze, backgroundColor: '#9b59b6', type: 'line', borderColor: '#9b59b6', fill: false, tension: 0.3, yAxisID: 'y' }}
+      {{ label: 'Negyedéves projekció', data: qProjected, backgroundColor: projPattern, borderColor: '#888', borderWidth: 1, borderDash: [4, 4] }},
+      {{ label: 'Álláspiac szűkülés', data: qFreeze, backgroundColor: '#9b59b6', type: 'line', borderColor: '#9b59b6', fill: false, tension: 0.3, yAxisID: 'y' }}
     ]
   }},
   options: {{
@@ -731,17 +811,21 @@ new Chart(document.getElementById('categoryChart'), {{
   options: {{ responsive: true, plugins: {{ legend: {{ position: 'bottom', labels: {{ boxWidth: 12 }} }} }} }}
 }});
 
-// AI trend
+// AI trend with year-end projection
+const aiProjPattern = createStripePattern('#e94560');
+const totalProjPattern = createStripePattern('#555');
 new Chart(document.getElementById('aiChart'), {{
   type: 'bar',
   data: {{
     labels: {json.dumps(ai_years)},
     datasets: [
-      {{ label: 'AI-t említő', data: {json.dumps([ai_by_year[y]['ai'] for y in ai_years])}, backgroundColor: '#e94560' }},
-      {{ label: 'Összes releváns', data: {json.dumps([ai_by_year[y]['total'] for y in ai_years])}, backgroundColor: '#2a2a4a' }}
+      {{ label: 'AI-t említő', data: {json.dumps([ai_by_year[y]['ai'] for y in ai_years])}, backgroundColor: '#e94560', stack: 'ai' }},
+      {{ label: 'AI projekció', data: {json.dumps([ai_proj[y]['ai'] for y in ai_years])}, backgroundColor: aiProjPattern, borderColor: '#e9456066', borderWidth: 1, stack: 'ai' }},
+      {{ label: 'Összes releváns', data: {json.dumps([ai_by_year[y]['total'] for y in ai_years])}, backgroundColor: '#2a2a4a', stack: 'total' }},
+      {{ label: 'Összes projekció', data: {json.dumps([ai_proj[y]['total'] for y in ai_years])}, backgroundColor: totalProjPattern, borderColor: '#55555566', borderWidth: 1, stack: 'total' }}
     ]
   }},
-  options: {{ responsive: true, scales: {{ y: {{ beginAtZero: true }} }}, plugins: {{ legend: {{ position: 'bottom' }} }} }}
+  options: {{ responsive: true, scales: {{ y: {{ beginAtZero: true, stacked: true }}, x: {{ stacked: true }} }}, plugins: {{ legend: {{ position: 'bottom' }} }} }}
 }});
 
 {tech_chart_js}

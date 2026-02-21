@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>magyar.dev/layoffs — IT Leépítés Radar</title>
 <meta property="og:title" content="magyar.dev/layoffs — IT Leépítés Radar">
-<meta property="og:description" content="41 érintett cég, 64 jelzés 2025 Q4 óta, 224 poszt alapján">
+<meta property="og:description" content="37 érintett cég, 64 jelzés 2025 Q4 óta, 224 poszt alapján">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="magyar.dev/layoffs — IT Leépítés Radar">
@@ -22,10 +22,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sa
 .stat.primary { border-color: #e94560; }
 .stat.primary .num { font-size: 2.5em; }
 .stat .label { font-size: 0.85em; color: #888; margin-top: 4px; }
+.stat .method-hint { font-size: 0.7em; color: #555; margin-top: 2px; font-style: italic; }
 .charts { max-width: 1200px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .chart-box { background: #1a1a2e; border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a; }
 .chart-box.full { grid-column: 1 / -1; }
-.chart-box h2 { font-size: 1.1em; color: #ccc; margin-bottom: 12px; }
+.chart-box h2 { font-size: 1.1em; color: #ccc; margin-bottom: 4px; }
+.chart-box .method { font-size: 0.75em; color: #666; margin-bottom: 10px; font-style: italic; }
 canvas { max-height: 350px; }
 .table-section { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .table-section h2 { font-size: 1.2em; color: #ccc; margin-bottom: 12px; }
@@ -55,11 +57,18 @@ details summary:hover { color: #fff; }
 .section-anchor { color: #555; text-decoration: none; font-size: 0.8em; margin-left: 6px; opacity: 0; transition: opacity 0.2s; }
 .chart-box:hover .section-anchor, .table-section:hover .section-anchor, details:hover .section-anchor { opacity: 1; }
 .section-anchor:hover { color: #e94560; }
-.event-group summary { cursor: pointer; list-style: none; }
-.event-group summary::-webkit-details-marker { display: none; }
-.event-group .badge { display: inline-block; background: #2a2a4a; color: #4ecdc4; padding: 1px 6px; border-radius: 3px; font-size: 0.7em; margin-left: 6px; vertical-align: middle; }
-.event-group .sub-row td { padding-left: 24px; color: #888; font-size: 0.8em; border-bottom: 1px solid #1a1a2e; }
-.event-group .sub-row:hover { background: #12122a; }
+.toggle-btn { cursor: pointer; user-select: none; }
+.toggle-btn .badge { display: inline-block; background: #1a3a3a; color: #4ecdc4; padding: 4px 10px; border-radius: 5px; font-size: 0.8em; font-weight: 600; margin-left: 8px; vertical-align: middle; border: 1px solid #4ecdc4; transition: all 0.15s; }
+.toggle-btn .badge::before { content: '\25B6\FE0E '; font-size: 0.75em; }
+.toggle-btn:hover .badge { background: #4ecdc4; color: #0f0f0f; }
+.toggle-btn.open .badge { background: #4ecdc433; }
+.toggle-btn.open .badge::before { content: '\25BC\FE0E '; }
+.expand-row td { padding: 0 8px 8px 8px; }
+.expand-row .sub-row { padding: 6px 0 6px 20px; color: #999; font-size: 0.8em; border-bottom: 1px solid #1a1a2e; }
+.expand-row .sub-row:hover { background: #12122a; }
+.expand-row .sub-row a { color: #6c8fbf; }
+.expand-row:not(.hidden) { background: #0f0f1f; }
+.hidden { display: none; }
 .reddit-ref { display: inline-block; background: #ff450033; color: #ff4500; padding: 1px 5px; border-radius: 3px; font-size: 0.65em; font-weight: 600; margin-left: 4px; vertical-align: middle; text-decoration: none; }
 .reddit-ref:hover { background: #ff450055; text-decoration: none; }
 @media (max-width: 768px) { .charts { grid-template-columns: 1fr; } }
@@ -70,7 +79,7 @@ details summary:hover { color: #fff; }
 <div class="header">
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
-  <div class="sub">Reddit + Google News publikus adatok | Generálva: 2026-02-21 16:34</div>
+  <div class="sub">Reddit + Google News publikus adatok | Generálva: 2026-02-21 18:30</div>
   <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
@@ -87,53 +96,97 @@ details summary:hover { color: #fff; }
   </div>
 </div>
 
+<details id="methodology" style="max-width:1200px;margin:8px auto 0;padding:0 24px">
+  <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
+  <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
+    <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
+    <p>Automatizált scraper gyűjt publikus adatokat két forrásból:</p>
+    <ul style="margin:8px 0 16px 20px">
+      <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions (poszt szöveg + top 20 komment)</li>
+      <li><strong>Google News RSS</strong> — magyar nyelvű IT leépítés hírek, teljes cikk szöveggel (URL dekódolás + tartalom kinyerés)</li>
+    </ul>
+    <p style="margin-top:8px">Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
+    <ol style="margin:8px 0 16px 20px">
+      <li><strong>Multi-source scraping</strong> — Reddit JSON API + Google News RSS (cikk tartalom kinyeréssel)</li>
+      <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
+      <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
+      <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>
+    </ol>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">LLM validáció</h3>
+    <p>A relevancia &ge; 1 posztokat nyelvi modell validálja: ténylegesen IT leépítésről szól-e, melyik cég érintett, confidence score (0.0-1.0), magyar összefoglaló, érintett technológiák és munkakörök.</p>
+    <p style='margin-top:8px'><strong>163 poszt</strong> validálva <strong>1246 másodperc</strong> alatt.</p>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">IT szektor szűrés</h3>
+    <p>A dashboard elsődlegesen IT szektorra fókuszál, de nem kizárólag IT-natív cégeket mutat. Nem-IT szektorok (autóipar, kormányzat, szórakoztatóipar stb.) leépítései is megjelennek, ha IT munkakört érintenek (fejlesztő, informatikus, data engineer stb.) — mivel ezek szintén az IT munkaerőpiacot érintik.</p>
+
+    <h3 style="color:#e94560;margin:16px 0 8px">Korlátok</h3>
+    <ul style="margin:8px 0 16px 20px">
+      <li>Csak publikus források — zárt csoportok, belső kommunikáció nem elérhető</li>
+      <li>A keresések nem garantálják a teljességet</li>
+      <li>LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot</li>
+    </ul>
+
+    <p><strong>Forráskód:</strong> <a href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">github.com/tatargabor/hu-it-layoffs</a></p>
+  </div>
+</details>
+
 <div class="stats">
-  <div class="stat primary"><div class="num">64</div><div class="label">Leépítési jelzés<br><span style="font-size:0.85em;color:#666">2025 Q4 óta</span></div></div>
-  <div class="stat"><div class="num">149</div><div class="label">Közvetlen leépítés</div></div>
-  <div class="stat"><div class="num">224</div><div class="label">Releváns poszt</div></div>
-  <div class="stat"><div class="num">41</div><div class="label">Érintett cég</div></div>
-  <div class="stat"><div class="num">4,677</div><div class="label">Upvote</div></div>
-  <div class="stat"><div class="num">5,108</div><div class="label">Komment</div></div>
-  <div class="stat"><div class="num">80</div><div class="label">AI-t említő poszt</div></div>
-  <div class="stat"><div class="num">20</div><div class="label">Hiring freeze jelzés</div></div>
+  <div class="stat primary"><div class="num">64</div><div class="label">Leépítési jelzés<br><span style="font-size:0.85em;color:#666">2025 Q4 óta</span></div><div class="method-hint">erős jelzések (rel. &ge;2)</div></div>
+  <div class="stat"><div class="num">79</div><div class="label">Közvetlen leépítés</div><div class="method-hint">relevancia 3, IT szektorra szűrve</div></div>
+  <div class="stat"><div class="num">180</div><div class="label">Erős jelzés</div><div class="method-hint">rel. &ge;2, IT, magyar, nem karriertanács</div></div>
+  <div class="stat"><div class="num">37</div><div class="label">Érintett cég</div><div class="method-hint">nevesített cégek, erős jelzésekből</div></div>
+  <div class="stat"><div class="num">4,677</div><div class="label">Upvote</div><div class="method-hint">összes IT-releváns poszt</div></div>
+  <div class="stat"><div class="num">5,108</div><div class="label">Komment</div><div class="method-hint">összes IT-releváns poszt</div></div>
+  <div class="stat"><div class="num">80</div><div class="label">AI-t említő poszt</div><div class="method-hint">AI ok vagy tényező (LLM elemzés)</div></div>
+  <div class="stat"><div class="num">72</div><div class="label">Álláspiac szűkülés</div><div class="method-hint">freeze kategória (LLM elemzés)</div></div>
 </div>
 
 <div class="charts">
 
 <div class="chart-box full" id="timeline">
   <h2>Negyedéves Timeline — Posztok száma <a class="section-anchor" href="#timeline" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#timeline')">&#128279;</a></h2>
+  <div class="method">IT-releváns posztok (relevancia 1-3) negyedévenként | Csíkozott sáv: aktuális negyedév időarányos projekciója</div>
   <canvas id="timelineChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>Érintett Cégek</h2>
+  <div class="method">Erős jelzések (relevancia &ge;2) alapján, esemény szinten csoportosítva</div>
   <canvas id="companyChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>Szektorok</h2>
+  <div class="method">LLM által meghatározott iparági besorolás, erős jelzések esemény szinten</div>
   <canvas id="sectorChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>Kategóriák</h2>
+  <div class="method">LLM kategorizálás: layoff (konkrét leépítés), freeze (álláspiac szűkülés), anxiety (aggodalom)</div>
   <canvas id="categoryChart"></canvas>
 </div>
 
 <div class="chart-box">
   <h2>AI Attribúció Trendje</h2>
+  <div class="method">Posztok aránya ahol AI/automatizáció a leépítés okaként vagy tényezőként szerepel</div>
   <canvas id="aiChart"></canvas>
 </div>
 
 
 <div class="chart-box">
   <h2>Érintett Technológiák (top 15)</h2>
+  <div class="method">LLM által kinyert technológiák a posztok szövegéből</div>
   <canvas id="techChart"></canvas>
 </div>
 
 
 <div class="chart-box">
   <h2>Érintett Munkakörök (top 10)</h2>
+  <div class="method">LLM által kinyert munkakörök a posztok szövegéből</div>
   <canvas id="rolesChart"></canvas>
 </div>
 
@@ -179,7 +232,7 @@ details summary:hover { color: #fff; }
       <th>LLM</th>
     </tr>
     <tr class="event-group"><td>2026-02-20</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQY3BCYTdkRmF1RFc3TnpHb3JXOFNfdm9hSWRFLW9aZW80SEFwb2c2bVRWV0IzaTRSVTZiNWx0b3lPRzl3Szg3RGNNS29BcThpNWg0TzgyYXJYcmNJcW1qd0FsUEg3aWgtUktjRWVlQ0E5STZZbkRVRDE4dExYRnhHSk15Wi04aUk?oc=5" target="_blank">Nagy leépítés a jól ismert szállásmegosztó portálnál: őket t...</a><span class="badge">2 forrás</span></summary><tr class="sub-row"><td>2026-02-20</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMi2wFBVV95cUxOS3FlZVFFektQNFNVbTFESmtwTFpQSm81ZmxidlYtZXNzMzhEM2duUm95N0hlN0h1VEhVQlI0SXhZZUs0OGJPUGxJR1JHUGp4OC1Qa2RVaGE5dzhDQ2QzdC1hUzVSb1Y4WkpteFRwYTNFeEctM1dFaDlNSW1Tc1ZaNEVIYTBBQnpkZmxNX1ZpbS1kT3I5aHNJZFBiZlBwVzhfQkZHSEFyUXRodV9pTFd0c3A0b2Vzd2N0dEpTaEthNVdTaVFmd3NJUlFDMUVCV3FWeDBzMUtVQlF1bnfSAdsBQVVfeXFMTktxZWVRRXpLUDRTVW0xREprcExaUEpvNWZsYnZWLWVzczM4RDNnblJveTdIZTdIdVRIVUJSNEl4WWVLNDhiT1BsSUdSR1BqeDgtUGtkVWhhOXc4Q0NkM3QtYVM1Um9WOFpKbXhUcGEzRXhHLTNXRWg5TUltU3NWWjRFSGEwQUJ6ZGZsTV9WaW0tZE9yOWhzSWRQYmZQcFc4X0JGR0hBclF0aHVfaUxXdHNwNG9lc3djdHRKU2hLYTVXU2lRZndzSVJRQzFFQldxVngwczFLVUJRdW53?oc=5" target="_blank">Komoly leépítés mellett döntött a népszerű szállásfogla...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQY3BCYTdkRmF1RFc3TnpHb3JXOFNfdm9hSWRFLW9aZW80SEFwb2c2bVRWV0IzaTRSVTZiNWx0b3lPRzl3Szg3RGNNS29BcThpNWg0TzgyYXJYcmNJcW1qd0FsUEg3aWgtUktjRWVlQ0E5STZZbkRVRDE4dExYRnhHSk15Wi04aUk?oc=5" target="_blank">Nagy leépítés a jól ismert szállásmegosztó portálnál: őket t...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">2 forrás</span></span></td>
       <td>Szállás Group</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -187,7 +240,8 @@ details summary:hover { color: #fff; }
       <td>0</td>
       <td class="rel-3">&#9733;&#9733;&#9733;</td>
       <td>&#10003;</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="8"><div class="sub-row">2026-02-20 — <a href="https://news.google.com/rss/articles/CBMi2wFBVV95cUxOS3FlZVFFektQNFNVbTFESmtwTFpQSm81ZmxidlYtZXNzMzhEM2duUm95N0hlN0h1VEhVQlI0SXhZZUs0OGJPUGxJR1JHUGp4OC1Qa2RVaGE5dzhDQ2QzdC1hUzVSb1Y4WkpteFRwYTNFeEctM1dFaDlNSW1Tc1ZaNEVIYTBBQnpkZmxNX1ZpbS1kT3I5aHNJZFBiZlBwVzhfQkZHSEFyUXRodV9pTFd0c3A0b2Vzd2N0dEpTaEthNVdTaVFmd3NJUlFDMUVCV3FWeDBzMUtVQlF1bnfSAdsBQVVfeXFMTktxZWVRRXpLUDRTVW0xREprcExaUEpvNWZsYnZWLWVzczM4RDNnblJveTdIZTdIdVRIVUJSNEl4WWVLNDhiT1BsSUdSR1BqeDgtUGtkVWhhOXc4Q0NkM3QtYVM1Um9WOFpKbXhUcGEzRXhHLTNXRWg5TUltU3NWWjRFSGEwQUJ6ZGZsTV9WaW0tZE9yOWhzSWRQYmZQcFc4X0JGR0hBclF0aHVfaUxXdHNwNG9lc3djdHRKU2hLYTVXU2lRZndzSVJRQzFFQldxVngwczFLVUJRdW53?oc=5" target="_blank">Komoly leépítés mellett döntött a népszerű szállásfogla...</a> — google-news</div></td></tr><tr>
       <td>2026-02-19</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r94yog/fejlesztőből_it_support/" target="_blank">Fejlesztőből IT support?</a></td>
       <td>—</td>
@@ -218,7 +272,7 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733;</td>
       <td>&#10003;</td>
     </tr><tr class="event-group"><td>2026-02-15</td>
-      <td><details><summary><a href="https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/" target="_blank">OTP bank - leépítés IT területen</a><span class="badge">15 forrás</span></summary><tr class="sub-row"><td>2026-02-17</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE9hNmpROGxiSXBQRndnSnE5bnVlOTV2N3NTN1ZFMndCaThXU0x6WGRyTS12OEpwWWlublBraEgxdnRYSkpSZkw2WEtLQUlkVFByTWcwZWhnY285ay1NSWozYnlWX3RodHRGcHJSUHFZazliVlk?oc=5" target="_blank">Átszervezés miatt több száz munkahely szűnik meg az OTP...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxObkgyYk91UmMyeFVJLW1jS0RIa3gycjlEMUN1Qk5OWWp0MUE2WTQxay1nTXB6RFQ0OEk2REZNbmlDajQzWHZEMWJNSVFFOUZMeTdUX2VjMDY5eU9QNEg4VEljaGFvaFdZcU9vbGFzVi1pQU9pZldNel9yVVRkSVRVZnI2Z2pnX1RUdUJFNkxHOUl2UlVLQXM4NmJhbUJDbGU2UGlDRUc5YmJXbmc?oc=5" target="_blank">Dobrev Klára: Felszólítjuk Csányi Sándort, hogy álljon ...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQSjR0VGE4b0ZCeEJid3JWSzlMNzNoZ1Y2aWE5UlVPV2tnNHB0dkZBX2pJZE5TbngzOXhud1hzbFJBeUY2OW9CbGJ3WklnM0d6cDdrMDNOLVF0aXh6YkMxZkc0aUoyckY0ZUlQRGlFV0R2SDhndUxOOFd6aGEzUDAzYVUtMlpnWjJxUjBlVjYtVEx4MUxuS3RSM3NZTXc?oc=5" target="_blank">OTP: Stratégiai átrendeződés áll a 200 fős leépítés mög...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE9seThHUW1OVVVXR1FudERtZk5wa0VFM1FBVEo3dkxpNEgtdEVHWDRIelg0REZCbGJkUnBsSWVid29hT1NrX0N0dE95U0RqOGc?oc=5" target="_blank">Óriási leépítés az egyik legnagyobb magyar banknál: töb...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxORndrSEN6RnkxUjJHUHd4OEVlOEhhTHRyY1NNVjk2eUx0VkVkN0FiTEw0cmRYM2JzMjVRZWI2UktFSEJkbjhwNVpnNXZVT3JfVEtHUG1rRGZydkVfY3dmLXJDNzBYVExwRDZET3RJV0QzR0FyMDFaR3lmQ2RwT1Y2VU81aUFGMks4T0RqaWtNV19QRFV0aG5reV91clVMQ0hlWjg5UnloQzJRdS0yRjFCaEtvSGcxWEhCcW95RUp1eHpYUdIBxwFBVV95cUxQOHpWWTNyUmtwSTZHRmc1OXRRX01HZ2ZsblY0em0wYVNjaFl5Nl9ESy1YbjhVYmtLYnU3QWtWQjJRNDRZWnFEOHFDOGRvWHp4Z21sdmpYdUFEX19fY0Nqd2JfYWJDLXBPYU4zdG1kc01fM18zRjhiUVhKOEN0YXlza19GQk1EMjE0YWEzOURyeUZyZG9fSnV4ZlBIX3NFeHJrdHhRVzlzV3M1Sm9ZelNOdnhKcGl3SmlKZUZqdFFiSGRkVi1uVkJV?oc=5" target="_blank">200 dolgozótól válik meg az OTP: ezzel indokolta a a lé...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5aYXdwTkpkZ0FDQ3ZFSld2cjZiVllXME40NkdGai1IemRkV2xxa2NwNF9XRlJYcWVtX09qMlJ5WmphUUMzbVo2T09vVFNXdFJHRG1NVHVjOXktQzFOU0lR?oc=5" target="_blank">Ezért küld el csaknem 200 dolgozót az OTP - Haszon Maga...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxQWFJra3NHNHdOc3I0bHQ5ZXp0bV9QeFRnTVFCMXRwQlVXZzd0N1FjaEY0Nkd2SlJqRzZsOF83OG9qOUxkMm9kUlZJOWNBeU4wbEk1ek1LRzlOR2pWR3NGOHdRa2wtUTA2cU9zSDU0TjR1Z2ZrdkxyYkgzRTQyOFpVQk9B?oc=5" target="_blank">Komoly leépítések jönnek az OTP Banknál - Magyar Jelen</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE5qVFd4M2NJNEM1UEhmdnJtUnI4R0JGX3IxdExrMzJwMnU2ZWI3akRaVEJTd3M4TjM5QWM5T29ZS1luMFNYcUN1ZmJQbFp4YnZsUDhuR1hlOHdfdmRRMUZwR1VJaDZkbm1PWXJIMUpOd0NaN3VsRC1ROQ?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Startlap</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMiakFVX3lxTFBLUXhTMkMwMHhKT2tFazZ1NTJaM1c2QjFNaGVsRzhwMFRvbWZ5THhMUWJ0LW1uVXRjb3pHOGd1a1Jwam00U29UOXk4SEhJZlgydmZNUHVTWE5PU2hCeUxEOWxfdjItVTZZcWc?oc=5" target="_blank">Több száz fős leépítés jön az egyik legnagyobb hazai ba...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="8"><a href="https://nepszava.hu/3311938_otp-bank-leepites-letszamcsokkentes-200-dolgozo-elkuldes" target="_blank">Csaknem 200 dolgozóját küldi el az OTP - Népszava</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxOVFMtV3RldGtFSnpld3VHZm1nYXJfMzhaV2F2ZkRoS1B1MXp1ekI0YkROV0VkMnFMSzBFZGpXMDg0dDBuSHJoY0Q1Tlo3MkY4Ulo4UUZhNzlpNjk3RTBqWW4xeTVCSFc3SnlibkR1UTJTOG5qN0dGRURYWUlfdnphVw?oc=5" target="_blank">Leépítések az OTP-nél: majdnem 200 munkatársától válik ...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE1MdmloZ3RJZ3k1YTVjU3lTODdFV3RYY3NrZEp3eFJrcnRVZ1FEWGJtS18xa1RESlJEdkZhNnVTYW43aEFSSE1SV2VQWHVRTkxMRTN4QVhualQwV1NsdU8xY0JIMlIwMjFXNWNaNnRVX2FIbXJpanA1Uw?oc=5" target="_blank">Közel 200 munkatársától válik meg az OTP Bank - Telex</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE85MC1NMWV1cGlKcDRfcllRR0wzQ3JOaXVEQ2NjbV9naWdJcHlXMkg4UHZvZXVkWkZaZ3l3T3F3T1lzVHJleTYwc1RlUmk5YldFaWJfalFpaUpDT3VIbHFQeXRuajRWX0lQZGZxc2dtbHFtZmhlMHgxYTV1YmhLZw?oc=5" target="_blank">Közel kétszáz alkalmazottjától válik meg az OTP - 444</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQX0NCRHBQMWtVNU9OdFozS3c3eXlFXzNJTExaS1hxam4tR05rZG1SOF9Pb2s2V3hsaGtDVDlCNnNZU2h5SWZvTDFLMHRFR2JMeDQxc0FycUJ1czY0S2MtSUhmcDVtdm9YQVdUT2tqaU9JWXh1a1k0R3dLU0sybnk4V3FBSndlRl940gGOAUFVX3lxTFB6MGpacXlmV3VDcm1DZHl2ZjZZTlRRYW9zTGRRX2dIbWp3c0VyZC1EWGp3OGxoMGlWQnZzRllfY1RHOVZpbkpHdDhoNEpVZmJjalpvakdGbkNlWVFtVXI3VFVEWnRQRU1CcExqWEtyeFo0SzkyLW1qRlFOdFladU5qSnpTWk1YYWh6SFJJWXc?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Portfolio.hu</a> — google-news</td></tr></details></td>
+      <td><a href="https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/" target="_blank">OTP bank - leépítés IT területen</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">15 forrás</span></span></td>
       <td>OTP Bank</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
@@ -226,7 +280,8 @@ details summary:hover { color: #fff; }
       <td>143</td>
       <td class="rel-3">&#9733;&#9733;&#9733;</td>
       <td>&#10003;</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="8"><div class="sub-row">2026-02-17 — <a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE9hNmpROGxiSXBQRndnSnE5bnVlOTV2N3NTN1ZFMndCaThXU0x6WGRyTS12OEpwWWlublBraEgxdnRYSkpSZkw2WEtLQUlkVFByTWcwZWhnY285ay1NSWozYnlWX3RodHRGcHJSUHFZazliVlk?oc=5" target="_blank">Átszervezés miatt több száz munkahely szűnik meg az OTP...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxObkgyYk91UmMyeFVJLW1jS0RIa3gycjlEMUN1Qk5OWWp0MUE2WTQxay1nTXB6RFQ0OEk2REZNbmlDajQzWHZEMWJNSVFFOUZMeTdUX2VjMDY5eU9QNEg4VEljaGFvaFdZcU9vbGFzVi1pQU9pZldNel9yVVRkSVRVZnI2Z2pnX1RUdUJFNkxHOUl2UlVLQXM4NmJhbUJDbGU2UGlDRUc5YmJXbmc?oc=5" target="_blank">Dobrev Klára: Felszólítjuk Csányi Sándort, hogy álljon ...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQSjR0VGE4b0ZCeEJid3JWSzlMNzNoZ1Y2aWE5UlVPV2tnNHB0dkZBX2pJZE5TbngzOXhud1hzbFJBeUY2OW9CbGJ3WklnM0d6cDdrMDNOLVF0aXh6YkMxZkc0aUoyckY0ZUlQRGlFV0R2SDhndUxOOFd6aGEzUDAzYVUtMlpnWjJxUjBlVjYtVEx4MUxuS3RSM3NZTXc?oc=5" target="_blank">OTP: Stratégiai átrendeződés áll a 200 fős leépítés mög...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE9seThHUW1OVVVXR1FudERtZk5wa0VFM1FBVEo3dkxpNEgtdEVHWDRIelg0REZCbGJkUnBsSWVid29hT1NrX0N0dE95U0RqOGc?oc=5" target="_blank">Óriási leépítés az egyik legnagyobb magyar banknál: töb...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxORndrSEN6RnkxUjJHUHd4OEVlOEhhTHRyY1NNVjk2eUx0VkVkN0FiTEw0cmRYM2JzMjVRZWI2UktFSEJkbjhwNVpnNXZVT3JfVEtHUG1rRGZydkVfY3dmLXJDNzBYVExwRDZET3RJV0QzR0FyMDFaR3lmQ2RwT1Y2VU81aUFGMks4T0RqaWtNV19QRFV0aG5reV91clVMQ0hlWjg5UnloQzJRdS0yRjFCaEtvSGcxWEhCcW95RUp1eHpYUdIBxwFBVV95cUxQOHpWWTNyUmtwSTZHRmc1OXRRX01HZ2ZsblY0em0wYVNjaFl5Nl9ESy1YbjhVYmtLYnU3QWtWQjJRNDRZWnFEOHFDOGRvWHp4Z21sdmpYdUFEX19fY0Nqd2JfYWJDLXBPYU4zdG1kc01fM18zRjhiUVhKOEN0YXlza19GQk1EMjE0YWEzOURyeUZyZG9fSnV4ZlBIX3NFeHJrdHhRVzlzV3M1Sm9ZelNOdnhKcGl3SmlKZUZqdFFiSGRkVi1uVkJV?oc=5" target="_blank">200 dolgozótól válik meg az OTP: ezzel indokolta a a lé...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5aYXdwTkpkZ0FDQ3ZFSld2cjZiVllXME40NkdGai1IemRkV2xxa2NwNF9XRlJYcWVtX09qMlJ5WmphUUMzbVo2T09vVFNXdFJHRG1NVHVjOXktQzFOU0lR?oc=5" target="_blank">Ezért küld el csaknem 200 dolgozót az OTP - Haszon Maga...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxQWFJra3NHNHdOc3I0bHQ5ZXp0bV9QeFRnTVFCMXRwQlVXZzd0N1FjaEY0Nkd2SlJqRzZsOF83OG9qOUxkMm9kUlZJOWNBeU4wbEk1ek1LRzlOR2pWR3NGOHdRa2wtUTA2cU9zSDU0TjR1Z2ZrdkxyYkgzRTQyOFpVQk9B?oc=5" target="_blank">Komoly leépítések jönnek az OTP Banknál - Magyar Jelen</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE5qVFd4M2NJNEM1UEhmdnJtUnI4R0JGX3IxdExrMzJwMnU2ZWI3akRaVEJTd3M4TjM5QWM5T29ZS1luMFNYcUN1ZmJQbFp4YnZsUDhuR1hlOHdfdmRRMUZwR1VJaDZkbm1PWXJIMUpOd0NaN3VsRC1ROQ?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Startlap</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMiakFVX3lxTFBLUXhTMkMwMHhKT2tFazZ1NTJaM1c2QjFNaGVsRzhwMFRvbWZ5THhMUWJ0LW1uVXRjb3pHOGd1a1Jwam00U29UOXk4SEhJZlgydmZNUHVTWE5PU2hCeUxEOWxfdjItVTZZcWc?oc=5" target="_blank">Több száz fős leépítés jön az egyik legnagyobb hazai ba...</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://nepszava.hu/3311938_otp-bank-leepites-letszamcsokkentes-200-dolgozo-elkuldes" target="_blank">Csaknem 200 dolgozóját küldi el az OTP - Népszava</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxOVFMtV3RldGtFSnpld3VHZm1nYXJfMzhaV2F2ZkRoS1B1MXp1ekI0YkROV0VkMnFMSzBFZGpXMDg0dDBuSHJoY0Q1Tlo3MkY4Ulo4UUZhNzlpNjk3RTBqWW4xeTVCSFc3SnlibkR1UTJTOG5qN0dGRURYWUlfdnphVw?oc=5" target="_blank">Leépítések az OTP-nél: majdnem 200 munkatársától válik ...</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE1MdmloZ3RJZ3k1YTVjU3lTODdFV3RYY3NrZEp3eFJrcnRVZ1FEWGJtS18xa1RESlJEdkZhNnVTYW43aEFSSE1SV2VQWHVRTkxMRTN4QVhualQwV1NsdU8xY0JIMlIwMjFXNWNaNnRVX2FIbXJpanA1Uw?oc=5" target="_blank">Közel 200 munkatársától válik meg az OTP Bank - Telex</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE85MC1NMWV1cGlKcDRfcllRR0wzQ3JOaXVEQ2NjbV9naWdJcHlXMkg4UHZvZXVkWkZaZ3l3T3F3T1lzVHJleTYwc1RlUmk5YldFaWJfalFpaUpDT3VIbHFQeXRuajRWX0lQZGZxc2dtbHFtZmhlMHgxYTV1YmhLZw?oc=5" target="_blank">Közel kétszáz alkalmazottjától válik meg az OTP - 444</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQX0NCRHBQMWtVNU9OdFozS3c3eXlFXzNJTExaS1hxam4tR05rZG1SOF9Pb2s2V3hsaGtDVDlCNnNZU2h5SWZvTDFLMHRFR2JMeDQxc0FycUJ1czY0S2MtSUhmcDVtdm9YQVdUT2tqaU9JWXh1a1k0R3dLU0sybnk4V3FBSndlRl940gGOAUFVX3lxTFB6MGpacXlmV3VDcm1DZHl2ZjZZTlRRYW9zTGRRX2dIbWp3c0VyZC1EWGp3OGxoMGlWQnZzRllfY1RHOVZpbkpHdDhoNEpVZmJjalpvakdGbkNlWVFtVXI3VFVEWnRQRU1CcExqWEtyeFo0SzkyLW1qRlFOdFladU5qSnpTWk1YYWh6SFJJWXc?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Portfolio.hu</a> — google-news</div></td></tr><tr>
       <td>2026-02-13</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/" target="_blank">Unisys munkahelyről tud valaki valamit?</a></td>
       <td>Unisys</td>
@@ -357,7 +412,7 @@ details summary:hover { color: #fff; }
       <td class="rel-2">&#9733;&#9733;</td>
       <td>&#10003;</td>
     </tr><tr class="event-group"><td>2025-12-17</td>
-      <td><details><summary><a href="https://hvg.hu/kkv/20251217_Az-OBI-elismerte-fu-alatt-nagy-leepitest-hajtott-vegre" target="_blank">Vállalkozás: Az OBI elismerte: fű alatt nagy leépítést hajto...</a><span class="badge">3 forrás</span></summary><tr class="sub-row"><td>2025-12-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxPV1RtWEk5VGVMbjNBd0pWdXNYMTlyNXVrYzcwcDBKUmpzNlBaNDYyaFF2bFVHZHNKalozZTNVZm5mUHdrR3VHT3BUM29DNWVBVlJzOGtIaV8wdDZtVHNYQWx3eTk2MWxCNlNkZzRDMUdIOEZ6dmhQaE5NbnFkMlprWjJGcXBNSVV5UUl6anllVFNFSERQMmp0TFVqSGV1bTZSN1FCemhVNA?oc=5" target="_blank">Gazdaság - Tömeges létszámleépítés mellett döntött az e...</a> — google-news</td></tr><tr class="sub-row"><td>2025-12-16</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxPczZRTGFzeGl5UGNxaGY3bkl3MnNyV3hMa1hCbk5xOEUzSHIyOHprMWpsN2xBVVJScldydXEyTzF0YVpnU2NKaGhfQTZIYnMyYzJsNFZuQnpCRjBHTFNyZUZkUExnZlNlM0RZUUhHZG5yR1ItSUFkQjBwZ2VpTnVMV3ozUGJydEYwX2tBYTRTU1ZVaDljWi1yYlV1QVFaUm9FYkZZTlNDWkoyc0pCamtVTG8zQ2xweDdzM2t4dEtPNmlITGNjdExuUUFPeGxwM3J0SXhjWnVSZC16MXl6Q0c2RWttektQckJCYkliOHktONIB9AFBVV95cUxQUklWVnQxUm1peTFZWVV4ZGNkdWhaR2FlUll2cFpaaU1OS2dBMDVNOHc1M1REWXY2a19vcXZKdG05LWlxbWhoaTE3a004VGlvanhzdjhDZDNEamV6U2QzM2d5MEFJYms5N1hseEFHb2tlaGZxWURabTIzc1kzMUF0TVp5MzJCWlhsRjdaenZNTTBmbGktWHRUWTNCSnVpM3NUZGd4eE1TVktPckFZOEQwN2JlUE0wbDB2WmROQy1ydzRIM0dhRFQ4TkRINVpRNzZEU2VUUHc2dGxjV0pENzcwYmtOU2p6VFZUWHN6WkRwc0VrRVNr?oc=5" target="_blank">Év végi bónusz helyett semmiből jött leépítés: több min...</a> — google-news</td></tr></details></td>
+      <td><a href="https://hvg.hu/kkv/20251217_Az-OBI-elismerte-fu-alatt-nagy-leepitest-hajtott-vegre" target="_blank">Vállalkozás: Az OBI elismerte: fű alatt nagy leépítést hajto...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">3 forrás</span></span></td>
       <td>OBI</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -365,7 +420,8 @@ details summary:hover { color: #fff; }
       <td>0</td>
       <td class="rel-3">&#9733;&#9733;&#9733;</td>
       <td>&#10003;</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="8"><div class="sub-row">2025-12-16 — <a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxPV1RtWEk5VGVMbjNBd0pWdXNYMTlyNXVrYzcwcDBKUmpzNlBaNDYyaFF2bFVHZHNKalozZTNVZm5mUHdrR3VHT3BUM29DNWVBVlJzOGtIaV8wdDZtVHNYQWx3eTk2MWxCNlNkZzRDMUdIOEZ6dmhQaE5NbnFkMlprWjJGcXBNSVV5UUl6anllVFNFSERQMmp0TFVqSGV1bTZSN1FCemhVNA?oc=5" target="_blank">Gazdaság - Tömeges létszámleépítés mellett döntött az e...</a> — google-news</div><div class="sub-row">2025-12-16 — <a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxPczZRTGFzeGl5UGNxaGY3bkl3MnNyV3hMa1hCbk5xOEUzSHIyOHprMWpsN2xBVVJScldydXEyTzF0YVpnU2NKaGhfQTZIYnMyYzJsNFZuQnpCRjBHTFNyZUZkUExnZlNlM0RZUUhHZG5yR1ItSUFkQjBwZ2VpTnVMV3ozUGJydEYwX2tBYTRTU1ZVaDljWi1yYlV1QVFaUm9FYkZZTlNDWkoyc0pCamtVTG8zQ2xweDdzM2t4dEtPNmlITGNjdExuUUFPeGxwM3J0SXhjWnVSZC16MXl6Q0c2RWttektQckJCYkliOHktONIB9AFBVV95cUxQUklWVnQxUm1peTFZWVV4ZGNkdWhaR2FlUll2cFpaaU1OS2dBMDVNOHc1M1REWXY2a19vcXZKdG05LWlxbWhoaTE3a004VGlvanhzdjhDZDNEamV6U2QzM2d5MEFJYms5N1hseEFHb2tlaGZxWURabTIzc1kzMUF0TVp5MzJCWlhsRjdaenZNTTBmbGktWHRUWTNCSnVpM3NUZGd4eE1TVktPckFZOEQwN2JlUE0wbDB2WmROQy1ydzRIM0dhRFQ4TkRINVpRNzZEU2VUUHc2dGxjV0pENzcwYmtOU2p6VFZUWHN6WkRwc0VrRVNr?oc=5" target="_blank">Év végi bónusz helyett semmiből jött leépítés: több min...</a> — google-news</div></td></tr><tr>
       <td>2025-12-09</td>
       <td><a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE5RRkNnWEowLUxxRkh4ZVFxMEFqWXVMdV9ha0doRV8xUzB0eDd2aS1oSnNkcVdQYjVGQ2xYR2RhRTh3UkRua0lkTWNjZXBmYm5QSEFkMmpWcWQ3dUlwWmE5SUxwczdkOU1fQTJHZ29wNVFxUGZKXy00?oc=5" target="_blank">Egyre több cég tervez új dolgozókat felvenni, de azzal is ti...</a></td>
       <td>—</td>
@@ -376,7 +432,7 @@ details summary:hover { color: #fff; }
       <td class="rel-2">&#9733;&#9733;</td>
       <td>&#10003;</td>
     </tr><tr class="event-group"><td>2025-12-04</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE9GNXhIOG1RME1KV3FUUVhrWGZGSTh5cVJjV1h5RGotaHpDWnZKM0xPZW0xMXEzWnhuTGM2VjNuekNENDZWdjF3MkIzUUdkakEwdEZJQnU5X1VRSFRYdjlNelpEOER0a1c4N0ROLURQRzJnaU1sbXJRSWxR?oc=5" target="_blank">Gattyánék eltörlik a home office-t, és újabb durva leépítése...</a><span class="badge">2 forrás</span></summary><tr class="sub-row"><td>2025-12-04</td><td colspan="8"><a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0JzM0FzZUtZVGJmM1l6SG1CMGFRWWtMT3IxUXNjU09jRmFaQTZnd2UzUFAxVTBNVkJxT190UWVXRXEtb0FqWjFadlVxc0F4SHp5a19TczFjTU9fNGZydHRnS0VnVE8xSHN3NGhaWVNIdDdVTUJhSnVJcEFqTzFrcU5QMEhURVJ4MGhQQTVYdGRydW9nOFE?oc=5" target="_blank">Karácsony előtt 140 fős létszámleépítést jelentettek be...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE9GNXhIOG1RME1KV3FUUVhrWGZGSTh5cVJjV1h5RGotaHpDWnZKM0xPZW0xMXEzWnhuTGM2VjNuekNENDZWdjF3MkIzUUdkakEwdEZJQnU5X1VRSFRYdjlNelpEOER0a1c4N0ROLURQRzJnaU1sbXJRSWxR?oc=5" target="_blank">Gattyánék eltörlik a home office-t, és újabb durva leépítése...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">2 forrás</span></span></td>
       <td>Docler/Byborg</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -384,7 +440,8 @@ details summary:hover { color: #fff; }
       <td>0</td>
       <td class="rel-3">&#9733;&#9733;&#9733;</td>
       <td>&#10003;</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="8"><div class="sub-row">2025-12-04 — <a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0JzM0FzZUtZVGJmM1l6SG1CMGFRWWtMT3IxUXNjU09jRmFaQTZnd2UzUFAxVTBNVkJxT190UWVXRXEtb0FqWjFadlVxc0F4SHp5a19TczFjTU9fNGZydHRnS0VnVE8xSHN3NGhaWVNIdDdVTUJhSnVJcEFqTzFrcU5QMEhURVJ4MGhQQTVYdGRydW9nOFE?oc=5" target="_blank">Karácsony előtt 140 fős létszámleépítést jelentettek be...</a> — google-news</div></td></tr><tr>
       <td>2025-12-04</td>
       <td><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxOMXgxOTk1UmxkdU5zNzRidHlLU29OZHU5NFFJWjhTRHIyZk9xcmhqRWNXR0hNdFF5azloSmxibFl1ekFXYks0alJrNGNwMUFTRDhweW8zWjIwYk5YeldaakVxSF9sVXg0R0VjVjZXQXNNS3pDME9ySjJabWkxd2J6TTZPbGFZZ3FtS2NCLQ?oc=5" target="_blank">140 dolgozójától válik meg Gattyán György cége - 24.hu</a></td>
       <td>Gattyán György cége</td>
@@ -494,7 +551,7 @@ details summary:hover { color: #fff; }
       <th>AI</th>
     </tr>
     <tr class="event-group"><td>2026-02-20</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQY3BCYTdkRmF1RFc3TnpHb3JXOFNfdm9hSWRFLW9aZW80SEFwb2c2bVRWV0IzaTRSVTZiNWx0b3lPRzl3Szg3RGNNS29BcThpNWg0TzgyYXJYcmNJcW1qd0FsUEg3aWgtUktjRWVlQ0E5STZZbkRVRDE4dExYRnhHSk15Wi04aUk?oc=5" target="_blank">Nagy leépítés a jól ismert szállásmegosztó portálnál: őket t...</a><span class="badge">2 forrás</span></summary><tr class="sub-row"><td>2026-02-20</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMi2wFBVV95cUxOS3FlZVFFektQNFNVbTFESmtwTFpQSm81ZmxidlYtZXNzMzhEM2duUm95N0hlN0h1VEhVQlI0SXhZZUs0OGJPUGxJR1JHUGp4OC1Qa2RVaGE5dzhDQ2QzdC1hUzVSb1Y4WkpteFRwYTNFeEctM1dFaDlNSW1Tc1ZaNEVIYTBBQnpkZmxNX1ZpbS1kT3I5aHNJZFBiZlBwVzhfQkZHSEFyUXRodV9pTFd0c3A0b2Vzd2N0dEpTaEthNVdTaVFmd3NJUlFDMUVCV3FWeDBzMUtVQlF1bnfSAdsBQVVfeXFMTktxZWVRRXpLUDRTVW0xREprcExaUEpvNWZsYnZWLWVzczM4RDNnblJveTdIZTdIdVRIVUJSNEl4WWVLNDhiT1BsSUdSR1BqeDgtUGtkVWhhOXc4Q0NkM3QtYVM1Um9WOFpKbXhUcGEzRXhHLTNXRWg5TUltU3NWWjRFSGEwQUJ6ZGZsTV9WaW0tZE9yOWhzSWRQYmZQcFc4X0JGR0hBclF0aHVfaUxXdHNwNG9lc3djdHRKU2hLYTVXU2lRZndzSVJRQzFFQldxVngwczFLVUJRdW53?oc=5" target="_blank">Komoly leépítés mellett döntött a népszerű szállásfogla...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQY3BCYTdkRmF1RFc3TnpHb3JXOFNfdm9hSWRFLW9aZW80SEFwb2c2bVRWV0IzaTRSVTZiNWx0b3lPRzl3Szg3RGNNS29BcThpNWg0TzgyYXJYcmNJcW1qd0FsUEg3aWgtUktjRWVlQ0E5STZZbkRVRDE4dExYRnhHSk15Wi04aUk?oc=5" target="_blank">Nagy leépítés a jól ismert szállásmegosztó portálnál: őket t...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">2 forrás</span></span></td>
       <td>Szállás Group</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -503,7 +560,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>igen</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2026-02-20 — <a href="https://news.google.com/rss/articles/CBMi2wFBVV95cUxOS3FlZVFFektQNFNVbTFESmtwTFpQSm81ZmxidlYtZXNzMzhEM2duUm95N0hlN0h1VEhVQlI0SXhZZUs0OGJPUGxJR1JHUGp4OC1Qa2RVaGE5dzhDQ2QzdC1hUzVSb1Y4WkpteFRwYTNFeEctM1dFaDlNSW1Tc1ZaNEVIYTBBQnpkZmxNX1ZpbS1kT3I5aHNJZFBiZlBwVzhfQkZHSEFyUXRodV9pTFd0c3A0b2Vzd2N0dEpTaEthNVdTaVFmd3NJUlFDMUVCV3FWeDBzMUtVQlF1bnfSAdsBQVVfeXFMTktxZWVRRXpLUDRTVW0xREprcExaUEpvNWZsYnZWLWVzczM4RDNnblJveTdIZTdIdVRIVUJSNEl4WWVLNDhiT1BsSUdSR1BqeDgtUGtkVWhhOXc4Q0NkM3QtYVM1Um9WOFpKbXhUcGEzRXhHLTNXRWg5TUltU3NWWjRFSGEwQUJ6ZGZsTV9WaW0tZE9yOWhzSWRQYmZQcFc4X0JGR0hBclF0aHVfaUxXdHNwNG9lc3djdHRKU2hLYTVXU2lRZndzSVJRQzFFQldxVngwczFLVUJRdW53?oc=5" target="_blank">Komoly leépítés mellett döntött a népszerű szállásfogla...</a> — google-news</div></td></tr><tr>
       <td>2026-02-19</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r94yog/fejlesztőből_it_support/" target="_blank">Fejlesztőből IT support?</a></td>
       <td>—</td>
@@ -548,7 +606,7 @@ details summary:hover { color: #fff; }
       <td>95%</td>
       <td>igen</td>
     </tr><tr class="event-group"><td>2026-02-15</td>
-      <td><details><summary><a href="https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/" target="_blank">OTP bank - leépítés IT területen</a><span class="badge">15 forrás</span></summary><tr class="sub-row"><td>2026-02-17</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE9hNmpROGxiSXBQRndnSnE5bnVlOTV2N3NTN1ZFMndCaThXU0x6WGRyTS12OEpwWWlublBraEgxdnRYSkpSZkw2WEtLQUlkVFByTWcwZWhnY285ay1NSWozYnlWX3RodHRGcHJSUHFZazliVlk?oc=5" target="_blank">Átszervezés miatt több száz munkahely szűnik meg az OTP...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxObkgyYk91UmMyeFVJLW1jS0RIa3gycjlEMUN1Qk5OWWp0MUE2WTQxay1nTXB6RFQ0OEk2REZNbmlDajQzWHZEMWJNSVFFOUZMeTdUX2VjMDY5eU9QNEg4VEljaGFvaFdZcU9vbGFzVi1pQU9pZldNel9yVVRkSVRVZnI2Z2pnX1RUdUJFNkxHOUl2UlVLQXM4NmJhbUJDbGU2UGlDRUc5YmJXbmc?oc=5" target="_blank">Dobrev Klára: Felszólítjuk Csányi Sándort, hogy álljon ...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQSjR0VGE4b0ZCeEJid3JWSzlMNzNoZ1Y2aWE5UlVPV2tnNHB0dkZBX2pJZE5TbngzOXhud1hzbFJBeUY2OW9CbGJ3WklnM0d6cDdrMDNOLVF0aXh6YkMxZkc0aUoyckY0ZUlQRGlFV0R2SDhndUxOOFd6aGEzUDAzYVUtMlpnWjJxUjBlVjYtVEx4MUxuS3RSM3NZTXc?oc=5" target="_blank">OTP: Stratégiai átrendeződés áll a 200 fős leépítés mög...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE9seThHUW1OVVVXR1FudERtZk5wa0VFM1FBVEo3dkxpNEgtdEVHWDRIelg0REZCbGJkUnBsSWVid29hT1NrX0N0dE95U0RqOGc?oc=5" target="_blank">Óriási leépítés az egyik legnagyobb magyar banknál: töb...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxORndrSEN6RnkxUjJHUHd4OEVlOEhhTHRyY1NNVjk2eUx0VkVkN0FiTEw0cmRYM2JzMjVRZWI2UktFSEJkbjhwNVpnNXZVT3JfVEtHUG1rRGZydkVfY3dmLXJDNzBYVExwRDZET3RJV0QzR0FyMDFaR3lmQ2RwT1Y2VU81aUFGMks4T0RqaWtNV19QRFV0aG5reV91clVMQ0hlWjg5UnloQzJRdS0yRjFCaEtvSGcxWEhCcW95RUp1eHpYUdIBxwFBVV95cUxQOHpWWTNyUmtwSTZHRmc1OXRRX01HZ2ZsblY0em0wYVNjaFl5Nl9ESy1YbjhVYmtLYnU3QWtWQjJRNDRZWnFEOHFDOGRvWHp4Z21sdmpYdUFEX19fY0Nqd2JfYWJDLXBPYU4zdG1kc01fM18zRjhiUVhKOEN0YXlza19GQk1EMjE0YWEzOURyeUZyZG9fSnV4ZlBIX3NFeHJrdHhRVzlzV3M1Sm9ZelNOdnhKcGl3SmlKZUZqdFFiSGRkVi1uVkJV?oc=5" target="_blank">200 dolgozótól válik meg az OTP: ezzel indokolta a a lé...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5aYXdwTkpkZ0FDQ3ZFSld2cjZiVllXME40NkdGai1IemRkV2xxa2NwNF9XRlJYcWVtX09qMlJ5WmphUUMzbVo2T09vVFNXdFJHRG1NVHVjOXktQzFOU0lR?oc=5" target="_blank">Ezért küld el csaknem 200 dolgozót az OTP - Haszon Maga...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxQWFJra3NHNHdOc3I0bHQ5ZXp0bV9QeFRnTVFCMXRwQlVXZzd0N1FjaEY0Nkd2SlJqRzZsOF83OG9qOUxkMm9kUlZJOWNBeU4wbEk1ek1LRzlOR2pWR3NGOHdRa2wtUTA2cU9zSDU0TjR1Z2ZrdkxyYkgzRTQyOFpVQk9B?oc=5" target="_blank">Komoly leépítések jönnek az OTP Banknál - Magyar Jelen</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE5qVFd4M2NJNEM1UEhmdnJtUnI4R0JGX3IxdExrMzJwMnU2ZWI3akRaVEJTd3M4TjM5QWM5T29ZS1luMFNYcUN1ZmJQbFp4YnZsUDhuR1hlOHdfdmRRMUZwR1VJaDZkbm1PWXJIMUpOd0NaN3VsRC1ROQ?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Startlap</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiakFVX3lxTFBLUXhTMkMwMHhKT2tFazZ1NTJaM1c2QjFNaGVsRzhwMFRvbWZ5THhMUWJ0LW1uVXRjb3pHOGd1a1Jwam00U29UOXk4SEhJZlgydmZNUHVTWE5PU2hCeUxEOWxfdjItVTZZcWc?oc=5" target="_blank">Több száz fős leépítés jön az egyik legnagyobb hazai ba...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="9"><a href="https://nepszava.hu/3311938_otp-bank-leepites-letszamcsokkentes-200-dolgozo-elkuldes" target="_blank">Csaknem 200 dolgozóját küldi el az OTP - Népszava</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxOVFMtV3RldGtFSnpld3VHZm1nYXJfMzhaV2F2ZkRoS1B1MXp1ekI0YkROV0VkMnFMSzBFZGpXMDg0dDBuSHJoY0Q1Tlo3MkY4Ulo4UUZhNzlpNjk3RTBqWW4xeTVCSFc3SnlibkR1UTJTOG5qN0dGRURYWUlfdnphVw?oc=5" target="_blank">Leépítések az OTP-nél: majdnem 200 munkatársától válik ...</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE1MdmloZ3RJZ3k1YTVjU3lTODdFV3RYY3NrZEp3eFJrcnRVZ1FEWGJtS18xa1RESlJEdkZhNnVTYW43aEFSSE1SV2VQWHVRTkxMRTN4QVhualQwV1NsdU8xY0JIMlIwMjFXNWNaNnRVX2FIbXJpanA1Uw?oc=5" target="_blank">Közel 200 munkatársától válik meg az OTP Bank - Telex</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE85MC1NMWV1cGlKcDRfcllRR0wzQ3JOaXVEQ2NjbV9naWdJcHlXMkg4UHZvZXVkWkZaZ3l3T3F3T1lzVHJleTYwc1RlUmk5YldFaWJfalFpaUpDT3VIbHFQeXRuajRWX0lQZGZxc2dtbHFtZmhlMHgxYTV1YmhLZw?oc=5" target="_blank">Közel kétszáz alkalmazottjától válik meg az OTP - 444</a> — google-news</td></tr><tr class="sub-row"><td>2026-02-15</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQX0NCRHBQMWtVNU9OdFozS3c3eXlFXzNJTExaS1hxam4tR05rZG1SOF9Pb2s2V3hsaGtDVDlCNnNZU2h5SWZvTDFLMHRFR2JMeDQxc0FycUJ1czY0S2MtSUhmcDVtdm9YQVdUT2tqaU9JWXh1a1k0R3dLU0sybnk4V3FBSndlRl940gGOAUFVX3lxTFB6MGpacXlmV3VDcm1DZHl2ZjZZTlRRYW9zTGRRX2dIbWp3c0VyZC1EWGp3OGxoMGlWQnZzRllfY1RHOVZpbkpHdDhoNEpVZmJjalpvakdGbkNlWVFtVXI3VFVEWnRQRU1CcExqWEtyeFo0SzkyLW1qRlFOdFladU5qSnpTWk1YYWh6SFJJWXc?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Portfolio.hu</a> — google-news</td></tr></details></td>
+      <td><a href="https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/" target="_blank">OTP bank - leépítés IT területen</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">15 forrás</span></span></td>
       <td>OTP Bank</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
@@ -557,7 +615,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>—</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2026-02-17 — <a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE9hNmpROGxiSXBQRndnSnE5bnVlOTV2N3NTN1ZFMndCaThXU0x6WGRyTS12OEpwWWlublBraEgxdnRYSkpSZkw2WEtLQUlkVFByTWcwZWhnY285ay1NSWozYnlWX3RodHRGcHJSUHFZazliVlk?oc=5" target="_blank">Átszervezés miatt több száz munkahely szűnik meg az OTP...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxObkgyYk91UmMyeFVJLW1jS0RIa3gycjlEMUN1Qk5OWWp0MUE2WTQxay1nTXB6RFQ0OEk2REZNbmlDajQzWHZEMWJNSVFFOUZMeTdUX2VjMDY5eU9QNEg4VEljaGFvaFdZcU9vbGFzVi1pQU9pZldNel9yVVRkSVRVZnI2Z2pnX1RUdUJFNkxHOUl2UlVLQXM4NmJhbUJDbGU2UGlDRUc5YmJXbmc?oc=5" target="_blank">Dobrev Klára: Felszólítjuk Csányi Sándort, hogy álljon ...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQSjR0VGE4b0ZCeEJid3JWSzlMNzNoZ1Y2aWE5UlVPV2tnNHB0dkZBX2pJZE5TbngzOXhud1hzbFJBeUY2OW9CbGJ3WklnM0d6cDdrMDNOLVF0aXh6YkMxZkc0aUoyckY0ZUlQRGlFV0R2SDhndUxOOFd6aGEzUDAzYVUtMlpnWjJxUjBlVjYtVEx4MUxuS3RSM3NZTXc?oc=5" target="_blank">OTP: Stratégiai átrendeződés áll a 200 fős leépítés mög...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE9seThHUW1OVVVXR1FudERtZk5wa0VFM1FBVEo3dkxpNEgtdEVHWDRIelg0REZCbGJkUnBsSWVid29hT1NrX0N0dE95U0RqOGc?oc=5" target="_blank">Óriási leépítés az egyik legnagyobb magyar banknál: töb...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxORndrSEN6RnkxUjJHUHd4OEVlOEhhTHRyY1NNVjk2eUx0VkVkN0FiTEw0cmRYM2JzMjVRZWI2UktFSEJkbjhwNVpnNXZVT3JfVEtHUG1rRGZydkVfY3dmLXJDNzBYVExwRDZET3RJV0QzR0FyMDFaR3lmQ2RwT1Y2VU81aUFGMks4T0RqaWtNV19QRFV0aG5reV91clVMQ0hlWjg5UnloQzJRdS0yRjFCaEtvSGcxWEhCcW95RUp1eHpYUdIBxwFBVV95cUxQOHpWWTNyUmtwSTZHRmc1OXRRX01HZ2ZsblY0em0wYVNjaFl5Nl9ESy1YbjhVYmtLYnU3QWtWQjJRNDRZWnFEOHFDOGRvWHp4Z21sdmpYdUFEX19fY0Nqd2JfYWJDLXBPYU4zdG1kc01fM18zRjhiUVhKOEN0YXlza19GQk1EMjE0YWEzOURyeUZyZG9fSnV4ZlBIX3NFeHJrdHhRVzlzV3M1Sm9ZelNOdnhKcGl3SmlKZUZqdFFiSGRkVi1uVkJV?oc=5" target="_blank">200 dolgozótól válik meg az OTP: ezzel indokolta a a lé...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5aYXdwTkpkZ0FDQ3ZFSld2cjZiVllXME40NkdGai1IemRkV2xxa2NwNF9XRlJYcWVtX09qMlJ5WmphUUMzbVo2T09vVFNXdFJHRG1NVHVjOXktQzFOU0lR?oc=5" target="_blank">Ezért küld el csaknem 200 dolgozót az OTP - Haszon Maga...</a> — google-news</div><div class="sub-row">2026-02-16 — <a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxQWFJra3NHNHdOc3I0bHQ5ZXp0bV9QeFRnTVFCMXRwQlVXZzd0N1FjaEY0Nkd2SlJqRzZsOF83OG9qOUxkMm9kUlZJOWNBeU4wbEk1ek1LRzlOR2pWR3NGOHdRa2wtUTA2cU9zSDU0TjR1Z2ZrdkxyYkgzRTQyOFpVQk9B?oc=5" target="_blank">Komoly leépítések jönnek az OTP Banknál - Magyar Jelen</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE5qVFd4M2NJNEM1UEhmdnJtUnI4R0JGX3IxdExrMzJwMnU2ZWI3akRaVEJTd3M4TjM5QWM5T29ZS1luMFNYcUN1ZmJQbFp4YnZsUDhuR1hlOHdfdmRRMUZwR1VJaDZkbm1PWXJIMUpOd0NaN3VsRC1ROQ?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Startlap</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMiakFVX3lxTFBLUXhTMkMwMHhKT2tFazZ1NTJaM1c2QjFNaGVsRzhwMFRvbWZ5THhMUWJ0LW1uVXRjb3pHOGd1a1Jwam00U29UOXk4SEhJZlgydmZNUHVTWE5PU2hCeUxEOWxfdjItVTZZcWc?oc=5" target="_blank">Több száz fős leépítés jön az egyik legnagyobb hazai ba...</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://nepszava.hu/3311938_otp-bank-leepites-letszamcsokkentes-200-dolgozo-elkuldes" target="_blank">Csaknem 200 dolgozóját küldi el az OTP - Népszava</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxOVFMtV3RldGtFSnpld3VHZm1nYXJfMzhaV2F2ZkRoS1B1MXp1ekI0YkROV0VkMnFMSzBFZGpXMDg0dDBuSHJoY0Q1Tlo3MkY4Ulo4UUZhNzlpNjk3RTBqWW4xeTVCSFc3SnlibkR1UTJTOG5qN0dGRURYWUlfdnphVw?oc=5" target="_blank">Leépítések az OTP-nél: majdnem 200 munkatársától válik ...</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE1MdmloZ3RJZ3k1YTVjU3lTODdFV3RYY3NrZEp3eFJrcnRVZ1FEWGJtS18xa1RESlJEdkZhNnVTYW43aEFSSE1SV2VQWHVRTkxMRTN4QVhualQwV1NsdU8xY0JIMlIwMjFXNWNaNnRVX2FIbXJpanA1Uw?oc=5" target="_blank">Közel 200 munkatársától válik meg az OTP Bank - Telex</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE85MC1NMWV1cGlKcDRfcllRR0wzQ3JOaXVEQ2NjbV9naWdJcHlXMkg4UHZvZXVkWkZaZ3l3T3F3T1lzVHJleTYwc1RlUmk5YldFaWJfalFpaUpDT3VIbHFQeXRuajRWX0lQZGZxc2dtbHFtZmhlMHgxYTV1YmhLZw?oc=5" target="_blank">Közel kétszáz alkalmazottjától válik meg az OTP - 444</a> — google-news</div><div class="sub-row">2026-02-15 — <a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQX0NCRHBQMWtVNU9OdFozS3c3eXlFXzNJTExaS1hxam4tR05rZG1SOF9Pb2s2V3hsaGtDVDlCNnNZU2h5SWZvTDFLMHRFR2JMeDQxc0FycUJ1czY0S2MtSUhmcDVtdm9YQVdUT2tqaU9JWXh1a1k0R3dLU0sybnk4V3FBSndlRl940gGOAUFVX3lxTFB6MGpacXlmV3VDcm1DZHl2ZjZZTlRRYW9zTGRRX2dIbWp3c0VyZC1EWGp3OGxoMGlWQnZzRllfY1RHOVZpbkpHdDhoNEpVZmJjalpvakdGbkNlWVFtVXI3VFVEWnRQRU1CcExqWEtyeFo0SzkyLW1qRlFOdFladU5qSnpTWk1YYWh6SFJJWXc?oc=5" target="_blank">200 fős leépítés jön az OTP Banknál - Portfolio.hu</a> — google-news</div></td></tr><tr>
       <td>2026-02-13</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/" target="_blank">Unisys munkahelyről tud valaki valamit?</a></td>
       <td>Unisys</td>
@@ -756,7 +815,7 @@ details summary:hover { color: #fff; }
       <td>90%</td>
       <td>—</td>
     </tr><tr class="event-group"><td>2025-12-17</td>
-      <td><details><summary><a href="https://hvg.hu/kkv/20251217_Az-OBI-elismerte-fu-alatt-nagy-leepitest-hajtott-vegre" target="_blank">Vállalkozás: Az OBI elismerte: fű alatt nagy leépítést hajto...</a><span class="badge">3 forrás</span></summary><tr class="sub-row"><td>2025-12-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxPV1RtWEk5VGVMbjNBd0pWdXNYMTlyNXVrYzcwcDBKUmpzNlBaNDYyaFF2bFVHZHNKalozZTNVZm5mUHdrR3VHT3BUM29DNWVBVlJzOGtIaV8wdDZtVHNYQWx3eTk2MWxCNlNkZzRDMUdIOEZ6dmhQaE5NbnFkMlprWjJGcXBNSVV5UUl6anllVFNFSERQMmp0TFVqSGV1bTZSN1FCemhVNA?oc=5" target="_blank">Gazdaság - Tömeges létszámleépítés mellett döntött az e...</a> — google-news</td></tr><tr class="sub-row"><td>2025-12-16</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxPczZRTGFzeGl5UGNxaGY3bkl3MnNyV3hMa1hCbk5xOEUzSHIyOHprMWpsN2xBVVJScldydXEyTzF0YVpnU2NKaGhfQTZIYnMyYzJsNFZuQnpCRjBHTFNyZUZkUExnZlNlM0RZUUhHZG5yR1ItSUFkQjBwZ2VpTnVMV3ozUGJydEYwX2tBYTRTU1ZVaDljWi1yYlV1QVFaUm9FYkZZTlNDWkoyc0pCamtVTG8zQ2xweDdzM2t4dEtPNmlITGNjdExuUUFPeGxwM3J0SXhjWnVSZC16MXl6Q0c2RWttektQckJCYkliOHktONIB9AFBVV95cUxQUklWVnQxUm1peTFZWVV4ZGNkdWhaR2FlUll2cFpaaU1OS2dBMDVNOHc1M1REWXY2a19vcXZKdG05LWlxbWhoaTE3a004VGlvanhzdjhDZDNEamV6U2QzM2d5MEFJYms5N1hseEFHb2tlaGZxWURabTIzc1kzMUF0TVp5MzJCWlhsRjdaenZNTTBmbGktWHRUWTNCSnVpM3NUZGd4eE1TVktPckFZOEQwN2JlUE0wbDB2WmROQy1ydzRIM0dhRFQ4TkRINVpRNzZEU2VUUHc2dGxjV0pENzcwYmtOU2p6VFZUWHN6WkRwc0VrRVNr?oc=5" target="_blank">Év végi bónusz helyett semmiből jött leépítés: több min...</a> — google-news</td></tr></details></td>
+      <td><a href="https://hvg.hu/kkv/20251217_Az-OBI-elismerte-fu-alatt-nagy-leepitest-hajtott-vegre" target="_blank">Vállalkozás: Az OBI elismerte: fű alatt nagy leépítést hajto...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">3 forrás</span></span></td>
       <td>OBI</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -765,7 +824,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>90%</td>
       <td>—</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2025-12-16 — <a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxPV1RtWEk5VGVMbjNBd0pWdXNYMTlyNXVrYzcwcDBKUmpzNlBaNDYyaFF2bFVHZHNKalozZTNVZm5mUHdrR3VHT3BUM29DNWVBVlJzOGtIaV8wdDZtVHNYQWx3eTk2MWxCNlNkZzRDMUdIOEZ6dmhQaE5NbnFkMlprWjJGcXBNSVV5UUl6anllVFNFSERQMmp0TFVqSGV1bTZSN1FCemhVNA?oc=5" target="_blank">Gazdaság - Tömeges létszámleépítés mellett döntött az e...</a> — google-news</div><div class="sub-row">2025-12-16 — <a href="https://news.google.com/rss/articles/CBMi7wFBVV95cUxPczZRTGFzeGl5UGNxaGY3bkl3MnNyV3hMa1hCbk5xOEUzSHIyOHprMWpsN2xBVVJScldydXEyTzF0YVpnU2NKaGhfQTZIYnMyYzJsNFZuQnpCRjBHTFNyZUZkUExnZlNlM0RZUUhHZG5yR1ItSUFkQjBwZ2VpTnVMV3ozUGJydEYwX2tBYTRTU1ZVaDljWi1yYlV1QVFaUm9FYkZZTlNDWkoyc0pCamtVTG8zQ2xweDdzM2t4dEtPNmlITGNjdExuUUFPeGxwM3J0SXhjWnVSZC16MXl6Q0c2RWttektQckJCYkliOHktONIB9AFBVV95cUxQUklWVnQxUm1peTFZWVV4ZGNkdWhaR2FlUll2cFpaaU1OS2dBMDVNOHc1M1REWXY2a19vcXZKdG05LWlxbWhoaTE3a004VGlvanhzdjhDZDNEamV6U2QzM2d5MEFJYms5N1hseEFHb2tlaGZxWURabTIzc1kzMUF0TVp5MzJCWlhsRjdaenZNTTBmbGktWHRUWTNCSnVpM3NUZGd4eE1TVktPckFZOEQwN2JlUE0wbDB2WmROQy1ydzRIM0dhRFQ4TkRINVpRNzZEU2VUUHc2dGxjV0pENzcwYmtOU2p6VFZUWHN6WkRwc0VrRVNr?oc=5" target="_blank">Év végi bónusz helyett semmiből jött leépítés: több min...</a> — google-news</div></td></tr><tr>
       <td>2025-12-09</td>
       <td><a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE5RRkNnWEowLUxxRkh4ZVFxMEFqWXVMdV9ha0doRV8xUzB0eDd2aS1oSnNkcVdQYjVGQ2xYR2RhRTh3UkRua0lkTWNjZXBmYm5QSEFkMmpWcWQ3dUlwWmE5SUxwczdkOU1fQTJHZ29wNVFxUGZKXy00?oc=5" target="_blank">Egyre több cég tervez új dolgozókat felvenni, de azzal is ti...</a></td>
       <td>—</td>
@@ -777,7 +837,7 @@ details summary:hover { color: #fff; }
       <td>90%</td>
       <td>igen</td>
     </tr><tr class="event-group"><td>2025-12-04</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE9GNXhIOG1RME1KV3FUUVhrWGZGSTh5cVJjV1h5RGotaHpDWnZKM0xPZW0xMXEzWnhuTGM2VjNuekNENDZWdjF3MkIzUUdkakEwdEZJQnU5X1VRSFRYdjlNelpEOER0a1c4N0ROLURQRzJnaU1sbXJRSWxR?oc=5" target="_blank">Gattyánék eltörlik a home office-t, és újabb durva leépítése...</a><span class="badge">2 forrás</span></summary><tr class="sub-row"><td>2025-12-04</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0JzM0FzZUtZVGJmM1l6SG1CMGFRWWtMT3IxUXNjU09jRmFaQTZnd2UzUFAxVTBNVkJxT190UWVXRXEtb0FqWjFadlVxc0F4SHp5a19TczFjTU9fNGZydHRnS0VnVE8xSHN3NGhaWVNIdDdVTUJhSnVJcEFqTzFrcU5QMEhURVJ4MGhQQTVYdGRydW9nOFE?oc=5" target="_blank">Karácsony előtt 140 fős létszámleépítést jelentettek be...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE9GNXhIOG1RME1KV3FUUVhrWGZGSTh5cVJjV1h5RGotaHpDWnZKM0xPZW0xMXEzWnhuTGM2VjNuekNENDZWdjF3MkIzUUdkakEwdEZJQnU5X1VRSFRYdjlNelpEOER0a1c4N0ROLURQRzJnaU1sbXJRSWxR?oc=5" target="_blank">Gattyánék eltörlik a home office-t, és újabb durva leépítése...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">2 forrás</span></span></td>
       <td>Docler/Byborg</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -786,7 +846,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>igen</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2025-12-04 — <a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0JzM0FzZUtZVGJmM1l6SG1CMGFRWWtMT3IxUXNjU09jRmFaQTZnd2UzUFAxVTBNVkJxT190UWVXRXEtb0FqWjFadlVxc0F4SHp5a19TczFjTU9fNGZydHRnS0VnVE8xSHN3NGhaWVNIdDdVTUJhSnVJcEFqTzFrcU5QMEhURVJ4MGhQQTVYdGRydW9nOFE?oc=5" target="_blank">Karácsony előtt 140 fős létszámleépítést jelentettek be...</a> — google-news</div></td></tr><tr>
       <td>2025-12-04</td>
       <td><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxOMXgxOTk1UmxkdU5zNzRidHlLU29OZHU5NFFJWjhTRHIyZk9xcmhqRWNXR0hNdFF5azloSmxibFl1ekFXYks0alJrNGNwMUFTRDhweW8zWjIwYk5YeldaakVxSF9sVXg0R0VjVjZXQXNNS3pDME9ySjJabWkxd2J6TTZPbGFZZ3FtS2NCLQ?oc=5" target="_blank">140 dolgozójától válik meg Gattyán György cége - 24.hu</a></td>
       <td>Gattyán György cége</td>
@@ -919,7 +980,7 @@ details summary:hover { color: #fff; }
       <td>90%</td>
       <td>—</td>
     </tr><tr class="event-group"><td>2025-11-17</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOMnRFVUhPdkxkQmRBaU9XaGtldERZRFBtOW8zZzZPOU9rcTFpT2tOcGtZbFNKMjFOX2FGZ3dSd3AyNllzZFdaRkRyWFVuVUdQV21FSndFZFFOZGZ5VEFPamZTcDk5d0ZPRDBfLWpmUk9tc2FOU0FudDlMWjhZSFBCckt6dHdlOWJaZjNqYndOTkk?oc=5" target="_blank">Belföld - Leépítés és béremelés jön a Magyar Telekomnál - In...</a><span class="badge">4 forrás</span></summary><tr class="sub-row"><td>2025-11-17</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxPVVI1NjdZd0s2SkMtb0JOZnQtUVJnajl6Y2I5QTVZLUdzbnpGWE9yVXVfNnNTT0lsRHM5YlRXUWhSNDYtcHhrdl9EM1lZLVd1MUVGa3FlaXJDRlJYeW5nSW1pWWJCc0daYTBGeHFoT3p0ZDJHUmlWVm55V3hyak01aTJGazAwZUlZakJEWWdGa3JhVWhTRGMwbHdsa2tPcDVueUVZRHphd0U1NzlsN2ROUU1aTQ?oc=5" target="_blank">Csoportos elbocsátás jön a Magyar Telekomnál - 24.hu</a> — google-news</td></tr><tr class="sub-row"><td>2025-11-17</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxPWkxPc2JlYWk0NUdtODVrcGJXcUhZR1dvWm1ZQXRyYS1qeVN1b3BPUlg2R3dQbl9mbHdUOUJOeEJWQVRyQi1KV25pd2YxamhXZW91ekJVcndoLWNLV0FoM19yZmlPMUtGMDdMblhPZEs4X0JHS3RDN1NFWXNZU2RLTlpvZzhLMlNtZzZaREJaNTdURUc3cVZXYThtMTgwSWM?oc=5" target="_blank">Leépítés jön a Magyar Telekomnál - Economx.hu</a> — google-news</td></tr><tr class="sub-row"><td>2025-11-17</td><td colspan="9"><a href="https://www.penzcentrum.hu/gazdasag/20251117/csoportos-elbocsatast-jelentett-be-a-magyar-telekom-durva-hanyan-kerulnek-utcara-1188836" target="_blank">Csoportos elbocsátást jelentett be a Magyar Telekom – d...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOMnRFVUhPdkxkQmRBaU9XaGtldERZRFBtOW8zZzZPOU9rcTFpT2tOcGtZbFNKMjFOX2FGZ3dSd3AyNllzZFdaRkRyWFVuVUdQV21FSndFZFFOZGZ5VEFPamZTcDk5d0ZPRDBfLWpmUk9tc2FOU0FudDlMWjhZSFBCckt6dHdlOWJaZjNqYndOTkk?oc=5" target="_blank">Belföld - Leépítés és béremelés jön a Magyar Telekomnál - In...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">4 forrás</span></span></td>
       <td>Magyar Telekom</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -928,7 +989,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>—</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2025-11-17 — <a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxPVVI1NjdZd0s2SkMtb0JOZnQtUVJnajl6Y2I5QTVZLUdzbnpGWE9yVXVfNnNTT0lsRHM5YlRXUWhSNDYtcHhrdl9EM1lZLVd1MUVGa3FlaXJDRlJYeW5nSW1pWWJCc0daYTBGeHFoT3p0ZDJHUmlWVm55V3hyak01aTJGazAwZUlZakJEWWdGa3JhVWhTRGMwbHdsa2tPcDVueUVZRHphd0U1NzlsN2ROUU1aTQ?oc=5" target="_blank">Csoportos elbocsátás jön a Magyar Telekomnál - 24.hu</a> — google-news</div><div class="sub-row">2025-11-17 — <a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxPWkxPc2JlYWk0NUdtODVrcGJXcUhZR1dvWm1ZQXRyYS1qeVN1b3BPUlg2R3dQbl9mbHdUOUJOeEJWQVRyQi1KV25pd2YxamhXZW91ekJVcndoLWNLV0FoM19yZmlPMUtGMDdMblhPZEs4X0JHS3RDN1NFWXNZU2RLTlpvZzhLMlNtZzZaREJaNTdURUc3cVZXYThtMTgwSWM?oc=5" target="_blank">Leépítés jön a Magyar Telekomnál - Economx.hu</a> — google-news</div><div class="sub-row">2025-11-17 — <a href="https://www.penzcentrum.hu/gazdasag/20251117/csoportos-elbocsatast-jelentett-be-a-magyar-telekom-durva-hanyan-kerulnek-utcara-1188836" target="_blank">Csoportos elbocsátást jelentett be a Magyar Telekom – d...</a> — google-news</div></td></tr><tr>
       <td>2025-11-15</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1oxmnhc/docler_byborg_home_office_eltörlés/" target="_blank">Docler / Byborg home office eltörlés</a></td>
       <td>Docler/Byborg</td>
@@ -1215,7 +1277,7 @@ details summary:hover { color: #fff; }
       <td>95%</td>
       <td>igen</td>
     </tr><tr class="event-group"><td>2025-08-06</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxONTZzNmVLNU5CMkgtVXMzNDZ2clVWUVBiMFU1cU1TVVlaMWVsaGNuWmlRWTY1dXl0MWdZRmdaaHBoQWY5ci1DM3h4TkNZc2UwMzhvaXRIZHZ4RXUzLXQ1MGlPZU5zREliR3JLUTk2VTlEaUtacWNxYjdEblpVUGM2cnFUbE84cU5jTWc?oc=5" target="_blank">200 fős leépítés kezdődik a Gattyán-féle Docler Holdingnál -...</a><span class="badge">5 forrás</span></summary><tr class="sub-row"><td>2025-08-06</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxQWkJEMktOOU5RTXJYUmFxOWhrTndOcmsteG9DT3ZoUGdjX2Z2d2s5d2Rwem44X1B2UFJXRjZMNDhoTFVHMnZuV29ZVVU2Yk13QWdDUlNzSWpZRHM1U0tRYlR4R3JYVkNqTEpJZ2FNeGREZU5xcEJuV1Ata3FJdDZRSGJmbm1jaDFSUS1ZSzYwSnU3SkRObVcybjBvSlBvYzU4SEI0?oc=5" target="_blank">200 embert küldenek el a Gattyán-féle Docler Holdingtól...</a> — google-news</td></tr><tr class="sub-row"><td>2025-07-30</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxPMlpaaUlfSGJ6MDZncC15VXp0RndQZkpISThkdjczYVhDNnpNQ2IxZS1KOWtvam9XSWFsbkhiaUp3ZnI2U0JtaXl0QXZSOHNGX1JCN0Q2c0xjVjU5SzFNdVBJdTlKMF9YblRLN0JYSWhOTVpuU1pmSmM0Nml2d0Eza1dicXFWd2dabkplYVVGRGJBWENxUThhTFVWeG03SUl2SnhiV1VNYVBsYkhjaDFIMndRSGZ5dw?oc=5" target="_blank">Kreatív Online - AI-alapú automatizáció miatt szervezet...</a> — google-news</td></tr><tr class="sub-row"><td>2025-07-29</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxQS2NfcXRqTWF6YlFjdU94QUdURDV1aV84ZF9JWlhwaXFNZnpXbklXMTIxTnBrQk5IYmdQLXEzTlhJeTlIcFgxZUpQZXlaa0l5RDd5d1VOd3h0ZnBST2NBcEJwekZYa3F4NF9XSU5Xa09WUFZHcG52a2M2d0JhX0FYV1kyMm1HMFUwX25UckdkbXFENmZhem5SdHhkdHRwekc4NDByTTRjQlJ2UTFKTmE1TDZWby0?oc=5" target="_blank">Durva leépítés az egyik leggazdagabb magyar cégében, az...</a> — google-news</td></tr><tr class="sub-row"><td>2025-07-29</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxNN3BMTjVNUjhUMjRxbEFyZzg3UWFmVEZ4bzFIQThPM2JvWG1xTFNnZ3RZR2xMc0lpelJGdGxPV0M0V25MR2l4LVpzTnNkaTlBcGtMOWRWN3d0UEtKeHR0TWVHT0hJZVA5MC1keDNKN0lWU0lPMm1CMFlhLW14ZE93aFlENEpMbWdWT0VEQ1llZG5FTUduOVhxblF3?oc=5" target="_blank">A mesterséges intelligencia miatt jön leépítés a Gattyá...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxONTZzNmVLNU5CMkgtVXMzNDZ2clVWUVBiMFU1cU1TVVlaMWVsaGNuWmlRWTY1dXl0MWdZRmdaaHBoQWY5ci1DM3h4TkNZc2UwMzhvaXRIZHZ4RXUzLXQ1MGlPZU5zREliR3JLUTk2VTlEaUtacWNxYjdEblpVUGM2cnFUbE84cU5jTWc?oc=5" target="_blank">200 fős leépítés kezdődik a Gattyán-féle Docler Holdingnál -...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">5 forrás</span></span></td>
       <td>Docler/Byborg</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -1224,7 +1286,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>igen</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2025-08-06 — <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxQWkJEMktOOU5RTXJYUmFxOWhrTndOcmsteG9DT3ZoUGdjX2Z2d2s5d2Rwem44X1B2UFJXRjZMNDhoTFVHMnZuV29ZVVU2Yk13QWdDUlNzSWpZRHM1U0tRYlR4R3JYVkNqTEpJZ2FNeGREZU5xcEJuV1Ata3FJdDZRSGJmbm1jaDFSUS1ZSzYwSnU3SkRObVcybjBvSlBvYzU4SEI0?oc=5" target="_blank">200 embert küldenek el a Gattyán-féle Docler Holdingtól...</a> — google-news</div><div class="sub-row">2025-07-30 — <a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxPMlpaaUlfSGJ6MDZncC15VXp0RndQZkpISThkdjczYVhDNnpNQ2IxZS1KOWtvam9XSWFsbkhiaUp3ZnI2U0JtaXl0QXZSOHNGX1JCN0Q2c0xjVjU5SzFNdVBJdTlKMF9YblRLN0JYSWhOTVpuU1pmSmM0Nml2d0Eza1dicXFWd2dabkplYVVGRGJBWENxUThhTFVWeG03SUl2SnhiV1VNYVBsYkhjaDFIMndRSGZ5dw?oc=5" target="_blank">Kreatív Online - AI-alapú automatizáció miatt szervezet...</a> — google-news</div><div class="sub-row">2025-07-29 — <a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxQS2NfcXRqTWF6YlFjdU94QUdURDV1aV84ZF9JWlhwaXFNZnpXbklXMTIxTnBrQk5IYmdQLXEzTlhJeTlIcFgxZUpQZXlaa0l5RDd5d1VOd3h0ZnBST2NBcEJwekZYa3F4NF9XSU5Xa09WUFZHcG52a2M2d0JhX0FYV1kyMm1HMFUwX25UckdkbXFENmZhem5SdHhkdHRwekc4NDByTTRjQlJ2UTFKTmE1TDZWby0?oc=5" target="_blank">Durva leépítés az egyik leggazdagabb magyar cégében, az...</a> — google-news</div><div class="sub-row">2025-07-29 — <a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxNN3BMTjVNUjhUMjRxbEFyZzg3UWFmVEZ4bzFIQThPM2JvWG1xTFNnZ3RZR2xMc0lpelJGdGxPV0M0V25MR2l4LVpzTnNkaTlBcGtMOWRWN3d0UEtKeHR0TWVHT0hJZVA5MC1keDNKN0lWU0lPMm1CMFlhLW14ZE93aFlENEpMbWdWT0VEQ1llZG5FTUduOVhxblF3?oc=5" target="_blank">A mesterséges intelligencia miatt jön leépítés a Gattyá...</a> — google-news</div></td></tr><tr>
       <td>2025-08-06</td>
       <td><a href="https://index.hu/belfold/2025/08/06/docler-gattyan-gyorgy-elbocsatas-leepites-mesterseges-intelligencia/" target="_blank">Mesterséges intelligenciával válthatja ki 200 elbocsátott do...</a></td>
       <td>Docler/Byborg</td>
@@ -1379,7 +1442,7 @@ details summary:hover { color: #fff; }
       <td>95%</td>
       <td>igen</td>
     </tr><tr class="event-group"><td>2025-07-04</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxNckNwOFFpaThVd2c5WHBLVDA2VERXX0EtSi01YmJodWVaekVQMEVtdDNnRTNCVDZhNzNCUWdTbDlUQklwSkdqdVNBbDJpRVpGZ3ZBejJDSEhlWW5zTDJYTWktVXF6WlFWUnB1Nkw2X2lNWXVFaHRYRXNLSGtWbndCbDBTblFpd3p2QkxvQlJIbkEwdndjd3FIMXpHRE5zc1IxeTFWUGQ0WV9yWE9STFM4ZE5sbw?oc=5" target="_blank">Gazdaság: Újabb leépítés a Magyar Postánál, most közel 50 in...</a><span class="badge">2 forrás</span></summary><tr class="sub-row"><td>2025-07-04</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxPNjBBdWVFMFB1dHREcUhaMUlyS0lHNjEtSmI3aDVBd0hNeFIwNUFoc0hZNklLYXU3QUk2bUdJcUExTlMyaVFTSHB4c3lMb1V5QWVzSFhWQkJnRW10V0p1UTY2cWhmV0M2UktpUURTVWpxSjJib1B0MFlsc0dBaE4waFVUZk1YNTJyZ21UZ1FRYw?oc=5" target="_blank">Túl sokat kerestek – a Magyar Posta elbocsát félszáz in...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxNckNwOFFpaThVd2c5WHBLVDA2VERXX0EtSi01YmJodWVaekVQMEVtdDNnRTNCVDZhNzNCUWdTbDlUQklwSkdqdVNBbDJpRVpGZ3ZBejJDSEhlWW5zTDJYTWktVXF6WlFWUnB1Nkw2X2lNWXVFaHRYRXNLSGtWbndCbDBTblFpd3p2QkxvQlJIbkEwdndjd3FIMXpHRE5zc1IxeTFWUGQ0WV9yWE9STFM4ZE5sbw?oc=5" target="_blank">Gazdaság: Újabb leépítés a Magyar Postánál, most közel 50 in...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">2 forrás</span></span></td>
       <td>Magyar Posta</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -1388,7 +1451,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>—</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2025-07-04 — <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxPNjBBdWVFMFB1dHREcUhaMUlyS0lHNjEtSmI3aDVBd0hNeFIwNUFoc0hZNklLYXU3QUk2bUdJcUExTlMyaVFTSHB4c3lMb1V5QWVzSFhWQkJnRW10V0p1UTY2cWhmV0M2UktpUURTVWpxSjJib1B0MFlsc0dBaE4waFVUZk1YNTJyZ21UZ1FRYw?oc=5" target="_blank">Túl sokat kerestek – a Magyar Posta elbocsát félszáz in...</a> — google-news</div></td></tr><tr>
       <td>2025-07-04</td>
       <td><a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxPTnYyRThqUi1UU0x4aDdCWVV1aXJUbm1hVmd6aEUwcDF1aTNwUmJSUHNlNkI2QVlNX2NVaEVCOFNYRkhXNk5ib3RUUjBxLXRuYWNyS21OZUxabUd1eEl0WUIyVG4zMzM3Tkljd19XWGN5RjF0VmRBdkRDNGk5UVh0NUVuSUhCUjhubkh4Zm5yZ0Y5TlFRdUV5d3ZIWjBnSEdteXMwMm4xcklJQ1JrZFE3Tw?oc=5" target="_blank">G7: Felmentést kapott a spórolás alól, mégis leépít a Magyar...</a></td>
       <td>MPSoft Informatikai Zrt.</td>
@@ -1466,7 +1530,7 @@ details summary:hover { color: #fff; }
       <td>90%</td>
       <td>—</td>
     </tr><tr class="event-group"><td>2025-05-30</td>
-      <td><details><summary><a href="https://reddit.com/r/hungary/comments/1kyudvn/leépítés_az_mnbnél_egy_nap_alatt_zavarták_le_az/" target="_blank">Leépítés az MNB-nél: egy nap alatt zavarták le az egészet, f...</a><span class="badge">4 forrás</span></summary><tr class="sub-row"><td>2025-05-30</td><td colspan="9"><a href="https://24.hu/fn/gazdasag/2025/05/30/mnb-magyar-nemzeti-bank-nagy-marton-varga-mihaly-letszamleepites-elbocsatas-kirugas-matolcsy-gyorgy/" target="_blank">Telex: statáriális leépítés az MNB-nél, Nagy Márton elő...</a> — google-news</td></tr><tr class="sub-row"><td>2025-05-29</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxNRnBJOGFYem9BS05BU0NwRXkyQTktc0dxSXlXZDhHZnZMV0xKYWxpVkt0X1N5aF9VLXR4VmlHMzdPaElMVnBRUTJpcXJzZkFmbHpnaXVBdWNGZlNaMnJPNUhGUWFvSHFsOUlkdnBIbnNiNWdMZlpLU0s2TlFoM29uc2dJM3ZTOUhnLUxnZjR5QnpOZzA?oc=5" target="_blank">Leépítés az MNB-nél: egy nap alatt zavarták le az egész...</a> — google-news</td></tr><tr class="sub-row"><td>2025-05-28</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxOQ3hQVW5HbVZKb01sa2ljbzZSVkplSEl5TTBGUENIWlMyMEV1RWN6dnpUVTZlUGV6ejNMRmdEbXFGM2kxWUFoYWhhT2t5bmN5MFBNanVkWFpRSTZqd2NWUzY3VkNkdG9xUVNtUWh6aEpzckZaZ1J1emFydGNPN3lPQS1qNEFMMTZZUVVmRlhGNmVjNU5PTGlzQXVsb2Q4OXdCR0U1R2RXcS01aks4NzQ2SEw4LWpVSGdZYXA5N0VxQ1hCOXBo0gHKAUFVX3lxTE8yOURYOXk5cktUVDJFVldZMmpNVURTMUZWTlRYT2hyWDhydklSSjQyUWgyczRpVHNtdHFiOTk2ZzdWTE5wMXlrRy1fWi1fUGtSaFJ5ZnIzTTBlQTJFd0tsSnBteGtxT1FUNFd5T2NXTG5MMmNsUW84MzdrcDJIWG54R24zeUpXWWd5RHNKaFh4YjhMR1VUbWRZNE5ReTQtR1FTeEp5LXZaemFQa18weUUwMllfTlh2d1JMMzJNZGFsOUFmRFFhTzlzUVE?oc=5" target="_blank">Újabb 60 fős leépítés a Magyar Nemzeti Banknál, egy ing...</a> — google-news</td></tr></details></td>
+      <td><a href="https://reddit.com/r/hungary/comments/1kyudvn/leépítés_az_mnbnél_egy_nap_alatt_zavarták_le_az/" target="_blank">Leépítés az MNB-nél: egy nap alatt zavarták le az egészet, f...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">4 forrás</span></span></td>
       <td>MNB</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/hungary</td>
@@ -1475,7 +1539,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>—</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2025-05-30 — <a href="https://24.hu/fn/gazdasag/2025/05/30/mnb-magyar-nemzeti-bank-nagy-marton-varga-mihaly-letszamleepites-elbocsatas-kirugas-matolcsy-gyorgy/" target="_blank">Telex: statáriális leépítés az MNB-nél, Nagy Márton elő...</a> — google-news</div><div class="sub-row">2025-05-29 — <a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxNRnBJOGFYem9BS05BU0NwRXkyQTktc0dxSXlXZDhHZnZMV0xKYWxpVkt0X1N5aF9VLXR4VmlHMzdPaElMVnBRUTJpcXJzZkFmbHpnaXVBdWNGZlNaMnJPNUhGUWFvSHFsOUlkdnBIbnNiNWdMZlpLU0s2TlFoM29uc2dJM3ZTOUhnLUxnZjR5QnpOZzA?oc=5" target="_blank">Leépítés az MNB-nél: egy nap alatt zavarták le az egész...</a> — google-news</div><div class="sub-row">2025-05-28 — <a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxOQ3hQVW5HbVZKb01sa2ljbzZSVkplSEl5TTBGUENIWlMyMEV1RWN6dnpUVTZlUGV6ejNMRmdEbXFGM2kxWUFoYWhhT2t5bmN5MFBNanVkWFpRSTZqd2NWUzY3VkNkdG9xUVNtUWh6aEpzckZaZ1J1emFydGNPN3lPQS1qNEFMMTZZUVVmRlhGNmVjNU5PTGlzQXVsb2Q4OXdCR0U1R2RXcS01aks4NzQ2SEw4LWpVSGdZYXA5N0VxQ1hCOXBo0gHKAUFVX3lxTE8yOURYOXk5cktUVDJFVldZMmpNVURTMUZWTlRYT2hyWDhydklSSjQyUWgyczRpVHNtdHFiOTk2ZzdWTE5wMXlrRy1fWi1fUGtSaFJ5ZnIzTTBlQTJFd0tsSnBteGtxT1FUNFd5T2NXTG5MMmNsUW84MzdrcDJIWG54R24zeUpXWWd5RHNKaFh4YjhMR1VUbWRZNE5ReTQtR1FTeEp5LXZaemFQa18weUUwMllfTlh2d1JMMzJNZGFsOUFmRFFhTzlzUVE?oc=5" target="_blank">Újabb 60 fős leépítés a Magyar Nemzeti Banknál, egy ing...</a> — google-news</div></td></tr><tr>
       <td>2025-05-29</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1kya76s/bújtatott_leépítés/" target="_blank">Bújtatott leépítés</a></td>
       <td>—</td>
@@ -1531,7 +1596,7 @@ details summary:hover { color: #fff; }
       <td>90%</td>
       <td>igen</td>
     </tr><tr class="event-group"><td>2025-05-14</td>
-      <td><details><summary><a href="https://reddit.com/r/programmingHungary/comments/1km1ajc/ismét_leépít_a_microsoft/" target="_blank">Ismét leépít a Microsoft</a><span class="badge">2 forrás</span></summary><tr class="sub-row"><td>2025-05-14</td><td colspan="9"><a href="https://index.hu/gazdasag/2025/05/14/microsoft-leepites-elbocsatas-technologia-munkahely-megszunes/" target="_blank">Gazdaság - Leépít a Microsoft, több ezer alkalmazottat ...</a> — google-news</td></tr></details></td>
+      <td><a href="https://reddit.com/r/programmingHungary/comments/1km1ajc/ismét_leépít_a_microsoft/" target="_blank">Ismét leépít a Microsoft</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">2 forrás</span></span></td>
       <td>Microsoft</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>r/programmingHungary</td>
@@ -1540,7 +1605,8 @@ details summary:hover { color: #fff; }
       <td class="rel-2">&#9733;&#9733; &#10003;</td>
       <td>90%</td>
       <td>—</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2025-05-14 — <a href="https://index.hu/gazdasag/2025/05/14/microsoft-leepites-elbocsatas-technologia-munkahely-megszunes/" target="_blank">Gazdaság - Leépít a Microsoft, több ezer alkalmazottat ...</a> — google-news</div></td></tr><tr>
       <td>2025-05-12</td>
       <td><a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxQSENWVUh4Q3RzYTFvTHUtVDdzTEdVRF9FQlJsZEo1TzJqNkdRMWd1TFFZVnFTbHhNYnpaVlIwekw4MTdIQmQ3OFZZaXQydkVMTDYzTlBub3NfczQxT2JRZUdKRjdMeGJUQVg3OHVaVGgwOERTZmh2dE83QUdERlBvTWN3?oc=5" target="_blank">Az AI akár a munkahelyek 70 százalékát is megszüntetheti - F...</a></td>
       <td>OpenAI</td>
@@ -1772,7 +1838,7 @@ details summary:hover { color: #fff; }
       <td>90%</td>
       <td>—</td>
     </tr><tr class="event-group"><td>2024-10-31</td>
-      <td><details><summary><a href="https://news.google.com/rss/articles/CBMif0FVX3lxTE0wZjZPSG81cWNNTFBKMGlsb09mM0ozSXFIakZiS1R1VTRoRGc1X2Rmb2xPdVZhN0c0anY1Yy0yS2ZvM3J5cWNLLW91dUNycDNrbkdUTTU5eEcwSUFPSnZSWVNIVDNRVjFfM1VaakxJRm5xalB5Qjltb1RHZmxQTW8?oc=5" target="_blank">Bérfejlesztést és 120 fős leépítést jelentett be a Magyar Te...</a><span class="badge">2 forrás</span></summary><tr class="sub-row"><td>2024-10-31</td><td colspan="9"><a href="https://news.google.com/rss/articles/CBMilAFBVV95cUxPbXJtSU1HczhmSE9pUUxCa1JBTlo2cUhtZlF1b2trZ2JpYUlfdmFqUTBkSDA0cVpxSlB2YlVYWWtCWEVwTFJrLXNCQ1B6Wi11djNjUExkZVdySEhNWlZFMmdZX1d5RnNNUm1sYW9uMXAxalRtcGdKSWllMmU1d2gzMnl2N1NSNWUtZVZXcmdxdS1Vd2VG?oc=5" target="_blank">Leépítés és béremelés: megegyezett a Telekom a dolgozói...</a> — google-news</td></tr></details></td>
+      <td><a href="https://news.google.com/rss/articles/CBMif0FVX3lxTE0wZjZPSG81cWNNTFBKMGlsb09mM0ozSXFIakZiS1R1VTRoRGc1X2Rmb2xPdVZhN0c0anY1Yy0yS2ZvM3J5cWNLLW91dUNycDNrbkdUTTU5eEcwSUFPSnZSWVNIVDNRVjFfM1VaakxJRm5xalB5Qjltb1RHZmxQTW8?oc=5" target="_blank">Bérfejlesztést és 120 fős leépítést jelentett be a Magyar Te...</a> <span class="toggle-btn" onclick="this.classList.toggle('open');this.closest('tr').nextElementSibling.classList.toggle('hidden')"><span class="badge">2 forrás</span></span></td>
       <td>Magyar Telekom</td>
       <td><span class="tag tag-layoff">layoff</span></td>
       <td>google-news</td>
@@ -1781,7 +1847,8 @@ details summary:hover { color: #fff; }
       <td class="rel-3">&#9733;&#9733;&#9733; &#10003;</td>
       <td>95%</td>
       <td>—</td>
-    </tr><tr>
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9"><div class="sub-row">2024-10-31 — <a href="https://news.google.com/rss/articles/CBMilAFBVV95cUxPbXJtSU1HczhmSE9pUUxCa1JBTlo2cUhtZlF1b2trZ2JpYUlfdmFqUTBkSDA0cVpxSlB2YlVYWWtCWEVwTFJrLXNCQ1B6Wi11djNjUExkZVdySEhNWlZFMmdZX1d5RnNNUm1sYW9uMXAxalRtcGdKSWllMmU1d2gzMnl2N1NSNWUtZVZXcmdxdS1Vd2VG?oc=5" target="_blank">Leépítés és béremelés: megegyezett a Telekom a dolgozói...</a> — google-news</div></td></tr><tr>
       <td>2024-10-25</td>
       <td><a href="https://reddit.com/r/programmingHungary/comments/1gbwlg2/melyek_a_jobb_álláskereső_oldalak/" target="_blank">Melyek a jobb álláskereső oldalak?</a></td>
       <td>—</td>
@@ -2610,40 +2677,6 @@ details summary:hover { color: #fff; }
   </table>
 </details>
 
-<details id="methodology" style="margin-top:8px">
-  <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
-  <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
-    <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
-    <p>Automatizált scraper gyűjt publikus adatokat két forrásból:</p>
-    <ul style="margin:8px 0 16px 20px">
-      <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions (poszt szöveg + top 20 komment)</li>
-      <li><strong>Google News RSS</strong> — magyar nyelvű IT leépítés hírek, teljes cikk szöveggel (URL dekódolás + tartalom kinyerés)</li>
-    </ul>
-    <p style="margin-top:8px">Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
-
-    <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
-    <ol style="margin:8px 0 16px 20px">
-      <li><strong>Multi-source scraping</strong> — Reddit JSON API + Google News RSS (cikk tartalom kinyeréssel)</li>
-      <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
-      <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
-      <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>
-    </ol>
-
-    <h3 style="color:#e94560;margin:16px 0 8px">LLM validáció</h3>
-    <p>A relevancia &ge; 1 posztokat nyelvi modell validálja: ténylegesen IT leépítésről szól-e, melyik cég érintett, confidence score (0.0-1.0), magyar összefoglaló, érintett technológiák és munkakörök.</p>
-    <p style='margin-top:8px'><strong>163 poszt</strong> validálva <strong>1246 másodperc</strong> alatt.</p>
-
-    <h3 style="color:#e94560;margin:16px 0 8px">Korlátok</h3>
-    <ul style="margin:8px 0 16px 20px">
-      <li>Csak publikus források — zárt csoportok, belső kommunikáció nem elérhető</li>
-      <li>A keresések nem garantálják a teljességet</li>
-      <li>LLM validáció nem 100%-os — confidence score jelzi a bizonytalanságot</li>
-    </ul>
-
-    <p><strong>Forráskód:</strong> <a href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">github.com/tatargabor/hu-it-layoffs</a></p>
-  </div>
-</details>
-
 <div class="footer">
   Források: google-news (125), r/programmingHungary (87), r/hungary (9), r/cscareerquestions (2), r/Layoffs (1) | 865 poszt feldolgozva | powered by Claude Code &middot; OpenSpec &middot; Agentic
   <br>163 poszt LLM-validálva 1246s alatt | ~984,094+22,512 token | Költség: $0.00 (GitHub Models) | Kézzel ez ~55 óra lett volna
@@ -2654,15 +2687,33 @@ const quarters = ["2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q
 const qDirect = [1, 0, 2, 2, 3, 3, 0, 3, 4, 6, 18, 15, 21];
 const qStrong = [3, 3, 2, 1, 8, 6, 5, 5, 7, 8, 10, 18, 10];
 const qIndirect = [0, 3, 3, 1, 6, 1, 0, 3, 2, 4, 10, 5, 5];
-const qFreeze = [1, 1, 2, 1, 1, 2, 0, 2, 0, 3, 1, 3, 1];
+const qFreeze = [2, 3, 2, 1, 6, 5, 5, 5, 3, 6, 5, 12, 4];
 const qLlmValidated = [4, 6, 7, 4, 17, 10, 5, 11, 13, 18, 38, 38, 36];
 const qKeywordOnly = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+const qProjected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27];
 
 Chart.defaults.color = '#888';
 Chart.defaults.borderColor = '#2a2a4a';
 
-// Timeline stacked bar with LLM opacity
-new Chart(document.getElementById('timelineChart'), {
+// Striped pattern for projected bar
+function createStripePattern(color) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 10; canvas.height = 10;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = color + '33';
+  ctx.fillRect(0, 0, 10, 10);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(0, 10); ctx.lineTo(10, 0);
+  ctx.stroke();
+  return ctx.createPattern(canvas, 'repeat');
+}
+
+// Timeline stacked bar with projection
+const timelineCtx = document.getElementById('timelineChart');
+const projPattern = createStripePattern('#888');
+new Chart(timelineCtx, {
   type: 'bar',
   data: {
     labels: quarters,
@@ -2670,7 +2721,8 @@ new Chart(document.getElementById('timelineChart'), {
       { label: 'Közvetlen leépítés (3)', data: qDirect, backgroundColor: '#e94560' },
       { label: 'Erős jelzés (2)', data: qStrong, backgroundColor: '#f9a826' },
       { label: 'Közvetett (1)', data: qIndirect, backgroundColor: '#4ecdc4' },
-      { label: 'Hiring freeze', data: qFreeze, backgroundColor: '#9b59b6', type: 'line', borderColor: '#9b59b6', fill: false, tension: 0.3, yAxisID: 'y' }
+      { label: 'Negyedéves projekció', data: qProjected, backgroundColor: projPattern, borderColor: '#888', borderWidth: 1, borderDash: [4, 4] },
+      { label: 'Álláspiac szűkülés', data: qFreeze, backgroundColor: '#9b59b6', type: 'line', borderColor: '#9b59b6', fill: false, tension: 0.3, yAxisID: 'y' }
     ]
   },
   options: {
@@ -2684,8 +2736,8 @@ new Chart(document.getElementById('timelineChart'), {
 new Chart(document.getElementById('companyChart'), {
   type: 'bar',
   data: {
-    labels: ["Microsoft", "OTP Bank", "Docler/Byborg", "Continental", "Audi", "Magyar Telekom", "Ericsson", "Gatty\u00e1n Gy\u00f6rgy c\u00e9ge", "Magyar Posta", "Sz\u00e1ll\u00e1s Group", "OBI", "Digi", "HP", "The Est\u00e9e Lauder Companies", "High Tech Systems & Software", "Agoda", "AVL", "MPSoft Informatikai Zrt.", "MNB", "Meta", "Nemzeti \u00datd\u00edjfizet\u00e9si Szolg\u00e1ltat\u00f3 (N\u00daSZ) Zrt.", "Lensa", "IBM", "SAP", "Bosch", "NNG", "Avis Budget Group BSC Kft.", "T-Systems", "Wildlight Entertainment", "UPS", "Aldi S\u00fcd", "BestByte", "4iG", "BorsodChem", "Ismeretlen magyar milli\u00e1rdos c\u00e9g", "CATL", "Unisys", "Amazon"],
-    datasets: [{ label: 'Posztok', data: [10, 7, 6, 6, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], backgroundColor: '#e94560' }]
+    labels: ["Microsoft", "OTP Bank", "Docler/Byborg", "Continental", "Audi", "Magyar Telekom", "Ericsson", "Gatty\u00e1n Gy\u00f6rgy c\u00e9ge", "Magyar Posta", "Sz\u00e1ll\u00e1s Group", "OBI", "Digi", "HP", "The Est\u00e9e Lauder Companies", "High Tech Systems & Software", "Agoda", "AVL", "MPSoft Informatikai Zrt.", "MNB", "Meta", "Nemzeti \u00datd\u00edjfizet\u00e9si Szolg\u00e1ltat\u00f3 (N\u00daSZ) Zrt.", "Lensa", "IBM", "SAP", "Bosch", "NNG", "Avis Budget Group BSC Kft.", "T-Systems", "Wildlight Entertainment", "UPS", "Aldi S\u00fcd", "BestByte", "4iG", "BorsodChem", "CATL", "Unisys", "Amazon"],
+    datasets: [{ label: 'Posztok', data: [10, 7, 6, 6, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], backgroundColor: '#e94560' }]
   },
   options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } } }
 });
@@ -2704,23 +2756,27 @@ new Chart(document.getElementById('sectorChart'), {
 new Chart(document.getElementById('categoryChart'), {
   type: 'doughnut',
   data: {
-    labels: ["K\u00f6zvetlen le\u00e9p\u00edt\u00e9s", "Egy\u00e9b", "Hiring freeze", "Karrier aggodalom"],
-    datasets: [{ data: [126, 74, 10, 14], backgroundColor: ['#e94560','#4ecdc4','#f9a826','#888'] }]
+    labels: ["Karrier aggodalom", "Hiring freeze", "K\u00f6zvetlen le\u00e9p\u00edt\u00e9s"],
+    datasets: [{ data: [44, 72, 108], backgroundColor: ['#e94560','#4ecdc4','#f9a826','#888'] }]
   },
   options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
 });
 
-// AI trend
+// AI trend with year-end projection
+const aiProjPattern = createStripePattern('#e94560');
+const totalProjPattern = createStripePattern('#555');
 new Chart(document.getElementById('aiChart'), {
   type: 'bar',
   data: {
     labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"],
     datasets: [
-      { label: 'AI-t említő', data: [0, 1, 0, 1, 1, 8, 11, 43, 15], backgroundColor: '#e94560' },
-      { label: 'Összes releváns', data: [1, 2, 2, 6, 6, 21, 43, 107, 36], backgroundColor: '#2a2a4a' }
+      { label: 'AI-t említő', data: [0, 1, 0, 1, 1, 8, 11, 43, 15], backgroundColor: '#e94560', stack: 'ai' },
+      { label: 'AI projekció', data: [0, 0, 0, 0, 0, 0, 0, 0, 91], backgroundColor: aiProjPattern, borderColor: '#e9456066', borderWidth: 1, stack: 'ai' },
+      { label: 'Összes releváns', data: [1, 2, 2, 6, 6, 21, 43, 107, 36], backgroundColor: '#2a2a4a', stack: 'total' },
+      { label: 'Összes projekció', data: [0, 0, 0, 0, 0, 0, 0, 0, 218], backgroundColor: totalProjPattern, borderColor: '#55555566', borderWidth: 1, stack: 'total' }
     ]
   },
-  options: { responsive: true, scales: { y: { beginAtZero: true } }, plugins: { legend: { position: 'bottom' } } }
+  options: { responsive: true, scales: { y: { beginAtZero: true, stacked: true }, x: { stacked: true } }, plugins: { legend: { position: 'bottom' } } }
 });
 
 
@@ -2744,5 +2800,7 @@ new Chart(document.getElementById('rolesChart'), {
 });
 </script>
 
+<script data-goatcounter="https://hu-it-layoffs.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
