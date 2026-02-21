@@ -236,7 +236,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
         if _is_named_company(c):
             company_counts[c] += 1
 
-    top_companies = sorted(company_counts.items(), key=lambda x: -x[1])
+    top_companies = sorted(company_counts.items(), key=lambda x: -x[1])[:15]
 
     # Category data (exclude 'other' — career advice, offtopic)
     cat_counts = defaultdict(int)
@@ -459,11 +459,11 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
     tech_chart_html = ''
     tech_chart_js = ''
     if has_llm_data and top_techs:
-        tech_chart_html = '''
-<div class="chart-box">
+        tech_chart_html = f'''
+<div class="chart-box hbar-chart">
   <h2>Érintett Technológiák (top 15)</h2>
   <div class="method">LLM által kinyert technológiák a posztok szövegéből</div>
-  <canvas id="techChart"></canvas>
+  <div style="height:{max(len(top_techs) * 28, 200)}px"><canvas id="techChart" class="dynamic-height"></canvas></div>
 </div>'''
         tech_chart_js = f'''
 new Chart(document.getElementById('techChart'), {{
@@ -472,17 +472,17 @@ new Chart(document.getElementById('techChart'), {{
     labels: {json.dumps([t[0] for t in top_techs])},
     datasets: [{{ label: 'Posztok', data: {json.dumps([t[1] for t in top_techs])}, backgroundColor: '#4ecdc4' }}]
   }},
-  options: {{ indexAxis: 'y', responsive: true, plugins: {{ legend: {{ display: false }} }} }}
+  options: {{ indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {{ legend: {{ display: false }} }}, scales: {{ y: {{ grid: {{ display: false }}, ticks: {{ autoSkip: false }} }} }} }}
 }});'''
 
     roles_chart_html = ''
     roles_chart_js = ''
     if has_llm_data and top_roles:
-        roles_chart_html = '''
-<div class="chart-box">
+        roles_chart_html = f'''
+<div class="chart-box hbar-chart">
   <h2>Érintett Munkakörök (top 10)</h2>
   <div class="method">LLM által kinyert munkakörök a posztok szövegéből</div>
-  <canvas id="rolesChart"></canvas>
+  <div style="height:{max(len(top_roles) * 28, 200)}px"><canvas id="rolesChart" class="dynamic-height"></canvas></div>
 </div>'''
         roles_chart_js = f'''
 new Chart(document.getElementById('rolesChart'), {{
@@ -491,7 +491,7 @@ new Chart(document.getElementById('rolesChart'), {{
     labels: {json.dumps([r[0] for r in top_roles])},
     datasets: [{{ label: 'Posztok', data: {json.dumps([r[1] for r in top_roles])}, backgroundColor: '#f9a826' }}]
   }},
-  options: {{ indexAxis: 'y', responsive: true, plugins: {{ legend: {{ display: false }} }} }}
+  options: {{ indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {{ legend: {{ display: false }} }}, scales: {{ y: {{ grid: {{ display: false }}, ticks: {{ autoSkip: false }} }} }} }}
 }});'''
 
     html = f"""<!DOCTYPE html>
@@ -508,7 +508,7 @@ new Chart(document.getElementById('rolesChart'), {{
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0f0f0f; color: #e0e0e0; }}
+body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0f0f0f; color: #e0e0e0; overflow-x: hidden; }}
 .header {{ background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 40px 20px; text-align: center; border-bottom: 2px solid #e94560; }}
 .header h1 {{ font-size: 2em; color: #fff; margin-bottom: 8px; }}
 .header .sub {{ color: #888; font-size: 0.9em; }}
@@ -519,15 +519,16 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, s
 .stat.primary .num {{ font-size: 2.5em; }}
 .stat .label {{ font-size: 0.85em; color: #888; margin-top: 4px; }}
 .stat .method-hint {{ font-size: 0.7em; color: #555; margin-top: 2px; font-style: italic; }}
-.charts {{ max-width: 1200px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }}
+.charts {{ max-width: 1200px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; overflow: hidden; }}
 .chart-box {{ background: #1a1a2e; border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a; }}
 .chart-box.full {{ grid-column: 1 / -1; }}
 .chart-box h2 {{ font-size: 1.1em; color: #ccc; margin-bottom: 4px; }}
 .chart-box .method {{ font-size: 0.75em; color: #666; margin-bottom: 10px; font-style: italic; }}
 canvas {{ max-height: 350px; }}
+canvas.dynamic-height {{ max-height: none; }}
 .table-section {{ max-width: 1200px; margin: 0 auto; padding: 24px; }}
 .table-section h2 {{ font-size: 1.2em; color: #ccc; margin-bottom: 12px; }}
-table {{ width: 100%; border-collapse: collapse; background: #1a1a2e; border-radius: 12px; overflow: hidden; }}
+table {{ width: 100%; min-width: 600px; border-collapse: collapse; background: #1a1a2e; border-radius: 12px; overflow: hidden; }}
 th {{ background: #16213e; color: #e94560; padding: 12px 8px; text-align: left; font-size: 0.85em; font-weight: 600; }}
 td {{ padding: 10px 8px; border-bottom: 1px solid #2a2a4a; font-size: 0.85em; }}
 tr:hover {{ background: #16213e; }}
@@ -541,7 +542,7 @@ a:hover {{ text-decoration: underline; }}
 .tag-freeze {{ background: #4ecdc433; color: #4ecdc4; }}
 .tag-anxiety {{ background: #f9a82633; color: #f9a826; }}
 .tag-other {{ background: #88888833; color: #888; }}
-details {{ max-width: 1200px; margin: 0 auto; padding: 0 24px 24px; }}
+details {{ max-width: 1200px; margin: 0 auto; padding: 0 24px 24px; overflow: hidden; }}
 details summary {{ cursor: pointer; font-size: 1.2em; color: #ccc; padding: 12px 0; }}
 details summary:hover {{ color: #fff; }}
 .footer {{ text-align: center; padding: 40px; color: #555; font-size: 0.8em; }}
@@ -565,9 +566,26 @@ details summary:hover {{ color: #fff; }}
 .expand-row .sub-row a {{ color: #6c8fbf; }}
 .expand-row:not(.hidden) {{ background: #0f0f1f; }}
 .hidden {{ display: none; }}
+.table-scroll {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
 .reddit-ref {{ display: inline-block; background: #ff450033; color: #ff4500; padding: 1px 5px; border-radius: 3px; font-size: 0.65em; font-weight: 600; margin-left: 4px; vertical-align: middle; text-decoration: none; }}
 .reddit-ref:hover {{ background: #ff450055; text-decoration: none; }}
-@media (max-width: 768px) {{ .charts {{ grid-template-columns: 1fr; }} }}
+@media (max-width: 768px) {{
+  .charts {{ grid-template-columns: 1fr; padding: 12px; gap: 16px; }}
+  .chart-box {{ padding: 12px; overflow: hidden; }}
+  .chart-box canvas {{ max-width: 100%; }}
+  .stats {{ grid-template-columns: repeat(2, 1fr); padding: 12px; gap: 10px; }}
+  .stat {{ padding: 12px 8px; }}
+  .stat.primary {{ grid-column: 1 / -1; }}
+  .stat .num {{ font-size: 1.5em; }}
+  .stat.primary .num {{ font-size: 2em; }}
+  .hbar-chart > div {{ max-height: 450px; overflow-y: auto; overflow-x: hidden; }}
+  .table-section {{ padding: 12px; }}
+  .table-section > div[style*="grid-template-columns"] {{ grid-template-columns: 1fr !important; }}
+  details {{ padding: 0 12px 12px; }}
+  .header {{ padding: 24px 12px; }}
+  .header h1 {{ font-size: 1.5em; }}
+  .footer {{ padding: 24px 12px; }}
+}}
 </style>
 </head>
 <body>
@@ -648,10 +666,10 @@ details summary:hover {{ color: #fff; }}
   <canvas id="timelineChart"></canvas>
 </div>
 
-<div class="chart-box">
+<div class="chart-box hbar-chart">
   <h2>Érintett Cégek</h2>
   <div class="method">Erős jelzések (relevancia &ge;2) alapján, esemény szinten csoportosítva</div>
-  <canvas id="companyChart"></canvas>
+  <div style="height:{max(len(top_companies) * 28, 200)}px"><canvas id="companyChart" class="dynamic-height"></canvas></div>
 </div>
 
 <div class="chart-box">
@@ -680,10 +698,10 @@ details summary:hover {{ color: #fff; }}
 
 <div class="table-section" id="engagement">
   <h2>Közösségi Engagement <a class="section-anchor" href="#engagement" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#engagement')">&#128279;</a></h2>
-  <table>
+  <div class="table-scroll"><table>
     <tr><th>Kategória</th><th>Posztok</th><th>Össz score</th><th>Össz komment</th><th>Átl. score</th><th>Átl. komment</th></tr>
     {"".join(f'<tr><td><span class="tag tag-{cat}">{cat}</span></td><td>{eng_cats[cat]["posts"]}</td><td>{eng_cats[cat]["score"]:,}</td><td>{eng_cats[cat]["comments"]:,}</td><td>{eng_cats[cat]["score"]//max(eng_cats[cat]["posts"],1)}</td><td>{eng_cats[cat]["comments"]//max(eng_cats[cat]["posts"],1)}</td></tr>' for cat in ['layoff', 'freeze', 'anxiety'] if eng_cats[cat]['posts'] > 0)}
-  </table>
+  </table></div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px">
     <div>
@@ -705,7 +723,7 @@ details summary:hover {{ color: #fff; }}
 
 <div class="table-section" id="top-posts">
   <h2>Top Posztok (relevancia >= 2) <a class="section-anchor" href="#top-posts" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#top-posts')">&#128279;</a></h2>
-  <table>
+  <div class="table-scroll"><table>
     <tr>
       <th>Dátum</th>
       <th>Cím</th>
@@ -718,12 +736,12 @@ details summary:hover {{ color: #fff; }}
       <th>LLM</th>
     </tr>
     {top_posts_rows}
-  </table>
+  </table></div>
 </div>
 
 <details id="detailed">
   <summary>Részletes Táblázat — összes releváns poszt ({len(all_relevant)} db) <a class="section-anchor" href="#detailed" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#detailed')">&#128279;</a></summary>
-  <table>
+  <div class="table-scroll"><table>
     <tr>
       <th>Dátum</th>
       <th>Cím</th>
@@ -737,7 +755,7 @@ details summary:hover {{ color: #fff; }}
       <th>AI</th>
     </tr>
     {detailed_rows}
-  </table>
+  </table></div>
 </details>
 
 <div class="footer">
@@ -802,7 +820,7 @@ new Chart(document.getElementById('companyChart'), {{
     labels: {json.dumps([c[0] for c in top_companies])},
     datasets: [{{ label: 'Posztok', data: {json.dumps([c[1] for c in top_companies])}, backgroundColor: '#e94560' }}]
   }},
-  options: {{ indexAxis: 'y', responsive: true, plugins: {{ legend: {{ display: false }} }} }}
+  options: {{ indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {{ legend: {{ display: false }} }}, scales: {{ y: {{ grid: {{ display: false }}, ticks: {{ autoSkip: false }} }} }} }}
 }});
 
 // Sector doughnut
