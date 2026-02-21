@@ -111,6 +111,37 @@ def _is_named_company(name):
     return not any(p in lower for p in _GENERIC_COMPANY_PATTERNS)
 
 
+def _group_by_event(posts):
+    """Group posts by event_label. Returns list of (label, representative, other_posts).
+
+    Representative selection: Reddit > highest relevance > most recent.
+    Posts without event_label get their own group (other_posts=[]).
+    """
+    groups = {}
+    result = []
+    for p in posts:
+        label = p.get('llm_event_label')
+        if label:
+            groups.setdefault(label, []).append(p)
+        else:
+            result.append((None, p, []))
+
+    for label, group_posts in groups.items():
+        # Sort: Reddit first, then by relevance desc, then by date desc
+        group_posts.sort(key=lambda x: (
+            0 if x.get('source') == 'reddit' else 1,
+            -_eff_relevance(x),
+            -x.get('created_utc', 0),
+        ))
+        rep = group_posts[0]
+        others = group_posts[1:]
+        result.append((label, rep, others))
+
+    # Sort all groups by representative date desc
+    result.sort(key=lambda x: x[1].get('created_utc', 0), reverse=True)
+    return result
+
+
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
     relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
     strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
@@ -236,33 +267,115 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
         label = f'r/{sub}' if src == 'reddit' else p.get('news_source', src) if src == 'google-news' else src
         by_source[label] += 1
 
-    # Build detailed table rows
-    detailed_rows = ''
-    for p in all_relevant:
-        company = p.get('company') or p.get('llm_company') or '—'
-        cat = p.get('category', 'other')
-        rel = _eff_relevance(p)
-        conf = f'{p["llm_confidence"]:.0%}' if p.get('llm_validated') else '—'
-        ai_str = 'igen' if _is_ai_attributed(p) else '—'
-        title_esc = p['title'][:60].replace('&', '&amp;').replace('<', '&lt;')
-        if len(p['title']) > 60:
-            title_esc += '...'
-        llm_badge = ' &#10003;' if p.get('llm_validated') else ''
-
+    # Build grouped table rows
+    def _src_label(p):
         src = p.get('source', 'reddit')
-        src_label = f'r/{p.get("subreddit", "?")}' if src == 'reddit' else p.get('news_source', src) if src == 'google-news' else src
+        if src == 'reddit':
+            return f'r/{p.get("subreddit", "?")}'
+        if src == 'google-news':
+            return p.get('news_source', src)
+        return src
 
-        detailed_rows += f'''<tr>
-      <td>{p["date"]}</td>
-      <td><a href="{p["url"]}" target="_blank">{title_esc}</a></td>
+    def _reddit_ref_html(others, rep):
+        """Return Reddit cross-reference link if group has a Reddit post (and rep is not Reddit)."""
+        if rep.get('source') == 'reddit':
+            return ''
+        for o in others:
+            if o.get('source') == 'reddit':
+                return f' <a class="reddit-ref" href="{o["url"]}" target="_blank" title="Reddit diskurzus">r/</a>'
+        return ''
+
+    # Group all relevant posts for detailed table
+    grouped_all = _group_by_event(all_relevant)
+
+    detailed_rows = ''
+    for label, rep, others in grouped_all:
+        company = rep.get('company') or rep.get('llm_company') or '—'
+        cat = rep.get('category', 'other')
+        rel = _eff_relevance(rep)
+        conf = f'{rep["llm_confidence"]:.0%}' if rep.get('llm_validated') else '—'
+        ai_str = 'igen' if _is_ai_attributed(rep) else '—'
+        title_esc = rep['title'][:60].replace('&', '&amp;').replace('<', '&lt;')
+        if len(rep['title']) > 60:
+            title_esc += '...'
+        llm_badge = ' &#10003;' if rep.get('llm_validated') else ''
+        badge = f'<span class="badge">{len(others)+1} forrás</span>' if others else ''
+        reddit_ref = _reddit_ref_html(others, rep) if others else ''
+
+        if not others:
+            detailed_rows += f'''<tr>
+      <td>{rep["date"]}</td>
+      <td><a href="{rep["url"]}" target="_blank">{title_esc}</a></td>
       <td>{company}</td>
       <td><span class="tag tag-{cat}">{cat}</span></td>
-      <td>{src_label}</td>
-      <td>{p["score"]}</td>
-      <td>{p["num_comments"]}</td>
+      <td>{_src_label(rep)}</td>
+      <td>{rep["score"]}</td>
+      <td>{rep["num_comments"]}</td>
       <td class="rel-{rel}">{"&#9733;" * rel}{llm_badge}</td>
       <td>{conf}</td>
       <td>{ai_str}</td>
+    </tr>'''
+        else:
+            sub_html = ''
+            for o in others:
+                o_title = o['title'][:55].replace('&', '&amp;').replace('<', '&lt;')
+                if len(o['title']) > 55:
+                    o_title += '...'
+                sub_html += f'<tr class="sub-row"><td>{o["date"]}</td><td colspan="9"><a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</td></tr>'
+
+            detailed_rows += f'''<tr class="event-group"><td>{rep["date"]}</td>
+      <td><details><summary><a href="{rep["url"]}" target="_blank">{title_esc}</a>{badge}{reddit_ref}</summary>{sub_html}</details></td>
+      <td>{company}</td>
+      <td><span class="tag tag-{cat}">{cat}</span></td>
+      <td>{_src_label(rep)}</td>
+      <td>{rep["score"]}</td>
+      <td>{rep["num_comments"]}</td>
+      <td class="rel-{rel}">{"&#9733;" * rel}{llm_badge}</td>
+      <td>{conf}</td>
+      <td>{ai_str}</td>
+    </tr>'''
+
+    # Group top posts too
+    top_posts_strong = [p for p in relevant if _eff_relevance(p) >= 2]
+    grouped_top = _group_by_event(top_posts_strong)[:30]
+
+    top_posts_rows = ''
+    for label, rep, others in grouped_top:
+        title_esc = rep['title'][:60].replace('&', '&amp;').replace('<', '&lt;')
+        if len(rep['title']) > 60:
+            title_esc += '...'
+        badge = f'<span class="badge">{len(others)+1} forrás</span>' if others else ''
+        reddit_ref = _reddit_ref_html(others, rep) if others else ''
+
+        if not others:
+            top_posts_rows += f'''<tr>
+      <td>{rep["date"]}</td>
+      <td><a href="{rep["url"]}" target="_blank">{title_esc}</a></td>
+      <td>{rep.get("company") or rep.get("llm_company") or "—"}</td>
+      <td><span class="tag tag-{rep.get("category", "other")}">{rep.get("category", "other")}</span></td>
+      <td>{_src_label(rep)}</td>
+      <td>{rep["score"]}</td>
+      <td>{rep["num_comments"]}</td>
+      <td class="rel-{_eff_relevance(rep)}">{"&#9733;" * _eff_relevance(rep)}</td>
+      <td>{"&#10003;" if rep.get("llm_validated") else "—"}</td>
+    </tr>'''
+        else:
+            sub_html = ''
+            for o in others:
+                o_title = o['title'][:55].replace('&', '&amp;').replace('<', '&lt;')
+                if len(o['title']) > 55:
+                    o_title += '...'
+                sub_html += f'<tr class="sub-row"><td>{o["date"]}</td><td colspan="8"><a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</td></tr>'
+
+            top_posts_rows += f'''<tr class="event-group"><td>{rep["date"]}</td>
+      <td><details><summary><a href="{rep["url"]}" target="_blank">{title_esc}</a>{badge}{reddit_ref}</summary>{sub_html}</details></td>
+      <td>{rep.get("company") or rep.get("llm_company") or "—"}</td>
+      <td><span class="tag tag-{rep.get("category", "other")}">{rep.get("category", "other")}</span></td>
+      <td>{_src_label(rep)}</td>
+      <td>{rep["score"]}</td>
+      <td>{rep["num_comments"]}</td>
+      <td class="rel-{_eff_relevance(rep)}">{"&#9733;" * _eff_relevance(rep)}</td>
+      <td>{"&#10003;" if rep.get("llm_validated") else "—"}</td>
     </tr>'''
 
     # Tech/roles chart sections
@@ -359,6 +472,13 @@ details summary:hover {{ color: #fff; }}
 .section-anchor {{ color: #555; text-decoration: none; font-size: 0.8em; margin-left: 6px; opacity: 0; transition: opacity 0.2s; }}
 .chart-box:hover .section-anchor, .table-section:hover .section-anchor, details:hover .section-anchor {{ opacity: 1; }}
 .section-anchor:hover {{ color: #e94560; }}
+.event-group summary {{ cursor: pointer; list-style: none; }}
+.event-group summary::-webkit-details-marker {{ display: none; }}
+.event-group .badge {{ display: inline-block; background: #2a2a4a; color: #4ecdc4; padding: 1px 6px; border-radius: 3px; font-size: 0.7em; margin-left: 6px; vertical-align: middle; }}
+.event-group .sub-row td {{ padding-left: 24px; color: #888; font-size: 0.8em; border-bottom: 1px solid #1a1a2e; }}
+.event-group .sub-row:hover {{ background: #12122a; }}
+.reddit-ref {{ display: inline-block; background: #ff450033; color: #ff4500; padding: 1px 5px; border-radius: 3px; font-size: 0.65em; font-weight: 600; margin-left: 4px; vertical-align: middle; text-decoration: none; }}
+.reddit-ref:hover {{ background: #ff450055; text-decoration: none; }}
 @media (max-width: 768px) {{ .charts {{ grid-template-columns: 1fr; }} }}
 </style>
 </head>
@@ -367,7 +487,7 @@ details summary:hover {{ color: #fff; }}
 <div class="header">
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
-  <div class="sub">Reddit publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
+  <div class="sub">Reddit + Google News publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
   <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
@@ -467,17 +587,7 @@ details summary:hover {{ color: #fff; }}
       <th>Rel.</th>
       <th>LLM</th>
     </tr>
-    {"".join(f'''<tr>
-      <td>{p["date"]}</td>
-      <td><a href="{p["url"]}" target="_blank">{p["title"][:60].replace("&", "&amp;").replace("<", "&lt;")}{"..." if len(p["title"]) > 60 else ""}</a></td>
-      <td>{p.get("company") or p.get("llm_company") or "—"}</td>
-      <td><span class="tag tag-{p.get("category", "other")}">{p.get("category", "other")}</span></td>
-      <td>{"r/" + p.get("subreddit", "?") if p.get("source", "reddit") == "reddit" else p.get("news_source", p.get("source", "?")) if p.get("source") == "google-news" else p.get("source", "?")}</td>
-      <td>{p["score"]}</td>
-      <td>{p["num_comments"]}</td>
-      <td class="rel-{_eff_relevance(p)}">{"&#9733;" * _eff_relevance(p)}</td>
-      <td>{"&#10003;" if p.get("llm_validated") else "—"}</td>
-    </tr>''' for p in top_posts)}
+    {top_posts_rows}
   </table>
 </div>
 
@@ -504,17 +614,16 @@ details summary:hover {{ color: #fff; }}
   <summary>Módszertan <a class="section-anchor" href="#methodology" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#methodology')">&#128279;</a></summary>
   <div style="background:#1a1a2e;border-radius:12px;padding:20px;border:1px solid #2a2a4a;margin-top:12px;line-height:1.7">
     <h3 style="color:#e94560;margin-bottom:8px">Adatgyűjtés</h3>
-    <p>Automatizált scraper gyűjt publikus adatokat a Redditről:</p>
+    <p>Automatizált scraper gyűjt publikus adatokat két forrásból:</p>
     <ul style="margin:8px 0 16px 20px">
-      <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions</li>
+      <li><strong>Reddit</strong> — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions (poszt szöveg + top 20 komment)</li>
+      <li><strong>Google News RSS</strong> — magyar nyelvű IT leépítés hírek, teljes cikk szöveggel (URL dekódolás + tartalom kinyerés)</li>
     </ul>
-    <p>A Reddit posztok teljes szöveggel (selftext) és top kommentekkel kerülnek elemzésre, így a cím mellett a részletes kontextus is rendelkezésre áll.</p>
-    <p style="margin-top:8px;color:#666;font-size:0.9em"><em>Megjegyzés: korábbi futásokból historikus Google News adatok is szerepelhetnek az adatbázisban.</em></p>
     <p style="margin-top:8px">Keresési lekérdezések magyar és angol nyelven: <em>elbocsátás, leépítés, layoff, hiring freeze, álláskereső</em>, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).</p>
 
     <h3 style="color:#e94560;margin:16px 0 8px">Elemzési pipeline</h3>
     <ol style="margin:8px 0 16px 20px">
-      <li><strong>Reddit scraping</strong> — Reddit JSON API (poszt szöveg + top 20 komment)</li>
+      <li><strong>Multi-source scraping</strong> — Reddit JSON API + Google News RSS (cikk tartalom kinyeréssel)</li>
       <li><strong>Kulcsszó-alapú elemzés</strong> — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás</li>
       <li><strong>LLM validáció</strong> — minden relevancia &ge; 1 posztot nyelvi modell értékel (structured JSON output)</li>
       <li><strong>Report generálás</strong> — Markdown + interaktív HTML dashboard</li>

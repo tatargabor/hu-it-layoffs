@@ -76,7 +76,7 @@ GNEWS_QUERIES = [
 ]
 
 # Which sources to scrape. Valid values: 'reddit', 'google-news', 'hup'
-ENABLED_SOURCES = ['reddit']
+ENABLED_SOURCES = ['reddit', 'google-news']
 
 USER_AGENT = 'hu-it-layoff-report/1.0 (research project)'
 REQUEST_DELAY = 2.0
@@ -400,6 +400,38 @@ def run_hup_scraper():
     return all_posts
 
 
+# === GOOGLE NEWS ARTICLE EXTRACTION ===
+
+GNEWS_DECODE_DELAY = 1.5  # seconds between googlenewsdecoder calls
+
+def _decode_gnews_url(gnews_url):
+    """Decode a Google News RSS URL to the real article URL. Returns real URL or None."""
+    try:
+        from googlenewsdecoder import new_decoderv1
+        time.sleep(GNEWS_DECODE_DELAY)
+        result = new_decoderv1(gnews_url, interval=None)
+        if result.get('status'):
+            return result['decoded_url']
+    except Exception as e:
+        print(f'    GNews decode error: {e}')
+    return None
+
+
+def _extract_article_content(url):
+    """Extract article body text from a URL using trafilatura. Returns text or empty string."""
+    try:
+        import trafilatura
+        downloaded = trafilatura.fetch_url(url)
+        if not downloaded:
+            return ''
+        text = trafilatura.extract(downloaded, include_comments=False)
+        if text and len(text) >= 50:
+            return text
+    except Exception as e:
+        print(f'    Article extract error: {e}')
+    return ''
+
+
 # === GOOGLE NEWS SCRAPER ===
 
 def _parse_pubdate(pubdate_str):
@@ -479,6 +511,23 @@ def run_google_news_scraper():
             new_count += 1
 
         print(f'    Found {new_count} new (total: {len(all_posts)})')
+
+    # Fetch article content for new posts
+    new_posts = [p for p in all_posts.values() if not p.get('selftext')]
+    if new_posts:
+        print(f'\n  Fetching article content for {len(new_posts)} Google News posts...')
+        fetched = 0
+        for i, post in enumerate(new_posts):
+            real_url = _decode_gnews_url(post['url'])
+            if real_url:
+                post['url'] = real_url  # replace GN redirect with real URL
+                content = _extract_article_content(real_url)
+                if content:
+                    post['selftext'] = content
+                    fetched += 1
+            if (i + 1) % 10 == 0:
+                print(f'    Progress: {i + 1}/{len(new_posts)} ({fetched} with content)')
+        print(f'  Article content: {fetched}/{len(new_posts)} successfully extracted')
 
     return all_posts
 

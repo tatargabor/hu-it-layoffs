@@ -2,7 +2,7 @@
 
 **[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)
 
-*Generálva: 2026-02-21 06:19 | Forrás: Reddit publikus adatok*
+*Generálva: 2026-02-21 06:55 | Forrás: Reddit + Google News publikus adatok*
 
 > **Jogi nyilatkozat:** Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.
 >
@@ -40,28 +40,28 @@
 
 | Cég | Dátum | Szektor | AI-faktor | Forrás | Link |
 |-----|-------|---------|-----------|--------|------|
-| Szállás Group | 2026-02-20 | retail tech | — | unknown | [link](https://news.google.com/rss/articles/CBMihwFBVV95cUxQY3BCYTdkRmF1RFc3TnpHb3JXOFNfdm9hSWRFLW9aZW80SEFwb2c2bVRWV0IzaTRSVTZiNWx0b3lPRzl3Szg3RGNNS29BcThpNWg0TzgyYXJYcmNJcW1qd0FsUEg3aWgtUktjRWVlQ0E5STZZbkRVRDE4dExYRnhHSk15Wi04aUk?oc=5) |
-| Szállás Group | 2026-02-20 | retail tech | igen | unknown | [link](https://news.google.com/rss/articles/CBMi2wFBVV95cUxOS3FlZVFFektQNFNVbTFESmtwTFpQSm81ZmxidlYtZXNzMzhEM2duUm95N0hlN0h1VEhVQlI0SXhZZUs0OGJPUGxJR1JHUGp4OC1Qa2RVaGE5dzhDQ2QzdC1hUzVSb1Y4WkpteFRwYTNFeEctM1dFaDlNSW1Tc1ZaNEVIYTBBQnpkZmxNX1ZpbS1kT3I5aHNJZFBiZlBwVzhfQkZHSEFyUXRodV9pTFd0c3A0b2Vzd2N0dEpTaEthNVdTaVFmd3NJUlFDMUVCV3FWeDBzMUtVQlF1bnfSAdsBQVVfeXFMTktxZWVRRXpLUDRTVW0xREprcExaUEpvNWZsYnZWLWVzczM4RDNnblJveTdIZTdIdVRIVUJSNEl4WWVLNDhiT1BsSUdSR1BqeDgtUGtkVWhhOXc4Q0NkM3QtYVM1Um9WOFpKbXhUcGEzRXhHLTNXRWg5TUltU3NWWjRFSGEwQUJ6ZGZsTV9WaW0tZE9yOWhzSWRQYmZQcFc4X0JGR0hBclF0aHVfaUxXdHNwNG9lc3djdHRKU2hLYTVXU2lRZndzSVJRQzFFQldxVngwczFLVUJRdW53?oc=5) |
 | Progmasters | 2026-02-18 | IT services | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r84s8m/progmasters_full_stack_képzés_negatív/) |
-| Szállás Group | 2026-02-18 | retail tech | igen | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r842vt/szállás_group_leépítésről_van_belsős_infótok/) |
-| OTP Bank | 2026-02-17 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMic0FVX3lxTE9hNmpROGxiSXBQRndnSnE5bnVlOTV2N3NTN1ZFMndCaThXU0x6WGRyTS12OEpwWWlublBraEgxdnRYSkpSZkw2WEtLQUlkVFByTWcwZWhnY285ay1NSWozYnlWX3RodHRGcHJSUHFZazliVlk?oc=5) |
-| OTP Bank | 2026-02-16 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMinAFBVV95cUxQSjR0VGE4b0ZCeEJid3JWSzlMNzNoZ1Y2aWE5UlVPV2tnNHB0dkZBX2pJZE5TbngzOXhud1hzbFJBeUY2OW9CbGJ3WklnM0d6cDdrMDNOLVF0aXh6YkMxZkc0aUoyckY0ZUlQRGlFV0R2SDhndUxOOFd6aGEzUDAzYVUtMlpnWjJxUjBlVjYtVEx4MUxuS3RSM3NZTXc?oc=5) |
-| OTP Bank | 2026-02-16 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMiT0FVX3lxTE9seThHUW1OVVVXR1FudERtZk5wa0VFM1FBVEo3dkxpNEgtdEVHWDRIelg0REZCbGJkUnBsSWVid29hT1NrX0N0dE95U0RqOGc?oc=5) |
-| OTP Bank | 2026-02-16 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMiggFBVV95cUxQWFJra3NHNHdOc3I0bHQ5ZXp0bV9QeFRnTVFCMXRwQlVXZzd0N1FjaEY0Nkd2SlJqRzZsOF83OG9qOUxkMm9kUlZJOWNBeU4wbEk1ek1LRzlOR2pWR3NGOHdRa2wtUTA2cU9zSDU0TjR1Z2ZrdkxyYkgzRTQyOFpVQk9B?oc=5) |
-| bank | 2026-02-16 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMinwFBVV95cUxNa0QzLXk2NlVvRzVZeExEZmhxMHR2VXJoN3JkV2pyTEJfTkpmRTdvYi15b29MUVRQODlycUF0eE9WTEdKM3YtMWdwY2lKelNNSUpDa0xyQTFpaHd6dXNpRXpKOU9YTm1jS2xEZlRFZHhJMFZzZjhTTGpZeWU2Vjk2TUxrSTg5b2pTWHJvd05DMzlVc0FMcXVnZjBsd0hUYU0?oc=5) |
-| OTP Bank | 2026-02-15 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMieEFVX3lxTE5qVFd4M2NJNEM1UEhmdnJtUnI4R0JGX3IxdExrMzJwMnU2ZWI3akRaVEJTd3M4TjM5QWM5T29ZS1luMFNYcUN1ZmJQbFp4YnZsUDhuR1hlOHdfdmRRMUZwR1VJaDZkbm1PWXJIMUpOd0NaN3VsRC1ROQ?oc=5) |
-| OTP Bank | 2026-02-15 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMigAFBVV95cUxOVFMtV3RldGtFSnpld3VHZm1nYXJfMzhaV2F2ZkRoS1B1MXp1ekI0YkROV0VkMnFMSzBFZGpXMDg0dDBuSHJoY0Q1Tlo3MkY4Ulo4UUZhNzlpNjk3RTBqWW4xeTVCSFc3SnlibkR1UTJTOG5qN0dGRURYWUlfdnphVw?oc=5) |
-| OTP Bank | 2026-02-15 | fintech | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/) |
-| OTP Bank | 2026-02-15 | fintech | — | unknown | [link](https://news.google.com/rss/articles/CBMiiAFBVV95cUxQX0NCRHBQMWtVNU9OdFozS3c3eXlFXzNJTExaS1hxam4tR05rZG1SOF9Pb2s2V3hsaGtDVDlCNnNZU2h5SWZvTDFLMHRFR2JMeDQxc0FycUJ1czY0S2MtSUhmcDVtdm9YQVdUT2tqaU9JWXh1a1k0R3dLU0sybnk4V3FBSndlRl940gGOAUFVX3lxTFB6MGpacXlmV3VDcm1DZHl2ZjZZTlRRYW9zTGRRX2dIbWp3c0VyZC1EWGp3OGxoMGlWQnZzRllfY1RHOVZpbkpHdDhoNEpVZmJjalpvakdGbkNlWVFtVXI3VFVEWnRQRU1CcExqWEtyeFo0SzkyLW1qRlFOdFladU5qSnpTWk1YYWh6SFJJWXc?oc=5) |
+| Szállás Group (+2 forrás) | 2026-02-18 | retail tech | igen | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r842vt/szállás_group_leépítésről_van_belsős_infótok/) |
+| bank | 2026-02-16 | fintech | — | unknown | [link](https://szeged365.hu/2026/02/15/200-fos-leepitesre-keszul-a-szegeden-negy-fiokkal-jelen-levo-bank/) |
+| OTP Bank (+7 forrás) | 2026-02-15 | fintech | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r5hbgh/otp_bank_leépítés_it_területen/) |
 | Unisys | 2026-02-13 | IT services | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1r3s1dt/unisys_munkahelyről_tud_valaki_valamit/) |
-| Highguard | 2026-02-12 | startup | — | unknown | [link](https://news.google.com/rss/articles/CBMikwFBVV95cUxNQ1hDenJSc0tJbmdLX2xJUno5U0RCalp1N2V0S3hxRVZQb0VhRVd5MTY3OTlyYjhYX2hjRmdDUTdoVDROMktaLWRjMVFZV1RfZVVjTVNablkzVm41QkJ2UTZWdkp5N3ZCcVZCOFVJOGdhZ0dpNlJPV2R1QzJ3ekJDeFNOTld1VjI3dC15dlNoLUVJYkU?oc=5) |
-| Highguard | 2026-02-12 | gaming tech | — | unknown | [link](https://news.google.com/rss/articles/CBMifkFVX3lxTE91UzJTTlRiMHg5WC1GSGJDal9fc1d0UXJRMkh3UmFiYmpPa1JmNWlqM21TTjNNMGc3YWY5TmFqMTNib0RxQjBFZWtReThMT2lSYlJ1N0JMRk5kU0ZwQnZxdXhpZlhBeGVDd1hNMlpwbXJWbll3ZllSNDVDblJQdw?oc=5) |
+| Highguard (+1 forrás) | 2026-02-12 | startup | — | unknown | [link](https://gamer.origo.hu/2026/02/12/ket-het-utan-leepites-elkuldik-a-highguard-fejlesztoit/) |
 | Tungsram | 2026-02-11 | general IT | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1r1u7pe/szijjártó_péter_száznegyven_új_munkahelyet_teremt/) |
-| Pénzcentrum | 2026-01-28 | retail tech | — | unknown | [link](https://news.google.com/rss/articles/CBMizgFBVV95cUxPOEdlbC1DN2ZfSzJrdFFvZ0VLR1J4dHd2c2RQVVg1U3BXMkFUcUt3NFl1T0s1WW9FdThwZWx2aEkwdlBKRUhVVWliNVprN0J6Zl84VjNtQjBrR0FMNzBjSFhJN0pLVFF5UldIR3FCVldOb1h4TzJJM2luX1p3YkpKTm5GUjZlM1V0ODVRSDEzMDVxcXU2QkVqQmhYTVFEUHFvTmZHX01tUFVBOVZENHpKd1NwRDFWeGxaSUFzcXlab1BoYXdtN1QwMGV6UmxBUdIB0wFBVV95cUxNQks0Sk9XeXVTYUNzUklIOGdXLXl4YTI3ejFwM3pmZFJqSFVEOVlvQTNNVzkxY200amVmcUdPU3lBcTZYUXpTSDh0M29MYTJTU0o2YXJOQmQ4NlZFUVkyakxRV1g4Q2hrRE9mbDlYbHAxZHdUMU5CSmQyUWtuREI2UlRMT3Z6Ry1jSXR2SVpUelVWaUJyYjMxNllNYUI5UVhlWHdWVm1SeUlDenNoTHZNd1k2RjNLV3hqTzZ6SndZMnpINVpoRXp3NWlxVzkzc0F6T2NV?oc=5) |
-| Aldi | 2026-01-23 | retail tech | — | unknown | [link](https://news.google.com/rss/articles/CBMivwFBVV95cUxNMldTTXZ4dzNBSEUtQnppQUh4eHBEc2hhOWMxOUZ5SWNUclNKYW1pc3ZlNDdtQUlZWTB5bm16N2NoRXN2TEZfR2RMZ0thOG1LQXVMVHdYaFI0TXNERnlXZjRmRXNhcmxiMGplaHJIcUJwS2E5ajlQZFNDQnpsT1ZJZmQ3VWFkXzVWdGNGcF85WVR6QlVlVVgweXBJMU9uUkRRbnJFOFk5blJZYWgzcXh1dlp5LXNtUzVKOVpkeUw0Y9IBxAFBVV95cUxNdEVhVEJiUWg2UEVRTWJ6OVU3b3lrNXdycW1CZEtoU3I4dFM1NEJIdl9LdUZ1ZFpQakg1bU9GWmNYRHNydE80ZDBSb2RzVnpzRHFNQlJYTW96TWwtNWNpclE1TW5PRTlpUXBncFk2S01ZRERZbjF0V3o3aEk4V3JhSVRyWXhwOFNuUW82OEZKZ1JlMm1vR191S19MaTZhak1PcG9GSU1NRTZEMWp5WWZPSGVWdnlNcGQ1RnFPSFFpYjRHeVZM?oc=5) |
+| Pénzcentrum | 2026-01-28 | retail tech | — | unknown | [link](https://www.penzcentrum.hu/karrier/20260128/brutalis-leepites-a-csomagkuldonel-30-ezer-allas-szunik-meg-a-nagy-szakitas-miatt-1192685) |
+| Aldi | 2026-01-23 | retail tech | — | unknown | [link](https://www.portfolio.hu/gazdasag/20260123/beismerte-a-magyar-aldi-anyacege-hogy-komoly-leepites-jon-nemetorszagban-812912) |
 | népszerű áruházlánc | 2025-12-16 | retail tech | — | unknown | [link](https://news.google.com/rss/articles/CBMi7wFBVV95cUxPczZRTGFzeGl5UGNxaGY3bkl3MnNyV3hMa1hCbk5xOEUzSHIyOHprMWpsN2xBVVJScldydXEyTzF0YVpnU2NKaGhfQTZIYnMyYzJsNFZuQnpCRjBHTFNyZUZkUExnZlNlM0RZUUhHZG5yR1ItSUFkQjBwZ2VpTnVMV3ozUGJydEYwX2tBYTRTU1ZVaDljWi1yYlV1QVFaUm9FYkZZTlNDWkoyc0pCamtVTG8zQ2xweDdzM2t4dEtPNmlITGNjdExuUUFPeGxwM3J0SXhjWnVSZC16MXl6Q0c2RWttektQckJCYkliOHktONIB9AFBVV95cUxQUklWVnQxUm1peTFZWVV4ZGNkdWhaR2FlUll2cFpaaU1OS2dBMDVNOHc1M1REWXY2a19vcXZKdG05LWlxbWhoaTE3a004VGlvanhzdjhDZDNEamV6U2QzM2d5MEFJYms5N1hseEFHb2tlaGZxWURabTIzc1kzMUF0TVp5MzJCWlhsRjdaenZNTTBmbGktWHRUWTNCSnVpM3NUZGd4eE1TVktPckFZOEQwN2JlUE0wbDB2WmROQy1ydzRIM0dhRFQ4TkRINVpRNzZEU2VUUHc2dGxjV0pENzcwYmtOU2p6VFZUWHN6WkRwc0VrRVNr?oc=5) |
+| Economx | 2025-12-11 | IT services | — | unknown | [link](https://news.google.com/rss/articles/CBMidEFVX3lxTE1ucWxBSklSdWp0bUlnUVRYa05KWEFBaXk4RXp6SjBMU28yaUZTMXo5dmY2XzVfMy1NcUlncC1MZm81a1I5YUtVOHFQS2YxNlRkYi1yNlN5RFpJX1RrX1BMcUVfYkNBNEs4b2kzakxRT05vYnow?oc=5) |
+| Rail Cargo Hungaria | 2025-12-09 | transportation | — | unknown | [link](https://news.google.com/rss/articles/CBMilwFBVV95cUxNcGNZQnJMNU1ORkF1MUFZNjVkQ2NFcjR4TTJ0Yk9ZbGt4Z1hhUmlVMGRJd0ROZzQ2TzlUeUxRenZUc3ZDeHJLVGVGMHV1by1jSU9TYVFKSnBCOWlXUTIzMWF2LVdjYWsxOThIR2V3NU5fb3JkRnRJTVVQNjFPS242UVFnV0VERmVHVU9hWFFFZWplNG42R0VR?oc=5) |
+| Rail Cargo Hungary (+2 forrás) | 2025-12-08 | transportation | — | r/hungary | [link](https://reddit.com/r/hungary/comments/1phglkk/lázárék_megvonták_a_támogatást_egy_osztrák_cégtől/) |
+| MÁV Cargo | 2025-12-08 | transportation | — | unknown | [link](https://news.google.com/rss/articles/CBMirAFBVV95cUxOSEhVYmZhdHlPUU1DWkRmUmV6dE1WODZ5dE1hOEhnN1F3cE5mU1JGLXpaR3BTZjZLQXZDZlczMVQ1S3Qtd25SWWdNcDJ3Y1RmWlBYeHVialAwQ09OOThMYmlnMS1GQVpqWVo4R3RfZmVhZGpNZkstMjY1MjdNU0lENnVJU1U5eWZ5bVNGMzU4ZUFCV2xwNHNsWXFaVHc1cGdwajVhWTJJVmZCVDh1?oc=5) |
+| Docler/Byborg (+1 forrás) | 2025-12-04 | IT services | — | unknown | [link](https://news.google.com/rss/articles/CBMiekFVX3lxTE9GNXhIOG1RME1KV3FUUVhrWGZGSTh5cVJjV1h5RGotaHpDWnZKM0xPZW0xMXEzWnhuTGM2VjNuekNENDZWdjF3MkIzUUdkakEwdEZJQnU5X1VRSFRYdjlNelpEOER0a1c4N0ROLURQRzJnaU1sbXJRSWxR?oc=5) |
+| Gattyán György cége | 2025-12-04 | startup | — | unknown | [link](https://news.google.com/rss/articles/CBMijAFBVV95cUxOMXgxOTk1UmxkdU5zNzRidHlLU29OZHU5NFFJWjhTRHIyZk9xcmhqRWNXR0hNdFF5azloSmxibFl1ekFXYks0alJrNGNwMUFTRDhweW8zWjIwYk5YeldaakVxSF9sVXg0R0VjVjZXQXNNS3pDME9ySjJabWkxd2J6TTZPbGFZZ3FtS2NCLQ?oc=5) |
+| Docler/Byborg | 2025-12-04 | startup | — | unknown | [link](https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0JzM0FzZUtZVGJmM1l6SG1CMGFRWWtMT3IxUXNjU09jRmFaQTZnd2UzUFAxVTBNVkJxT190UWVXRXEtb0FqWjFadlVxc0F4SHp5a19TczFjTU9fNGZydHRnS0VnVE8xSHN3NGhaWVNIdDdVTUJhSnVJcEFqTzFrcU5QMEhURVJ4MGhQQTVYdGRydW9nOFE?oc=5) |
+| Digi | 2025-12-04 | telecom | — | unknown | [link](https://news.google.com/rss/articles/CBMirgFBVV95cUxPNUhJSWZLNHVLNHJNS1VLRjRMNHg5ZUpOa2Fyb3N4bmNuQ05OcktoOVVSRHBfbzdQNmVxbGIzNG9TX2JsQzFuLTFmVE5Sdm1BaFFSTldlOC02N0RHbGZwSjhpMjlscWs3aE96VzBMdzVaRF9DcVNWRjdHcUVjSXZmbWNqYnduM2h6bjhlZFFTRmprT1dkTXZZZGZrY2V0NTk1LXNRcUs0MGdHOVZwdUE?oc=5) |
+| 4iG | 2025-12-03 | IT services | — | r/programmingHungary | [link](https://reddit.com/r/programmingHungary/comments/1pd25uk/4ig_milyen_manapság/) |
+| RTL | 2025-12-03 | entertainment | — | unknown | [link](https://news.google.com/rss/articles/CBMigwFBVV95cUxPSTlJUWdULTctWUJNRnV4ak0xcUJ4dTNDclJMV1h3emREMG80Uy1wVUdaWWJORW1kMUZ1elVsTmo3dmpINXcxN2JScGNOVldJdGgwMFViMG1PYmc0U1ZIalhNMUZFQ0J2SGN6UWdJVV9oSDNsaWRtVGh1M21rVGtFeDhvSQ?oc=5) |
 
-*További 66 cég → [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html#top-posts)*
+*További 42 esemény → [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html#top-posts)*
 
 ## Összesített Statisztikák
 
@@ -109,17 +109,14 @@
 ## Módszertan
 
 ### Adatgyűjtés
-A projekt automatizált scraper-rel gyűjt publikus adatokat a Redditről:
-- **Reddit** — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions
-
-A Reddit posztok teljes szöveggel (selftext) és top kommentekkel kerülnek elemzésre, így a cím mellett a részletes kontextus is rendelkezésre áll.
-
-> *Megjegyzés: korábbi futásokból historikus Google News adatok is szerepelhetnek az adatbázisban, de új Google News/HUP.hu gyűjtés nem történik.*
+A projekt automatizált scraper-rel gyűjt publikus adatokat két forrásból:
+- **Reddit** — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions (poszt szöveg + top 20 komment)
+- **Google News RSS** — magyar nyelvű IT leépítés hírek, teljes cikk szöveggel (a Google News URL-ből kinyert valódi cikk automatikus letöltése)
 
 Keresési lekérdezések magyar és angol nyelven: `elbocsátás`, `leépítés`, `layoff`, `hiring freeze`, `álláskereső`, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).
 
 ### Elemzési pipeline
-1. **Reddit scraping** — Reddit JSON API (poszt szöveg + top 20 komment)
+1. **Multi-source scraping** — Reddit JSON API + Google News RSS (cikk tartalom kinyeréssel)
 2. **Kulcsszó-alapú elemzés** — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás
 3. **LLM batch triage** — posztcímek batch-szűrése LLM-mel, releváns posztok kiválasztása
 4. **LLM full validáció** — részletes elemzés: kategória, cég, szektor, AI-szerep, technológiák, munkakörök (structured JSON output)

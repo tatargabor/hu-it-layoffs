@@ -127,6 +127,35 @@ def _source_str(post):
     return source
 
 
+def _group_by_event(posts):
+    """Group posts by event_label. Returns list of (label, representative, other_posts).
+
+    Representative selection: Reddit > highest relevance > most recent.
+    Posts without event_label get their own group (other_posts=[]).
+    """
+    groups = {}
+    result = []
+    for p in posts:
+        label = p.get('llm_event_label')
+        if label:
+            groups.setdefault(label, []).append(p)
+        else:
+            result.append((None, p, []))
+
+    for label, group_posts in groups.items():
+        group_posts.sort(key=lambda x: (
+            0 if x.get('source') == 'reddit' else 1,
+            -_eff_relevance(x),
+            -x.get('created_utc', 0),
+        ))
+        rep = group_posts[0]
+        others = group_posts[1:]
+        result.append((label, rep, others))
+
+    result.sort(key=lambda x: x[1].get('created_utc', 0), reverse=True)
+    return result
+
+
 def generate_report(posts, output_path='data/report.md', llm_stats=None):
     """Generate full markdown report."""
     relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
@@ -140,7 +169,7 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('')
     lines.append('**[Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html)** | [GitHub repo](https://github.com/tatargabor/hu-it-layoffs)')
     lines.append('')
-    lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")} | Forrás: Reddit publikus adatok*')
+    lines.append(f'*Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")} | Forrás: Reddit + Google News publikus adatok*')
     lines.append('')
     lines.append('> **Jogi nyilatkozat:** Ez a kimutatás publikusan elérhető posztok és hírek automatizált elemzése. A tartalom harmadik felek által közzétett véleményeket és információkat tükrözi, amelyek pontossága nem ellenőrzött. A kimutatás tájékoztató és kutatási célú, nem minősül tényállításnak egyetlen szervezetről sem. Tartalom eltávolítását a [GitHub Issues](https://github.com/tatargabor/hu-it-layoffs/issues) oldalon lehet kérni.')
     lines.append('>')
@@ -217,22 +246,23 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('|-----|-------|---------|-----------|--------|------|')
 
     company_posts = [p for p in strong if p.get('company') or p.get('llm_company')]
-    company_posts.sort(key=lambda x: x['date'], reverse=True)
+    grouped_companies = _group_by_event(company_posts)
 
     max_companies = 20
-    for p in company_posts[:max_companies]:
-        company = p.get('company') or p.get('llm_company')
-        ai_str = 'igen' if _is_ai_attributed(p) else '—'
-        link = f'[link]({p["url"]})'
+    for label, rep, others in grouped_companies[:max_companies]:
+        company = rep.get('company') or rep.get('llm_company')
+        ai_str = 'igen' if _is_ai_attributed(rep) else '—'
+        link = f'[link]({rep["url"]})'
+        suffix = f' (+{len(others)} forrás)' if others else ''
         lines.append(
-            f'| {company} | {p["date"]} | '
-            f'{_eff_sector(p)} | {ai_str} | {_source_str(p)} | {link} |'
+            f'| {company}{suffix} | {rep["date"]} | '
+            f'{_eff_sector(rep)} | {ai_str} | {_source_str(rep)} | {link} |'
         )
 
-    remaining = len(company_posts) - max_companies
+    remaining = len(grouped_companies) - max_companies
     if remaining > 0:
         lines.append('')
-        lines.append(f'*További {remaining} cég → [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html#top-posts)*')
+        lines.append(f'*További {remaining} esemény → [Interaktív Dashboard](https://tatargabor.github.io/hu-it-layoffs/report.html#top-posts)*')
 
     lines.append('')
 
@@ -317,17 +347,14 @@ def generate_report(posts, output_path='data/report.md', llm_stats=None):
     lines.append('## Módszertan')
     lines.append('')
     lines.append('### Adatgyűjtés')
-    lines.append('A projekt automatizált scraper-rel gyűjt publikus adatokat a Redditről:')
-    lines.append('- **Reddit** — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions')
-    lines.append('')
-    lines.append('A Reddit posztok teljes szöveggel (selftext) és top kommentekkel kerülnek elemzésre, így a cím mellett a részletes kontextus is rendelkezésre áll.')
-    lines.append('')
-    lines.append('> *Megjegyzés: korábbi futásokból historikus Google News adatok is szerepelhetnek az adatbázisban, de új Google News/HUP.hu gyűjtés nem történik.*')
+    lines.append('A projekt automatizált scraper-rel gyűjt publikus adatokat két forrásból:')
+    lines.append('- **Reddit** — r/programmingHungary, r/hungary, r/Layoffs, r/cscareerquestions (poszt szöveg + top 20 komment)')
+    lines.append('- **Google News RSS** — magyar nyelvű IT leépítés hírek, teljes cikk szöveggel (a Google News URL-ből kinyert valódi cikk automatikus letöltése)')
     lines.append('')
     lines.append('Keresési lekérdezések magyar és angol nyelven: `elbocsátás`, `leépítés`, `layoff`, `hiring freeze`, `álláskereső`, valamint cégspecifikus keresések (Ericsson, Continental, OTP, Audi, stb.).')
     lines.append('')
     lines.append('### Elemzési pipeline')
-    lines.append('1. **Reddit scraping** — Reddit JSON API (poszt szöveg + top 20 komment)')
+    lines.append('1. **Multi-source scraping** — Reddit JSON API + Google News RSS (cikk tartalom kinyeréssel)')
     lines.append('2. **Kulcsszó-alapú elemzés** — relevancia pontozás (0-3), cégfelismerés, AI-attribúció detektálás')
     lines.append('3. **LLM batch triage** — posztcímek batch-szűrése LLM-mel, releváns posztok kiválasztása')
     lines.append('4. **LLM full validáció** — részletes elemzés: kategória, cég, szektor, AI-szerep, technológiák, munkakörök (structured JSON output)')
