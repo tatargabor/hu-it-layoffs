@@ -335,15 +335,15 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
       <td>{ai_str}</td>
     </tr>'''
         else:
-            sub_html = ''
+            sub_items = ''
             for o in others:
                 o_title = o['title'][:55].replace('&', '&amp;').replace('<', '&lt;')
                 if len(o['title']) > 55:
                     o_title += '...'
-                sub_html += f'<tr class="sub-row"><td>{o["date"]}</td><td colspan="9"><a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</td></tr>'
+                sub_items += f'<div class="sub-row">{o["date"]} — <a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</div>'
 
             detailed_rows += f'''<tr class="event-group"><td>{rep["date"]}</td>
-      <td><details><summary><a href="{rep["url"]}" target="_blank">{title_esc}</a>{badge}{reddit_ref}</summary>{sub_html}</details></td>
+      <td><a href="{rep["url"]}" target="_blank">{title_esc}</a> <span class="toggle-btn" onclick="this.closest('tr').nextElementSibling.classList.toggle('hidden')">{badge}</span>{reddit_ref}</td>
       <td>{company}</td>
       <td><span class="tag tag-{cat}">{cat}</span></td>
       <td>{_src_label(rep)}</td>
@@ -352,7 +352,8 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
       <td class="rel-{rel}">{"&#9733;" * rel}{llm_badge}</td>
       <td>{conf}</td>
       <td>{ai_str}</td>
-    </tr>'''
+    </tr>
+    <tr class="expand-row hidden"><td></td><td colspan="9">{sub_items}</td></tr>'''
 
     # Group top posts too
     top_posts_strong = [p for p in relevant if _eff_relevance(p) >= 2 and _eff_category(p) != 'other']
@@ -384,7 +385,7 @@ def generate_html(posts, output_path='data/report.html', llm_stats=None):
                 o_title = o['title'][:55].replace('&', '&amp;').replace('<', '&lt;')
                 if len(o['title']) > 55:
                     o_title += '...'
-                sub_html += f'<tr class="sub-row"><td>{o["date"]}</td><td colspan="8"><a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</td></tr>'
+                sub_html += f'<div class="sub-row">{o["date"]} — <a href="{o["url"]}" target="_blank">{o_title}</a> — {_src_label(o)}</div>'
 
             top_posts_rows += f'''<tr class="event-group"><td>{rep["date"]}</td>
       <td><details><summary><a href="{rep["url"]}" target="_blank">{title_esc}</a>{badge}{reddit_ref}</summary>{sub_html}</details></td>
@@ -494,8 +495,9 @@ details summary:hover {{ color: #fff; }}
 .event-group summary {{ cursor: pointer; list-style: none; }}
 .event-group summary::-webkit-details-marker {{ display: none; }}
 .event-group .badge {{ display: inline-block; background: #2a2a4a; color: #4ecdc4; padding: 1px 6px; border-radius: 3px; font-size: 0.7em; margin-left: 6px; vertical-align: middle; }}
-.event-group .sub-row td {{ padding-left: 24px; color: #888; font-size: 0.8em; border-bottom: 1px solid #1a1a2e; }}
+.event-group .sub-row {{ padding: 4px 0 4px 24px; color: #888; font-size: 0.8em; border-bottom: 1px solid #1a1a2e; }}
 .event-group .sub-row:hover {{ background: #12122a; }}
+.event-group .sub-row a {{ color: #6c8fbf; }}
 .reddit-ref {{ display: inline-block; background: #ff450033; color: #ff4500; padding: 1px 5px; border-radius: 3px; font-size: 0.65em; font-weight: 600; margin-left: 4px; vertical-align: middle; text-decoration: none; }}
 .reddit-ref:hover {{ background: #ff450055; text-decoration: none; }}
 @media (max-width: 768px) {{ .charts {{ grid-template-columns: 1fr; }} }}
@@ -747,6 +749,8 @@ new Chart(document.getElementById('aiChart'), {{
 {roles_chart_js}
 </script>
 
+<script data-goatcounter="https://hu-it-layoffs.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 
