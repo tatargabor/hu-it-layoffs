@@ -42,9 +42,9 @@ def _is_hungarian_relevant(post):
     return post.get('llm_hungarian_relevance', 'direct') != 'none'
 
 
-# IT-relevant sectors (whitelist) — sectors NOT in this set require IT roles/tech to pass
-_IT_SECTORS = {'fintech', 'big tech', 'IT services', 'telecom', 'startup', 'general IT', 'retail tech',
-               'gaming tech', 'travel tech'}
+# IT-relevant sectors — strict auto-pass, soft needs IT keyword evidence
+_IT_SECTORS_STRICT = {'fintech', 'big tech', 'IT services', 'telecom', 'startup'}
+_IT_SECTORS_SOFT = {'general IT', 'retail tech', 'gaming tech', 'travel tech'}
 _IT_ROLE_KEYWORDS = {'fejlesztő', 'programozó', 'informatikus', 'szoftver', 'devops', 'qa',
                      'developer', 'engineer', 'software', 'backend', 'frontend',
                      'machine learning', 'mesterséges intelligencia'}
@@ -59,18 +59,25 @@ def _eff_category(post):
     return post.get('category', 'other')
 
 
-def _is_it_relevant(post):
-    """Filter out non-IT sector layoffs unless IT roles/technologies are mentioned."""
-    sector = _eff_sector(post)
-    if sector in _IT_SECTORS:
-        return True
-    # Non-IT sector: check if IT roles or technologies mentioned
+def _has_it_keywords(post):
+    """Check if post has IT role/technology keywords in LLM fields."""
     roles = post.get('llm_roles', [])
     techs = post.get('llm_technologies', [])
     summary = post.get('llm_summary', '')
     text = ' '.join(roles + techs) + ' ' + summary
     lower = text.lower()
     return any(kw in lower for kw in _IT_ROLE_KEYWORDS) or bool(_IT_ROLE_KEYWORDS_WB.search(text))
+
+
+def _is_it_relevant(post):
+    """Filter out non-IT sector layoffs unless IT roles/technologies are mentioned."""
+    sector = _eff_sector(post)
+    if sector in _IT_SECTORS_STRICT:
+        return True
+    if sector in _IT_SECTORS_SOFT:
+        return _has_it_keywords(post)
+    # All other sectors: need IT keyword evidence
+    return _has_it_keywords(post)
 
 
 def _count_events(posts):

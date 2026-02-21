@@ -15,11 +15,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  run-pipeline:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed for git describe --tags
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -41,7 +43,11 @@ jobs:
         env:
           LLM_BACKEND: anthropic
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python -m src.run
+          DASHBOARD_VERSION: ${{ env.DASHBOARD_VERSION }}
+        run: |
+          export DASHBOARD_VERSION=$(git describe --tags --always)
+          echo "Dashboard version: $DASHBOARD_VERSION"
+          python -m src.run
 
       - name: Verify LLM validation succeeded
         run: |
@@ -52,9 +58,31 @@ jobs:
           ")
           echo "LLM validated posts: $validated"
           if [ "$validated" -lt 10 ]; then
-            echo "ERROR: Only $validated posts validated — aborting push"
+            echo "ERROR: Only $validated posts validated — aborting"
             exit 1
           fi
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-output
+          path: |
+            data/
+            README.md
+          retention-days: 7
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pipeline-output
 
       - name: Commit and push changes
         run: |
@@ -71,7 +99,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: data

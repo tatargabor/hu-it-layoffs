@@ -8,6 +8,11 @@ import time
 import urllib.request
 import urllib.error
 
+try:
+    import anthropic
+except ImportError:
+    anthropic = None
+
 
 GITHUB_API_URL = 'https://models.inference.ai.azure.com/chat/completions'
 OLLAMA_API_URL = 'http://localhost:11434/v1/chat/completions'
@@ -30,6 +35,9 @@ Releváns posztok:
 NEM releváns:
 - Globális tech leépítések magyar vonatkozás nélkül (Amazon USA, Ubisoft Torontó, Google globális, HP, Nestlé) — még ha magyar nyelven is írták!
 - Nem-IT szektorok leépítései (bolti eladó, gyári munkás, textil, élelmiszer, katonai, oktatási, agrár, közlekedési) — KIVÉVE ha kifejezetten IT/tech pozíciókat érintenek
+- Barkácsáruház (OBI), elektronikai bolt (BestByte), szupermarket (Tesco, Aldi) leépítés = NEM releváns, KIVÉVE ha kifejezetten IT pozíciókat említ
+- Autógyári fizikai munkás, akkugyári dolgozó, targoncás leépítés = NEM releváns, KIVÉVE ha szoftvermérnök/fejlesztő érintett
+- Kórházi, egyetemi, operaházi, TV csatornai leépítés = NEM releváns, KIVÉVE ha IT pozíciókat említ
 - Külföldi leépítések magyar vonatkozás nélkül (Dél-Korea, Szlovákia, Románia — kivéve ha magyar hatást említ)
 - Karriertanács, álláskereső posztok: "merre menjek?", "CV tippek", "milyen skilleket tanuljak?", "megéri váltani?" — ezek NEM munkaerőpiaci események
 - Generikus AI/automatizáció cikkek konkrét cég/esemény nélkül: "300 millió munkahely szűnik meg", "AI elveszi a munkát" — ezek NEM specifikus leépítések
@@ -65,20 +73,20 @@ Mezők:
 - is_actual_layoff: true CSAK ha a poszt SZERVEZETI SZINTŰ leépítésről szól ÉS kifejezetten IT/tech/fejlesztő/programozó/informatikus pozíciókat érint. False ha: egyéni szintű ("kirúgtak és tanácsot kérek"), gyári/termelési/fizikai munkás leépítés, vagy nem leépítés. FONTOS: autógyári, gyártóüzemi leépítés (pl. Audi Győr gyári munkások, Suzuki termelés) NEM is_actual_layoff, KIVÉVE ha a cikk kifejezetten megemlíti, hogy IT/szoftverfejlesztő/mérnök pozíciókat érint (pl. "fejlesztőközpont bezárás", "szoftveres csapat leépítése").
 - category: a poszt kategóriája az alábbiak közül:
   - "layoff": Konkrét leépítés amely IT/tech/fejlesztő/programozó/informatikus pozíciókat érint. Ide tartozik: tech cégek, IT szolgáltatók, telco, valamint más szektorok IT/tech osztályai (pl. bank IT osztály, autógyár FEJLESZTŐKÖZPONT/szoftvermérnökök). NEM ide tartozik: gyári/termelési munkás leépítés (még ha tech cégnél is!), katonai, oktatási, agrár, gyártási, közlekedési szektorok leépítései. Ha egy cikk csak annyit mond hogy "leépítés az X cégnél" és NEM említ IT/fejlesztő/programozó pozíciókat, és a cég nem IT cég → category: "other". Egyéni "kirúgtak és tanácsot kérek" típusú posztok NEM layoff — azok freeze vagy anxiety.
-  - "freeze": Hiring freeze, álláspiac-romlás, nehéz elhelyezkedés, felvételi stop (pl. "egy éve nem találok munkát", "nem vesznek fel senkit"). Ide tartoznak azok a posztok is ahol valakit egyénileg elbocsátottak és tanácsot kér (nem szervezeti leépítés).
+  - "freeze": Hiring freeze, álláspiac-romlás, nehéz elhelyezkedés, felvételi stop (pl. "egy éve nem találok munkát", "nem vesznek fel senkit"). Ide tartoznak azok a posztok is ahol valakit egyénileg elbocsátottak és tanácsot kér (nem szervezeti leépítés). FONTOS: NEM freeze a következő: home office / remote munka viták, karriertanács ("merre menjek", "megéri váltani"), munka-magánélet egyensúly, kiégés, karrierszünet, álláskereső portál ajánlás, bérkérdés, általános remote munka jövője kérdés — ezek mind 'other'!
   - "anxiety": Karrier-aggodalom, bizonytalanság, kiégés, pályaváltás kérdések az IT szektorra vonatkozóan (pl. "megéri programozónak tanulni?", "AI elveszi a munkánkat?")
   - "other": Nem kapcsolódik az IT munkaerőpiachoz — általános kérdés, hír, offtopic, VAGY nem-IT szektorban történő leépítés (katonai, oktatási, agrár, közlekedési stb.)
 - confidence: mennyire vagy biztos a category besorolásban (0.0-1.0)
 - company: az érintett cég neve ha azonosítható, egyébként null
 - sector: az érintett iparág/szektor az alábbiak közül (a poszt kontextusából határozd meg, nem kell hozzá cégnév):
   - "fintech": bank, pénzügyi szolgáltató, fizetési rendszer IT
-  - "automotive": autógyár, autóipari beszállító, járműtechnológia
+  - "automotive": autógyár, autóipari beszállító, járműtechnológia. FONTOS: Audi/Suzuki/Mercedes/BMW GYÁRI MUNKÁS/targoncás/termelési dolgozó/akkugyári dolgozó leépítés = category: 'other'. CSAK fejlesztőközpont/szoftvermérnök/IT pozíciók = category: 'layoff'
   - "telecom": telekommunikáció, hálózati infrastruktúra
   - "big tech": nagy nemzetközi tech cég (Microsoft, Google, Meta, stb.)
   - "IT services": IT outsourcing, tanácsadás, rendszerintegrátor
   - "entertainment": szórakoztató ipar, média, gaming tech
   - "energy": energiaszektor IT, olaj/gáz tech
-  - "retail tech": kiskereskedelmi tech, e-commerce
+  - "retail tech": CSAK e-commerce platform, online kereskedelem, webshop, szállásfoglaló/utazási TECH cég (Szállás Group, hasznaltauto.hu). NEM: fizikai bolt, áruház, barkácsáruház leépítés (OBI, BestByte, Tesco, Aldi = sector: 'other')
   - "startup": startup, kis tech cég
   - "government": állami IT, közigazgatási rendszer
   - "general IT": IT szektor, de konkrét szegmens nem azonosítható (pl. általános álláspiac, karrierkérdés)
@@ -99,7 +107,7 @@ Mezők:
   - "indirect": Globális cég leépítése ahol a cégnek ismert magyar jelenléte van, VAGY a cikk/poszt kifejezetten megemlíti a magyar hatást (pl. "Continental globális leépítés, Budapestet is érinti")
   - "none": Semmi magyar vonatkozás — külföldi cég külföldi leépítése, még ha magyar nyelven is írták (pl. "Amazon 14 ezer embert küld el az USA-ban", "Ubisoft torontói stúdió leépítés", "Dél-Korea AI munkahelyek")
 - hungarian_context: ha hungarian_relevance nem "none", 1 mondatos magyarázat a magyar vonatkozásról. Ha "none", legyen null.
-- event_label: normalizált esemény azonosító formátumban: "[Cég] [Helyszín opcionális] [Év QN] [típus]". Példák: "Audi Győr 2026 Q1 leépítés", "OTP Bank 2026 Q1 leépítés", "Bosch Németország 2025 Q3 leépítés". Ha a poszt nem konkrét eseményről szól (pl. általános aggodalom, álláspiac kérdés), legyen null. FONTOS: ugyanarról az eseményről szóló különböző cikkek/posztok UGYANAZT a labelt kapják!
+- event_label: normalizált esemény azonosító formátumban: "[Cég] [Helyszín opcionális] [Év QN] [típus]". Példák: "Audi Győr 2026 Q1 leépítés", "OTP Bank 2026 Q1 leépítés", "Bosch Németország 2025 Q3 leépítés". Ha a poszt nem konkrét eseményről szól (pl. általános aggodalom, álláspiac kérdés), legyen null. FONTOS: ugyanarról az eseményről szóló különböző cikkek/posztok UGYANAZT a labelt kapják! Ugyanarról a cégről/cégcsoportról szóló posztok UGYANAZT az event_label-t kapják. Ha a cég több néven ismert (pl. Docler/Byborg/Gattyán), használd a legismertebb nevet. NE hozz létre külön labelt aliasoknak.
 
 FONTOS A MAGYAR VONATKOZÁSRÓL:
 - Magyar NYELVŰ cikk NEM jelent magyar VONATKOZÁST! A Portfolio.hu, HVG, Index cikkei gyakran globális híreket tárgyalnak magyarul — ezek "none" ha nincs magyar szál.
@@ -289,11 +297,25 @@ def _check_backend(backend):
         print(f'\nUsing Ollama backend (model: {backend["model"]})')
         return True
     elif backend['name'] == 'anthropic':
+        if anthropic is None:
+            print('\nLLM: anthropic package not installed')
+            print('  pip install anthropic')
+            return False
         if not backend.get('api_key'):
             print('\nLLM: no Anthropic API key available')
             print('  Set ANTHROPIC_API_KEY environment variable')
             return False
-        print(f'\nUsing Anthropic backend (model: {backend["model"]})')
+        # Quick SDK health check
+        try:
+            client = anthropic.Anthropic(api_key=backend['api_key'])
+            client.models.list(limit=1)
+            backend['_client'] = client  # reuse for later calls
+        except anthropic.AuthenticationError:
+            print('\nLLM: Anthropic API key is invalid')
+            return False
+        except anthropic.APIError:
+            pass  # Non-auth errors are OK (e.g. model listing restricted)
+        print(f'\nUsing Anthropic backend (model: {backend["model"]}, prompt caching enabled)')
         return True
     else:
         if not backend.get('token'):
@@ -307,30 +329,23 @@ def _check_backend(backend):
 def _call_llm(backend, system_prompt, prompt, max_retries=5):
     """Call LLM API with exponential backoff. Returns parsed JSON dict or None."""
     if backend['name'] == 'anthropic':
-        body_dict = {
-            'model': backend['model'],
-            'max_tokens': 1024,
-            'system': system_prompt,
-            'messages': [
-                {'role': 'user', 'content': prompt},
-            ],
-            'temperature': 0.1,
-        }
-    else:
-        body_dict = {
-            'model': backend['model'],
-            'messages': [
-                {'role': 'system', 'content': system_prompt},
-                {'role': 'user', 'content': prompt},
-            ],
-            'temperature': 0.1,
-            'stream': False,
-        }
-        # JSON mode: different param for Ollama vs OpenAI
-        if backend['name'] == 'ollama':
-            body_dict['format'] = 'json'
-        elif backend['name'] != 'openai':
-            body_dict['response_format'] = {'type': 'json_object'}
+        return _call_llm_anthropic(backend, system_prompt, prompt, max_retries)
+
+    # OpenAI-compatible backends (ollama, github, openai)
+    body_dict = {
+        'model': backend['model'],
+        'messages': [
+            {'role': 'system', 'content': system_prompt},
+            {'role': 'user', 'content': prompt},
+        ],
+        'temperature': 0.1,
+        'stream': False,
+    }
+    # JSON mode: different param for Ollama vs OpenAI
+    if backend['name'] == 'ollama':
+        body_dict['format'] = 'json'
+    elif backend['name'] != 'openai':
+        body_dict['response_format'] = {'type': 'json_object'}
 
     body = json.dumps(body_dict).encode()
 
@@ -344,11 +359,7 @@ def _call_llm(backend, system_prompt, prompt, max_retries=5):
         try:
             resp = urllib.request.urlopen(req, timeout=120)
             data = json.loads(resp.read())
-            # Anthropic: content[0].text; OpenAI-compatible: choices[0].message.content
-            if backend['name'] == 'anthropic':
-                content = data['content'][0]['text']
-            else:
-                content = data['choices'][0]['message']['content']
+            content = data['choices'][0]['message']['content']
             # Strip markdown code fences (```json ... ```) if present
             content = re.sub(r'^```(?:json)?\s*\n?', '', content.strip())
             content = re.sub(r'\n?```\s*$', '', content.strip())
@@ -363,6 +374,55 @@ def _call_llm(backend, system_prompt, prompt, max_retries=5):
             return None
         except urllib.error.URLError as e:
             print(f'    API error: {e}')
+            return None
+        except (json.JSONDecodeError, KeyError, IndexError) as e:
+            print(f'    Parse error: {e}')
+            return None
+
+
+def _call_llm_anthropic(backend, system_prompt, prompt, max_retries=5):
+    """Call Anthropic API via SDK with prompt caching. Returns parsed JSON dict or None."""
+    client = backend.get('_client')
+    if client is None:
+        client = anthropic.Anthropic(api_key=backend['api_key'])
+        backend['_client'] = client
+
+    for attempt in range(max_retries):
+        try:
+            response = client.messages.create(
+                model=backend['model'],
+                max_tokens=1024,
+                temperature=0.1,
+                system=[{
+                    'type': 'text',
+                    'text': system_prompt,
+                    'cache_control': {'type': 'ephemeral'},
+                }],
+                messages=[{'role': 'user', 'content': prompt}],
+            )
+            content = response.content[0].text
+            # Strip markdown code fences if present
+            content = re.sub(r'^```(?:json)?\s*\n?', '', content.strip())
+            content = re.sub(r'\n?```\s*$', '', content.strip())
+            # Log cache stats on first call
+            usage = response.usage
+            cache_read = getattr(usage, 'cache_read_input_tokens', 0) or 0
+            cache_create = getattr(usage, 'cache_creation_input_tokens', 0) or 0
+            if cache_read > 0 or cache_create > 0:
+                if not backend.get('_cache_logged'):
+                    print(f'    [cache] read={cache_read}, created={cache_create}')
+                    backend['_cache_logged'] = True
+            return json.loads(content)
+        except anthropic.RateLimitError:
+            if attempt < max_retries - 1:
+                delay = 10 * (2 ** attempt)
+                print(f'    Rate limited, waiting {delay}s (attempt {attempt+1}/{max_retries})...')
+                time.sleep(delay)
+                continue
+            print('    Rate limit exceeded after retries')
+            return None
+        except anthropic.APIError as e:
+            print(f'    Anthropic API error: {e}')
             return None
         except (json.JSONDecodeError, KeyError, IndexError) as e:
             print(f'    Parse error: {e}')

@@ -1,9 +1,28 @@
 """Generate interactive HTML report with Chart.js visualizations."""
 
 import json
+import os
 import re
+import subprocess
 from datetime import datetime
 from collections import defaultdict
+
+
+def _get_version():
+    """Get version from DASHBOARD_VERSION env var or git describe --tags."""
+    version = os.environ.get('DASHBOARD_VERSION')
+    if version:
+        return version
+    try:
+        result = subprocess.run(
+            ['git', 'describe', '--tags', '--always'],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+    return None
 
 
 def _quarter(date_str):
@@ -39,8 +58,8 @@ def _is_hungarian_relevant(post):
     return post.get('llm_hungarian_relevance', 'direct') != 'none'
 
 
-_IT_SECTORS = {'fintech', 'big tech', 'IT services', 'telecom', 'startup', 'general IT', 'retail tech',
-               'gaming tech', 'travel tech'}
+_IT_SECTORS_STRICT = {'fintech', 'big tech', 'IT services', 'telecom', 'startup'}
+_IT_SECTORS_SOFT = {'general IT', 'retail tech', 'gaming tech', 'travel tech'}
 _IT_ROLE_KEYWORDS = {'fejlesztő', 'programozó', 'informatikus', 'szoftver', 'devops', 'qa',
                      'developer', 'engineer', 'software', 'backend', 'frontend',
                      'machine learning', 'mesterséges intelligencia'}
@@ -54,17 +73,24 @@ def _eff_category(post):
     return post.get('category', 'other')
 
 
-def _is_it_relevant(post):
-    """Filter out non-IT sector layoffs unless IT roles/technologies are mentioned."""
-    sector = _eff_sector(post)
-    if sector in _IT_SECTORS:
-        return True
+def _has_it_keywords(post):
+    """Check if post has IT role/technology keywords in LLM fields."""
     roles = post.get('llm_roles', [])
     techs = post.get('llm_technologies', [])
     summary = post.get('llm_summary', '')
     text = ' '.join(roles + techs) + ' ' + summary
     lower = text.lower()
     return any(kw in lower for kw in _IT_ROLE_KEYWORDS) or bool(_IT_ROLE_KEYWORDS_WB.search(text))
+
+
+def _is_it_relevant(post):
+    """Filter out non-IT sector layoffs unless IT roles/technologies are mentioned."""
+    sector = _eff_sector(post)
+    if sector in _IT_SECTORS_STRICT:
+        return True
+    if sector in _IT_SECTORS_SOFT:
+        return _has_it_keywords(post)
+    return _has_it_keywords(post)
 
 
 def _count_events(posts):
@@ -176,6 +202,7 @@ def _group_by_event(posts):
 
 
 def generate_html(posts, output_path='data/report.html', llm_stats=None):
+    version = _get_version()
     relevant = [p for p in posts if _eff_relevance(p) >= 1 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
     strong = [p for p in posts if _eff_relevance(p) >= 2 and _is_hungarian_relevant(p) and _is_it_relevant(p) and _eff_category(p) != 'other']
     direct = [p for p in posts if _eff_relevance(p) >= 3 and _is_hungarian_relevant(p) and _is_it_relevant(p)]
@@ -550,7 +577,6 @@ details summary:hover {{ color: #fff; }}
 .share-btn {{ display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 0.8em; color: #fff; text-decoration: none; cursor: pointer; border: 1px solid #2a2a4a; background: #1a1a2e; transition: background 0.2s; }}
 .share-btn:hover {{ background: #2a2a4a; text-decoration: none; }}
 .share-btn.watch {{ border-color: #e94560; }}
-.tagline {{ color: #666; font-size: 0.8em; margin-top: 8px; font-style: italic; }}
 .section-anchor {{ color: #555; text-decoration: none; font-size: 0.8em; margin-left: 6px; opacity: 0; transition: opacity 0.2s; }}
 .chart-box:hover .section-anchor, .table-section:hover .section-anchor, details:hover .section-anchor {{ opacity: 1; }}
 .section-anchor:hover {{ color: #e94560; }}
@@ -596,8 +622,7 @@ details summary:hover {{ color: #fff; }}
 <div class="header">
   <h1>magyar.dev/layoffs</h1>
   <div class="sub" style="font-size:1.1em;color:#ccc;margin-bottom:4px">IT Leépítés Radar</div>
-  <div class="sub">Reddit + Google News publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
-  <div class="tagline">Specifikálva OpenSpec-kel, generálva Claude Code-dal</div>
+  <div class="sub">{(version + ' | ') if version else ''}Reddit + Google News publikus adatok | Generálva: {datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
   <div class="share-row">
     <a class="share-btn watch" href="https://github.com/tatargabor/hu-it-layoffs" target="_blank">&#9733; Watch on GitHub</a>
     <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=" target="_blank">LinkedIn</a>
@@ -762,7 +787,7 @@ details summary:hover {{ color: #fff; }}
 </details>
 
 <div class="footer">
-  Források: {", ".join(f"{k} ({v})" for k, v in sorted(by_source.items(), key=lambda x: -x[1]))} | {len(posts)} poszt feldolgozva | powered by Claude Code &middot; OpenSpec
+  Források: {", ".join(f"{k} ({v})" for k, v in sorted(by_source.items(), key=lambda x: -x[1]))} | {len(posts)} poszt feldolgozva
   {"<br>" + f"{llm_stats['validated']} poszt LLM-validálva {llm_stats['elapsed_seconds']:.0f}s alatt | ~{llm_stats['est_input_tokens']:,}+{llm_stats['est_output_tokens']:,} token | Becsült költség: ~${_est_cost(llm_stats):.2f} ({llm_stats.get('backend_name', '?')}) | Kézzel ez ~{llm_stats['est_manual_hours']:.0f} óra lett volna" if llm_stats and llm_stats.get('validated', 0) > 0 else ""}
 </div>
 
